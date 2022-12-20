@@ -10,35 +10,58 @@ import unidecode
 import string
 from random import randrange
 
+# https://alphacephei.com/vosk/models
+# Colocar o path do vosk-model-small-pt-0.3
+model = Model("vosk-model-small-pt-0.3")
+recognizer = KaldiRecognizer(model, 16000)
+
+with open('intents.json') as json_data:
+    intents = json.load(json_data)
+
+speaker = tts.init()
+speaker.setProperty('rate', 150)
+speaker.setProperty('voice', "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\MSTTS_V110_ptPT_Helia")
+'''
+print("Assistente: Olá, eu sou a Maria. Como posso ajudar?")
+speaker.say("Olá, eu sou a Maria. Como posso ajudar?")
+speaker.runAndWait()
+'''
+
+mic = pyaudio.PyAudio()
+stream = mic.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8192)
+stream.start_stream()
+
 def main():
-    # https://alphacephei.com/vosk/models
-    # Colocar o path do vosk-model-small-pt-0.3
-    model = Model("vosk-model-small-pt-0.3")
-    recognizer = KaldiRecognizer(model, 16000)
-
-    with open('intents.json') as json_data:
-        intents = json.load(json_data)
-
-    speaker = tts.init()
-    speaker.setProperty('rate', 150)
-    speaker.setProperty('voice', "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\MSTTS_V110_ptPT_Helia")
-    print("Assistente: Olá, eu sou a Maria. Como posso ajudar?")
-    speaker.say("Olá, eu sou a Maria. Como posso ajudar?")
-    speaker.runAndWait()
-
-    mic = pyaudio.PyAudio()
-    stream = mic.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8192)
-    stream.start_stream()
-
     while True:
         data = stream.read(4096, exception_on_overflow = False)
         if recognizer.AcceptWaveform(data):
             text = recognizer.Result()
             text = text[14:-3]
             recognize = False
-            print(text)
             text = normalize_text(text)
-            if text == "stop" or text == "parar" or text == "sair" or text == "desligar":
+            print(text)
+            if text == "hey maria" or text == "oi maria" or text == "ola maria":
+                assistant_listening_loop()
+            elif text == "desligar":
+                print("Assistente: A desligar!")
+                speaker.say("a desligar")
+                speaker.runAndWait()
+                speaker.stop()
+                break
+            
+def assistant_listening_loop():
+    print("Assistente: Olá, como posso ajudar?")
+    speaker.say("Olá, como posso ajudar?")
+    speaker.runAndWait()
+    while True:
+        data = stream.read(4096, exception_on_overflow = False)
+        if recognizer.AcceptWaveform(data):
+            text = recognizer.Result()
+            text = text[14:-3]
+            recognize = False
+            text = normalize_text(text)
+            print(text)
+            if text == "stop" or text == "sair" or text == "adeus":
                 print("Assistente: Adeus!")
                 speaker.say("adeus")
                 speaker.runAndWait()

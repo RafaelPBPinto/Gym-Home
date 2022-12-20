@@ -36,7 +36,6 @@
                 "Cristiano Ronaldo"
             ],
             "responses" : [
-                "O melhor jogador do mundo!",
                 "SIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII!"
             ]
         },
@@ -53,13 +52,54 @@
             ]
         },
         {
-            "tag" : "Messi",
+            "tag" : "avaliar",
             "patterns" : [
-                "Messi"
+                "quero avaliar o meu plano",
+                "avaliar plano",
+                "avaliar",
+                "avaliação",
+                "avaliações"
             ],
             "responses" : [
-                "quem?"
+                "Quantas estrelas quer dar?"
+            ]
+        },
+        {
+            "tag" : "parar",
+            "patterns" : [
+                "parar",
+                "parar plano",
+                "parar exercício",
+                "parar exercícios"
+            ],
+            "responses" : [
+                "okay"
+            ]
+        },
+        {
+            "tag" : "piadas",
+            "patterns" : [
+                "diz-me uma piada",
+                "conta-me uma piada",
+                "diz uma piada",
+                "conta uma piada",
+                "piada",
+                "conta-me uma anedota",
+                "conta uma anedota",
+                "diz-me uma anedota",
+                "diz uma anedota",
+                "anedota"
+            ],
+            "responses" : [
+                "Como as enzimas se reproduzem? Umas enzimas das outras.",
+                "Por que o virus da gripe não tem amigos? Porque ele e uma ma influenza.",
+                "Para onde o mamao vai passar ferias? papaia",
+                "Porque é que o contorcionista esta sempre cansado? Porque ele trabalha a dobrar.",
+                "Como se chama um cao sem patas? Nao se chama, vai-se buscar",
+                "Porque e que o panado se divorciou? Porque a mulher nao servia panada",
+                "Como se chama uma estrela triste que cai do ceu? Uma estrela carente"
             ]
         }
+
     ]
 }
