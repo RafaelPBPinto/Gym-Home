@@ -1,0 +1,65 @@
+{
+    "intents" : [
+        {
+            "tag" : "greeting",
+            "patterns" : [
+                "Olá",
+                "Oi",
+                "Tudo bem?",
+                "Boas",
+                "Bom dia",
+                "Boa tarde",
+                "Boa noite"
+            ],
+            "responses" : [
+                "Olá, como posso ajudar?",
+                "Olá, em que posso ajudar?",
+                "Olá!",
+                "Em que posso ajudar?"
+            ]
+        },
+        {
+            "tag" : "name",
+            "patterns" : [
+                "Como te chamas?",
+                "Qual é o teu nome?",
+                "Como te posso chamar?"
+            ],
+            "responses" : [
+                "Chamo-me Maria!"
+            ]
+        },
+        {
+            "tag" : "Ronaldo",
+            "patterns" : [
+                "Ronaldo",
+                "Cristiano Ronaldo"
+            ],
+            "responses" : [
+                "O melhor jogador do mundo!",
+                "SIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII!"
+            ]
+        },
+        {
+            "tag" : "planos",
+            "patterns" : [
+                "planos de exercícios",
+                "plano",
+                "exercício",
+                "exercícios"
+            ],
+            "responses" : [
+                "aqui estão os seus planos de exercício"
+            ]
+        },
+        {
+            "tag" : "Messi",
+            "patterns" : [
+                "Messi"
+            ],
+            "responses" : [
+                "quem?"
+            ]
+        }
+    ]
+}
