@@ -36,7 +36,7 @@
             <Button Margin="0,150,0,100" HorizontalAlignment="Center" 
                     Width="642" Height="200"
                     CornerRadius="30"
-                    Background="LightBlue">
+                    Background="LightBlue" Click="Button_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="./Assets/calendar-regular.svg" Width="75"
                            Margin="0,0,30,0"/>
@@ -48,7 +48,7 @@
             </Button>
             <Button HorizontalAlignment="Center" Width="642" Height="200"
                     CornerRadius="30"
-                    Background="LightBlue">
+                    Background="LightBlue" Click="Button_Click_1">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="./Assets/Muscleman.png" Width="100"
                            Margin="0,0,30,0"/>

@@ -6,9 +6,112 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="White">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="LightBlue"/>
+        <TextBlock Foreground="Black" 
+                   Text="Excercicios"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Grid.ColumnSpan="7"
+                   FontSize="70"/>
 
+        <StackPanel Grid.Row="1">
+            <Grid DoubleTapped="Grid_DoubleTapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Pernas e Costas" Foreground="Black"
+                               FontSize="50" TextWrapping="WrapWholeWords"/>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <TextBlock Text="Criado por: Joao Manuel"
+                                   Foreground="Black"
+                                   FontSize="30"/>
+                    <TextBlock Text="Duracao: 1h30min"
+                                   Foreground="Black"
+                                   FontSize="30"/>
+                </StackPanel>
+            </Grid>
+            <Grid DoubleTapped="Grid_DoubleTapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Costas" Foreground="Black"
+                           FontSize="50" TextWrapping="WrapWholeWords"/>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <TextBlock Text="Criado por: Jose Silva"
+                               Foreground="Black"
+                               FontSize="30"/>
+                    <TextBlock Text="Duracao: 1h"
+                               Foreground="Black"
+                               FontSize="30"/>
+                </StackPanel>
+            </Grid>
+            <Grid DoubleTapped="Grid_DoubleTapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Bracos" Foreground="Black"
+                           FontSize="50" TextWrapping="WrapWholeWords"/>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <TextBlock Text="Criado por: Emanuel Costa"
+                               Foreground="Black"
+                               FontSize="30"/>
+                    <TextBlock Text="Duracao: 45min"
+                               Foreground="Black"
+                               FontSize="30"/>
+                </StackPanel>
+            </Grid>
+            <Grid DoubleTapped="Grid_DoubleTapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Bracos e Pernas" Foreground="Black"
+                           FontSize="50" TextWrapping="WrapWholeWords"/>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <TextBlock Text="Criado por: Tiago Amorim"
+                               Foreground="Black"
+                               FontSize="30"/>
+                    <TextBlock Text="Duracao: 1h15min"
+                               Foreground="Black"
+                               FontSize="30"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <ListBox Grid.Row="1" 
+                 Background="White"
+                 x:Name="Items">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid DoubleTapped="Grid_DoubleTapped">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Title}" Foreground="Black"
+                           FontSize="50" TextWrapping="WrapWholeWords" Grid.Column="0"/>
+                        <StackPanel Grid.Column="1" Orientation="Vertical">
+                            <TextBlock Text="{Binding Author}"
+                               Foreground="Black"
+                               FontSize="30"/>
+                            <TextBlock Text="{Binding Duration}"
+                               Foreground="Black"
+                               FontSize="30"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Page>
