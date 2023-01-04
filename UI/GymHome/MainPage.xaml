@@ -17,12 +17,12 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="7*" />
         </Grid.RowDefinitions>
-        <Image Source="./Assets/wave.svg"
+        <!--<Image Source="./Assets/wave.svg"
                VerticalAlignment="Top"
                Grid.ColumnSpan="2" Grid.RowSpan="2"
                HorizontalAlignment="Left" Height="Auto" Margin="0,-27,0,0"
-               />
-        <!--<Rectangle Grid.ColumnSpan="2" Fill="LightBlue"/>-->
+               />-->
+        <Rectangle Grid.ColumnSpan="2" Fill="LightBlue"/>
         <TextBlock TextWrapping="WrapWholeWords" 
                    Text="O que deseja fazer hoje?" 
                    Grid.ColumnSpan="2" FontSize="50" 
@@ -31,31 +31,33 @@
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" 
                     HorizontalAlignment="Center" VerticalAlignment="Center" 
                     BorderThickness="0,0,5,0" BorderBrush="LightBlue"
-                    Padding="0,0,100,0"
+                    Padding="0,50,30,0"
                     Height="800">
-            <Button Margin="0,150,0,100" HorizontalAlignment="Center" 
-                    Width="642" Height="200"
+            <Button Margin="30,150,0,100" HorizontalAlignment="Center" 
+                   
                     CornerRadius="30"
-                    Background="LightBlue" Click="Button_Click">
+                    Background="LightBlue" Click="Button_Click" Width="471">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="./Assets/calendar-regular.svg" Width="75"
                            Margin="0,0,30,0"/>
-                    <TextBlock TextWrapping="WrapWholeWords" FontSize="50" 
+                    <TextBlock TextWrapping="WrapWholeWords" FontSize="35" 
                            Text="Plano de exercicios"
                            Foreground="Black"
+                           VerticalAlignment="Center"
                            FontWeight="Bold"/>
                 </StackPanel>
             </Button>
-            <Button HorizontalAlignment="Center" Width="642" Height="200"
+            <Button HorizontalAlignment="Center"
+                    Margin="30,0,0,0"
                     CornerRadius="30"
-                    Background="LightBlue" Click="Button_Click_1">
+                    Background="LightBlue" Click="Button_Click_1" Width="448">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="./Assets/Muscleman.png" Width="100"
                            Margin="0,0,30,0"/>
-                    <TextBlock TextWrapping="WrapWholeWords" FontSize="50" 
+                    <TextBlock TextWrapping="WrapWholeWords" FontSize="35" 
                            Text="Mostrar todos os exercicios"
-                           Foreground="Black" Width="500"
-                           FontWeight="Bold"/>
+                           Foreground="Black"
+                           FontWeight="Bold" Width="376"/>
                 </StackPanel>
             </Button>
         </StackPanel>
@@ -63,6 +65,7 @@
                Grid.Row="1"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               Height="1000"/>
+               Height="500"
+               />
     </Grid>
 </Page>
