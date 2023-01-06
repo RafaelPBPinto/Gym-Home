@@ -1,0 +1,18 @@
+version: "3.1"
+
+rules:
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: despedida
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: Say 'SIIIIIIIIIII' anytime the user says 'Ronaldo'
+  steps:
+  - intent: ronaldo_siiii
+  - action: utter_ronaldo_siiii

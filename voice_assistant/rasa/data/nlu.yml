@@ -1,0 +1,88 @@
+version: "3.1"
+
+nlu:
+- intent: cumprimento
+  examples: |
+    - oi
+    - olá
+    - bom dia
+    - boa tarde
+    - boa noite
+    - hey
+    - tudo bem?
+
+- intent: despedida
+  examples: |
+    - adeus
+    - até logo
+    - até amanhã
+    - tchau
+    - xau
+
+- intent: afirmação
+  examples: |
+    - sim
+    - s
+    - yes
+    - y
+    - yeah
+    - yep
+    - ya
+
+- intent: negação
+  examples: |
+    - não
+    - n
+    - no
+    - acho que não
+    - não me parece
+
+- intent: mood_great
+  examples: |
+    - estou bem
+    - estou ótimo
+    - estou muito bem
+    - estou muito bem, obrigado
+    - estou muito bem, e tu?
+    - sinto-me bem
+    - perfeito
+    - tive um dia ótimo
+    - feliz
+    - muito feliz
+    - estou muito feliz
+    - estou muito feliz hoje
+    - estou feliz
+
+- intent: mood_unhappy
+  examples: |
+    - triste
+    - não estou bem
+    - não estou muito bem
+    - muito triste
+    - tive um dia péssimo
+    - tive um dia horrível
+    - mal
+    - estou mal
+    - estou muito mal
+    - estou muito mal hoje
+  
+- intent: ronaldo
+  examples: |
+    - quem é o melhor jogador do mundo?
+    - quem é o melhor jogador de futebol do mundo?
+    - quem é o melhor jogador de futebol?
+    - quem é o melhor jogador?
+    - quem é o melhor jogador de sempre?
+
+- intent: ronaldo_siiii
+  examples: |
+    - Ronaldo
+    - CR7
+    - Cristiano Ronaldo
+
+- intent: bot_challenge
+  examples: |
+    - és um bot?
+    - és um robô?
+    - és um humano?
+    - és humano?

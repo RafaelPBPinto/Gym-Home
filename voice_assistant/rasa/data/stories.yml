@@ -1,0 +1,40 @@
+version: "3.1"
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: cumprimentar
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: sad path 1
+  steps:
+  - intent: cumprimentar
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: afirmar
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - intent: cumprimentar
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: negar
+  - action: utter_goodbye
+
+- story: Ronaldo
+  steps:
+  - intent: ronaldo
+  - action: utter_ronaldo
+
+- story: Ronaldo SIIII
+  steps:
+  - intent: ronaldo_siiii
+  - action: utter_ronaldo_siiii

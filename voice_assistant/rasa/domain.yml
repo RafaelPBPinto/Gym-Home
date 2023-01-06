@@ -1,0 +1,44 @@
+version: "3.1"
+
+intents:
+  - cumprimento
+  - despedida
+  - afirmação
+  - negação
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - ronaldo
+  - ronaldo_siiii
+
+responses:
+  utter_greet:
+  - text: "Olá! Como estás?"
+
+  utter_cheer_up:
+  - text: "Aqui está algo para te animar:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+  - text: "Ajudou-te?"
+
+  utter_happy:
+  - text: "Boa, continua assim!"
+
+  utter_goodbye:
+  - text: "Adeus"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+  utter_ronaldo:
+  - text: "O melhor jogador de sempre é o Cristiano Ronaldo."
+
+  utter_ronaldo_siiii:
+  - text: "SIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
+  
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
