@@ -27,7 +27,7 @@ namespace GymHome
         public VideoPlayer()
         {
             this.InitializeComponent();
-            _mediaPlayerElement.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/video.mp4"));
+            _mediaPlayerElement.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/push_up.mp4"));
             var mediaPlayer = _mediaPlayerElement.MediaPlayer;
             mediaPlayer.Play();
         }

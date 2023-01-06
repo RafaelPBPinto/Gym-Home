@@ -45,7 +45,7 @@ namespace GymHome
         {
             ObservableCollection<ExerciseItem> itemList = new ObservableCollection<ExerciseItem>();
 
-            ExerciseItem item = new ExerciseItem("Pernas e Costas", "Joao Manuel", "1h30min","pernas e costas é bom para todos os velhotes. aqui praticamos costas principalmente mas tambem um bocadinho de pernas.");
+            ExerciseItem item = new ExerciseItem("Pernas e Costas", "Criado por: Joao Manuel", "Duracao: 1h30min","pernas e costas é bom para todos os velhotes. aqui praticamos costas principalmente mas tambem um bocadinho de pernas.");
             itemList.Add(item);
 
             item = new ExerciseItem("Costas", "Criado por: Jose Silva", "Duracao: 1h","exercicio para costas. perfeito para todos os velhotes!!!");
@@ -55,6 +55,9 @@ namespace GymHome
             itemList.Add(item);
 
             item = new ExerciseItem("Bracos e Pernas", "Criado por: Tiago Amorim", "Duracao: 1h15min","exercicio de bracos e pernas. uma mistura para quem precisa.");
+            itemList.Add(item);
+
+            item = new ExerciseItem("Bracos", "Criado por: Jose Silva", "Duracao: 26seg", "exercicio de bracos (push ups)");
             itemList.Add(item);
 
             return itemList;
