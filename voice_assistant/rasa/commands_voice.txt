@@ -1,0 +1,7 @@
+3 terminais:
+
+rasa run -m models --endpoints endpoints.yml --port 5002 --credentials credentials.yml
+
+rasa run actions
+
+python assistant_loop.py

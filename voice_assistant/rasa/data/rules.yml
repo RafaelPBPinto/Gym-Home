@@ -4,7 +4,7 @@ rules:
 
 - rule: Say goodbye anytime the user says goodbye
   steps:
-  - intent: despedida
+  - intent: despedir
   - action: utter_goodbye
 
 - rule: Say 'I am a bot' anytime the user challenges
@@ -12,7 +12,27 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-- rule: Say 'SIIIIIIIIIII' anytime the user says 'Ronaldo'
+- rule: Mostrar planos de exercicios sempre que a pessoa pedir
   steps:
-  - intent: ronaldo_siiii
-  - action: utter_ronaldo_siiii
+  - intent: planos_exercicios
+  - action: utter_exercicios
+
+- rule: Voltar atras sempre que a pessoa pedir
+  steps:
+  - intent: voltar
+  - action: utter_voltar
+
+- rule: Avancar sempre que a pessoa pedir
+  steps:
+  - intent: avancar
+  - action: utter_avancar
+
+- rule: Selecionar opcao sempre que a pessoa pedir
+  steps:
+  - intent: selecionar_opcao
+  - action: utter_opcao
+
+- rule: Wake up sempre que alguem chamar
+  steps:
+  - intent: wake_up
+  - action: utter_greet

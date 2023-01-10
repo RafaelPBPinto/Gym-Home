@@ -1,19 +1,23 @@
 version: "3.1"
 
 intents:
-  - cumprimento
-  - despedida
-  - afirmação
-  - negação
+  - cumprimentar
+  - despedir
+  - afirmar
+  - negar
   - mood_great
   - mood_unhappy
   - bot_challenge
-  - ronaldo
-  - ronaldo_siiii
-
+  - wake_up
+  - planos_exercicios
+  - selecionar_opcao
+  - voltar
+  - avançar
+  - username
+  
 responses:
   utter_greet:
-  - text: "Olá! Como estás?"
+  - text: "Olá [Rafael](username)! Como posso ajudar?"
 
   utter_cheer_up:
   - text: "Aqui está algo para te animar:"
@@ -31,13 +35,17 @@ responses:
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
 
-  utter_ronaldo:
-  - text: "O melhor jogador de sempre é o Cristiano Ronaldo."
+  utter_exercicios:
+  - text: "Aqui estão os seus planos de exercícios!"
 
-  utter_ronaldo_siiii:
-  - text: "SIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
-  
+  utter_opcao:
+  - text: "selecionando [opcao](planos_exercicios)"
 
+  utter_voltar:
+  - text: "Voltando..."
+
+  utter_avancar:
+  - text: "Avançando..."
 
 session_config:
   session_expiration_time: 60

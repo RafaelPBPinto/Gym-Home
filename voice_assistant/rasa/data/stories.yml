@@ -29,12 +29,9 @@ stories:
   - intent: negar
   - action: utter_goodbye
 
-- story: Ronaldo
+- story: path selecionar exercicios
   steps:
-  - intent: ronaldo
-  - action: utter_ronaldo
-
-- story: Ronaldo SIIII
-  steps:
-  - intent: ronaldo_siiii
-  - action: utter_ronaldo_siiii
+  - intent: planos_exercicios
+  - action: utter_exercicios
+  - intent: selecionar_opcao
+  - action: utter_opcao

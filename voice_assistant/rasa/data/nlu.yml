@@ -1,7 +1,23 @@
 version: "3.1"
 
 nlu:
-- intent: cumprimento
+- intent: wake_up
+  examples: |
+    - hey maria
+    - oi maria
+    - olá maria
+    - bom dia maria
+    - boa tarde maria
+    - boa noite maria
+    - maria
+
+- intent: username
+  examples: |
+    - o meu nome é [Rafael](username)
+    - chamo-me [Rafael](username)
+    - [Rafael](username)
+
+- intent: cumprimentar
   examples: |
     - oi
     - olá
@@ -11,7 +27,7 @@ nlu:
     - hey
     - tudo bem?
 
-- intent: despedida
+- intent: despedir
   examples: |
     - adeus
     - até logo
@@ -19,7 +35,7 @@ nlu:
     - tchau
     - xau
 
-- intent: afirmação
+- intent: afirmar
   examples: |
     - sim
     - s
@@ -29,13 +45,38 @@ nlu:
     - yep
     - ya
 
-- intent: negação
+- intent: negar
   examples: |
     - não
     - n
     - no
     - acho que não
     - não me parece
+
+- intent: planos_exercicios
+  examples: |
+    - planos de exercícios
+    - mostra-me os meus planos de exercícios
+
+- intent: selecionar_opcao
+  examples: |
+    - selecionar plano de pernas
+    - selecionar plano de braços
+    - selecionar plano de peito
+
+- intent: voltar
+  examples: |
+    - voltar
+    - voltar atrás
+    - voltar para trás
+    - andar para trás
+
+- intent: avancar
+  examples: |
+    - avançar
+    - próximo
+    - seguinte
+    - andar para frente
 
 - intent: mood_great
   examples: |
@@ -66,20 +107,6 @@ nlu:
     - estou muito mal
     - estou muito mal hoje
   
-- intent: ronaldo
-  examples: |
-    - quem é o melhor jogador do mundo?
-    - quem é o melhor jogador de futebol do mundo?
-    - quem é o melhor jogador de futebol?
-    - quem é o melhor jogador?
-    - quem é o melhor jogador de sempre?
-
-- intent: ronaldo_siiii
-  examples: |
-    - Ronaldo
-    - CR7
-    - Cristiano Ronaldo
-
 - intent: bot_challenge
   examples: |
     - és um bot?
