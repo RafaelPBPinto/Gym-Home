@@ -7,6 +7,7 @@ from vosk import Model, KaldiRecognizer
 import pyaudio
 import pyttsx3 as tts
 import requests
+import sys
 
 # https://alphacephei.com/vosk/models
 # Colocar o path do vosk-model-small-pt-0.3
@@ -22,17 +23,31 @@ stream = mic.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, fr
 stream.start_stream()
 
 def main():
-    print("Bot says, Como te chamas?")
-    speaker.say("Como te chamas")
+    bot_message = ""
+    while bot_message != "Adeus":
+        if "Olá" in bot_message:
+            print(f"Assistente: {bot_message}")
+            speaker.say(bot_message)
+            speaker.runAndWait()
+            assistant_listening_loop()
+            bot_message = ""
+        else:
+            data = stream.read(4096, exception_on_overflow = False)
+            if recognizer.AcceptWaveform(data):
+                text = recognizer.Result()
+                text = text[14:-3]
+                text = text.lower()
+                print(text)
+                if text != "" :
+                    r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"message": text})
+                    for i in r.json():
+                        bot_message = i['text']
+    print(f"Assistente: {bot_message}")
+    speaker.say(bot_message)
     speaker.runAndWait()
-    name = ""
-    while name == "":
-        data = stream.read(4096, exception_on_overflow = False)
-        if recognizer.AcceptWaveform(data):
-            name = recognizer.Result()
-            name = name[14:-3]
-            name = name.lower()
-            print(name)
+    sys.exit(0)
+
+def assistant_listening_loop():
     bot_message = ""
     while bot_message != "Adeus":
         data = stream.read(4096, exception_on_overflow = False)
@@ -41,15 +56,17 @@ def main():
             text = text[14:-3]
             text = text.lower()
             print(text)
-            
-            r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"username": name, "message": text})
-
-            print("Bot says, ", end=' ')
-            for i in r.json():
-                bot_message = i['text']
-                print(f"{bot_message}")
-                speaker.say(bot_message)
-                speaker.runAndWait()
-
+            if text != "" :
+                r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"message": text})
+                print("Assistente: ", end=' ')
+                for i in r.json():
+                    bot_message = i['text']
+                    print(f"{bot_message}")
+                    speaker.say(bot_message)
+                    speaker.runAndWait()
+    print(f"Assistente: {bot_message}")
+    speaker.say(bot_message)
+    speaker.runAndWait()
+    
 if __name__ == "__main__":
     main()  
