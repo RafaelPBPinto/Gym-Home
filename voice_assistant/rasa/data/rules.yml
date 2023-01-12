@@ -36,3 +36,40 @@ rules:
   steps:
   - intent: wake_up
   - action: utter_greet
+
+- rule: Terminar sempre que pedir
+  steps:
+  - intent: terminar
+  - action: utter_terminar
+
+- rule: responder "de nada" sempre que alguém agradecer
+  steps:
+  - intent: agradecer
+  - action: utter_agradecer
+
+- rule: dizer siiii sempre que alguém falar do Ronaldo
+  steps:
+  - intent: ronaldo
+  - action: utter_ronaldo
+
+- rule: dizer uma piada sempre que for pedido
+  steps:
+  - intent: piada
+  - action: utter_piada
+
+- rule: ativar form_name
+  steps:
+    - intent: request_mudar_nome
+    - action: form_name
+    - active_loop: form_name
+
+- rule: mudar nome de utilizador
+  condition:
+    - active_loop: form_name
+  steps:
+    - action: form_name
+    - active_loop: null
+    - slot_was_set:
+      - requested_slot: null
+    - action: utter_submit
+    - action: utter_slots_values

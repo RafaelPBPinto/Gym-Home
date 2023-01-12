@@ -10,8 +10,8 @@ import requests
 import sys
 
 # https://alphacephei.com/vosk/models
-# Colocar o path do vosk-model-small-pt-0.3
-model = Model("vosk-model-small-pt-0.3")
+# Colocar o path do vosk-model
+model = Model("vosk-model-small-pt-0.3") # 31MB
 recognizer = KaldiRecognizer(model, 16000)
 
 speaker = tts.init()
@@ -24,13 +24,15 @@ stream.start_stream()
 
 def main():
     bot_message = ""
+    text = ""
     while bot_message != "Adeus":
-        if "Olá" in bot_message:
+        if text == "olá maria" or text == "hey maria" or text == "oi maria":
             print(f"Assistente: {bot_message}")
             speaker.say(bot_message)
             speaker.runAndWait()
             assistant_listening_loop()
             bot_message = ""
+            text = ""
         else:
             data = stream.read(4096, exception_on_overflow = False)
             if recognizer.AcceptWaveform(data):
@@ -42,9 +44,6 @@ def main():
                     r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"message": text})
                     for i in r.json():
                         bot_message = i['text']
-    print(f"Assistente: {bot_message}")
-    speaker.say(bot_message)
-    speaker.runAndWait()
     sys.exit(0)
 
 def assistant_listening_loop():
@@ -58,15 +57,11 @@ def assistant_listening_loop():
             print(text)
             if text != "" :
                 r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"message": text})
-                print("Assistente: ", end=' ')
                 for i in r.json():
                     bot_message = i['text']
-                    print(f"{bot_message}")
+                    print(f"Assistente: {bot_message}")
                     speaker.say(bot_message)
                     speaker.runAndWait()
-    print(f"Assistente: {bot_message}")
-    speaker.say(bot_message)
-    speaker.runAndWait()
     
 if __name__ == "__main__":
     main()  

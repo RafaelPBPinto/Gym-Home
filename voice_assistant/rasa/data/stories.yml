@@ -15,6 +15,7 @@ stories:
   - action: utter_greet
   - intent: mood_unhappy
   - action: utter_cheer_up
+  - action: utter_piada
   - action: utter_did_that_help
   - intent: afirmar
   - action: utter_happy
@@ -25,6 +26,7 @@ stories:
   - action: utter_greet
   - intent: mood_unhappy
   - action: utter_cheer_up
+  - action: utter_piada
   - action: utter_did_that_help
   - intent: negar
   - action: utter_goodbye

@@ -11,9 +11,17 @@ nlu:
     - boa noite maria
     - maria
 
+- intent: request_mudar_nome
+  examples: |
+    - Quero mudar o meu username
+    - Quero mudar o meu nome
+    - Quero mudar o meu nome de utilizador
+    - Quero alterar o meu nome de utilizador
+
 - intent: username
   examples: |
     - o meu nome é [Rafael](username)
+    - sou o [Rafael](username)
     - chamo-me [Rafael](username)
     - [Rafael](username)
 
@@ -34,6 +42,7 @@ nlu:
     - até amanhã
     - tchau
     - xau
+    - desligar
 
 - intent: afirmar
   examples: |
@@ -78,6 +87,17 @@ nlu:
     - seguinte
     - andar para frente
 
+- intent: agradecer
+  examples: |
+    - obrigado
+    - obrigada
+
+- intent: terminar
+  examples: |
+    - terminar
+    - acabar
+    - parar
+
 - intent: mood_great
   examples: |
     - estou bem
@@ -106,7 +126,20 @@ nlu:
     - estou mal
     - estou muito mal
     - estou muito mal hoje
-  
+
+- intent: piada
+  examples: |
+    - piada
+    - conta uma piada
+    - diz uma piada
+
+- intent: ronaldo
+  examples: |
+    - ronaldo
+    - cr7
+    - cristiano ronaldo
+    - ronaldo
+
 - intent: bot_challenge
   examples: |
     - és um bot?
