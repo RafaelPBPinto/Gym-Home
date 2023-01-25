@@ -60,6 +60,9 @@ rules:
 - rule: ativar form_name
   steps:
     - intent: request_mudar_nome
+    - action: action_reset_name
+    - slot_was_set:
+      - requested_slot: username
     - action: form_name
     - active_loop: form_name
 
