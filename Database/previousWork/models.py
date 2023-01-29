@@ -10,9 +10,7 @@ conn = sqlite3.connect('PlanosUser.db')
 query = ('''CREATE TABLE IF NOT EXISTS Utilizador 
         (ID INTEGER PRIMARY KEY,
         Nome TEXT NOT NULL,
-        Email TEXT NOT NULL,
-        Passe TEXT NOT NULL,
-        Telefone NUMERIC);''')
+        Passe TEXT NOT NULL);''')
 conn.execute(query)
 
 query = ('''CREATE TABLE IF NOT EXISTS Plano 
@@ -52,10 +50,9 @@ query = ('''CREATE TABLE IF NOT EXISTS Sessao
         RefID_utilizador INTEGER NOT NULL,
         RefID_plano INTEGER NOT NULL,
         Dia TEXT NOT NULL,
-        Serie NUMERIC,
-        Repeticao NUMERIC,
         FOREIGN KEY(RefID_plano) REFERENCES Plano(ID)
         FOREIGN KEY(RefID_utilizador) REFERENCES Utilizador(ID)
         );''')
+        
 conn.execute(query)
 conn.close()
