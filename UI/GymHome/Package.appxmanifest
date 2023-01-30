@@ -2,16 +2,14 @@
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
-  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="a8a56ada-e296-4848-80a8-a63c461cca95"
+    Name="3611dce6-9fd5-42d2-98fa-08ca0bf54037"
     Publisher="CN=blues"
     Version="1.0.0.0" />
-
-  <mp:PhoneIdentity PhoneProductId="a8a56ada-e296-4848-80a8-a63c461cca95" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>GymHome</DisplayName>
@@ -20,7 +18,8 @@
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
   </Dependencies>
 
   <Resources>
@@ -30,20 +29,20 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="GymHome.App">
+      EntryPoint="$targetentrypoint$">
       <uap:VisualElements
         DisplayName="GymHome"
-        Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png"
         Description="GymHome"
-        BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" />
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
   </Applications>
 
   <Capabilities>
-    <Capability Name="internetClient" />
+    <rescap:Capability Name="runFullTrust" />
   </Capabilities>
 </Package>
