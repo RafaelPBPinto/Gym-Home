@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "GymHome (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "GymHome (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
