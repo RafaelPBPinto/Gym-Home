@@ -31,6 +31,7 @@ conn.execute(query)
 query = ('''CREATE TABLE IF NOT EXISTS Imagem 
         (ID INTEGER PRIMARY KEY,
         Nome TEXT NOT NULL,
+        ImagemBinary BLOB,
         RefID_exercicio  INTEGER NOT NULL,
         FOREIGN KEY(RefID_exercicio) REFERENCES Exercicio(ID)
         );''')
@@ -48,10 +49,11 @@ query = ('''CREATE TABLE IF NOT EXISTS ExercicioPlano
         FOREIGN KEY(RefID_exercicio) REFERENCES Exercicio(ID)
         );''')
 conn.execute(query)
-
+#mudei o DiaHora para Dia e alterei o tipo de dados para TEXT, Para facilitar a minha vida
+#DiaHora DATETIME NOT NULL,
 query = ('''CREATE TABLE IF NOT EXISTS Sessao 
         (ID INTEGER PRIMARY KEY,
-        DiaHora DATETIME NOT NULL,
+        Dia TEXT NOT NULL,
         RefID_utilizador INTEGER NOT NULL,
         RefID_plano INTEGER NOT NULL,
         FOREIGN KEY(RefID_plano) REFERENCES Plano(ID)
