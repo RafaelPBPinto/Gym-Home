@@ -17,6 +17,7 @@ conn.execute(query)
 query = ('''CREATE TABLE IF NOT EXISTS Plano 
         (ID INTEGER PRIMARY KEY,
         Nome TEXT NOT NULL,
+        Autor TEXT NOT NULL,
         Descricao TEXT NOT NULL);''')
 conn.execute(query)
 
@@ -24,33 +25,35 @@ query = ('''CREATE TABLE IF NOT EXISTS Exercicio
         (ID INTEGER PRIMARY KEY,
         Nome TEXT NOT NULL,
         Tipo TEXT NOT NULL,
-        Duracao TEXT NOT NULL,
         Descricao TEXT NOT NULL);''')
 conn.execute(query)
 
 query = ('''CREATE TABLE IF NOT EXISTS Imagem 
         (ID INTEGER PRIMARY KEY,
         Nome TEXT NOT NULL,
-        Descricao TEXT NOT NULL,
         RefID_exercicio  INTEGER NOT NULL,
         FOREIGN KEY(RefID_exercicio) REFERENCES Exercicio(ID)
         );''')
 conn.execute(query)
 
-query = ('''CREATE TABLE IF NOT EXISTS Parentesco 
+query = ('''CREATE TABLE IF NOT EXISTS ExercicioPlano 
         (ID INTEGER PRIMARY KEY,
+        Series INTEGER NOT NULL,
+        Repeticoes INTEGER NOT NULL,
+        Duracao INTEGER NOT NULL,
+        Ordem INTEGER NOT NULL,
         RefID_plano INTEGER NOT NULL,
         RefID_exercicio INTEGER NOT NULL,
         FOREIGN KEY(RefID_plano) REFERENCES Plano(ID)
-        FOREIGN KEY(RefID_exercicio) REFERENCES Eexercicio(ID)
+        FOREIGN KEY(RefID_exercicio) REFERENCES Exercicio(ID)
         );''')
 conn.execute(query)
 
 query = ('''CREATE TABLE IF NOT EXISTS Sessao 
         (ID INTEGER PRIMARY KEY,
+        DiaHora DATETIME NOT NULL,
         RefID_utilizador INTEGER NOT NULL,
         RefID_plano INTEGER NOT NULL,
-        Dia TEXT NOT NULL,
         FOREIGN KEY(RefID_plano) REFERENCES Plano(ID)
         FOREIGN KEY(RefID_utilizador) REFERENCES Utilizador(ID)
         );''')

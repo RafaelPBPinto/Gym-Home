@@ -4,9 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'QWErty310'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///PlanosUser.db'
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///PlanosUser.db'
 
-    db = SQLAlchemy(app)
+    #db = SQLAlchemy(app)
 
     from .auth import auth
 
