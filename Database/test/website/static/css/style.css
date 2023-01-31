@@ -7,9 +7,18 @@
   }
   body {
   font-family: Arial;
-  background-color: #eaeef0;
+  background-color: #d1e6eb;
   padding: 50px;
   }
+
+  h2 {
+    font-size: 25px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 40px;
+  }
+
   .login {
   margin: 20px auto;
   width: 300px;
@@ -76,7 +85,7 @@
     display: block;
     margin-top: 12px;
   }
-
+/* 
   .tab-content>.tab-pane {
     display: none;
   }
@@ -157,4 +166,15 @@
   .row-cols-auto>* {
     flex: 0 0 auto;
     width: auto;
-  }
+  } */
+
+  .plan-section {
+    border: 1px solid darkblue;
+    padding: 10px;
+    margin-bottom: 20px;
+  } 
+
+
+
+
+
