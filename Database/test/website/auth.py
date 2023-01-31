@@ -16,12 +16,16 @@ def login():
         query = f"SELECT Passe FROM Utilizador WHERE Email = '{email}'"
         result = conn.execute(query)
         result = result.fetchone()
-        conn.close()
+        #conn.close()
         
         if result:
             if check_password_hash(result[0], password):
                 flash('Logged in successfully!', category='success')
-                return redirect('/profile')
+                query = f"SELECT ID FROM Utilizador WHERE Email = '{email}'"
+                ID = conn.execute(query)
+                ID= ID.fetchone()
+                conn.close()
+                return redirect('/profile/%d',ID)
             else:
                 flash('Incorrect password, try again.', category='error')
         else:
@@ -51,13 +55,27 @@ def signup():
 
             flash('Account created!', category='success')
             
-            return redirect('/profile')
+            return redirect('/login')
         
 
     return render_template('register.html')
 
-@auth.route('/profile')
-def profile():
-    return render_template('home.html')
+@auth.route('/profile/<int:user_id>')
+def profile(user_id):
+    conn = sqlite3.connect('PlanosUser.db')
+    query  = f"SELECT Dia, RefID_plano FROM Sessao WHERE RefID_utilizador = '{user_id}'"
+    sessao = conn.execute(query)
+    sessao = sessao.fetchone()
+    dias = []
+    for dia in sessao:
+        dias.append(dia[0])
+    planos = []
+    for row in sessao:
+        query2 = f"SELECT Nome, Autor, Descricao FROM Plano WHERE ID = '{row[1]}'"
+        pl = conn.execute(query2)
+        pl = pl.fetchone()
+        planos.append(pl)
+    conn.close()
+    return render_template('home.html',dias,planos)
 
 

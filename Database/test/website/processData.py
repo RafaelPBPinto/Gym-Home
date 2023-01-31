@@ -43,7 +43,7 @@ def processData():
     query = f"INSERT INTO Plano (Nome, Descricao, Autor) VALUES ('{nome}', '{descricao}', '{autor}')"
     conn.execute(query)
     conn.commit()
-
+    #plano de exercicios: 
     if os.path.exists(plaExer):
             xlsx = openpyxl.load_workbook(plaExer)
             sheet = xlsx.active
