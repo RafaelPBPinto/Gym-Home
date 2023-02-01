@@ -30,41 +30,96 @@
         <Grid Grid.Row="1"
               BorderBrush="LightBlue"
               BorderThickness="0 0 5 0"
-              Margin="0 50">
+              Margin="0 50"
+              Padding="50 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Vertical"
-                        Grid.Row="1"
-                        Padding="50 0">
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <Button HorizontalAlignment="Stretch"
                         CornerRadius="20"
                         Background="LightBlue"
-                        VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                        <Image Source="./Assets/calendar-regular.svg" Width="75" Height="75"
-                                   Margin="0 0 30 0"/>
-                        <TextBlock Text="Plano de exercicios"
-                                   TextWrapping="WrapWholeWords"
+                        VerticalAlignment="Center"
+                        Click="Button_Click">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="./Assets/calendar-regular.svg" MaxHeight="75"
+                               Margin="0 0 20 0"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="Plano de exercicios"
                                    Foreground="Black"
-                                   VerticalAlignment="Center"  
+                                   VerticalAlignment="Center"
+                                   TextWrapping="Wrap"
                                    FontSize="20"
-                                   Style="{StaticResource BodyStrongTextBlockStyle}"/>
-                    </StackPanel>
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Left"/>
+
+                    </Grid>
                 </Button>
                 <Button HorizontalAlignment="Stretch"
                         CornerRadius="20"
                         Background="LightBlue"
                         VerticalAlignment="Center"
+                        Grid.Row="1"
                         Margin="0 20 0 0"
-                        >
+                        Click="Button_Click">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="./Assets/Muscleman.png" MaxHeight="75"
+                               Margin="0 0 20 0"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="Mostrar todos os exercicios"
+                                   Foreground="Black"
+                                   VerticalAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Left"/>
+
+                    </Grid>
+                </Button>
+            </Grid>
+            <!--<StackPanel Orientation="Vertical"
+                        Grid.Row="1"
+                        Padding="50 0">
+                --><!--<Button HorizontalAlignment="Stretch"
+                        CornerRadius="20"
+                        Background="LightBlue"
+                        VerticalAlignment="Center"
+                        Click="Button_Click">
+                        <StackPanel Orientation="Horizontal">
+                        <Image Source="./Assets/calendar-regular.svg" MaxWidth="75" MaxHeight="75"
+                                   Margin="0 0 30 0"/>
+                        <TextBlock Text="Plano de exercicios"
+                                   TextWrapping="Wrap"
+                                   Foreground="Black"
+                                   VerticalAlignment="Center"  
+                                   FontSize="20"
+                                   Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                    </StackPanel>
+                </Button>--><!--
+                <Button HorizontalAlignment="Stretch"
+                        CornerRadius="20"
+                        Background="LightBlue"
+                        VerticalAlignment="Center"
+                        Margin="0 20 0 0">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="./Assets/Muscleman.png" Width="75" Height="75"
+                        <Image Source="./Assets/Muscleman.png" MaxWidth="75" MaxHeight="75"
                                Margin="0 0 30 0"/>
                         <TextBlock Text="Mostrar todos os exercicios"
-                                   TextWrapping="WrapWholeWords"
+                                   TextWrapping="Wrap"
                                    Height="Auto"
                                    Foreground="Black"
                                    VerticalAlignment="Center"
@@ -72,7 +127,7 @@
                                    Style="{StaticResource BodyStrongTextBlockStyle}"/>
                     </StackPanel>
                 </Button>
-            </StackPanel>
+            </StackPanel>-->
         </Grid>
         <Image Source="./Assets/MainPageImage.jpg"
                Grid.Column="1"
