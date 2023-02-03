@@ -14,22 +14,22 @@ rules:
 
 - rule: Mostrar planos de exercicios sempre que a pessoa pedir
   steps:
-  - intent: planos_exercicios
+  - intent: request_planos_exercicios
   - action: utter_exercicios
 
 - rule: Voltar atras sempre que a pessoa pedir
   steps:
-  - intent: voltar
+  - intent: request_voltar
   - action: utter_voltar
 
 - rule: Avancar sempre que a pessoa pedir
   steps:
-  - intent: avancar
+  - intent: request_avancar
   - action: utter_avancar
 
 - rule: Selecionar opcao sempre que a pessoa pedir
   steps:
-  - intent: selecionar_opcao
+  - intent: request_selecionar_opcao
   - action: utter_opcao
 
 - rule: Wake up sempre que alguem chamar
@@ -39,7 +39,7 @@ rules:
 
 - rule: Terminar sempre que pedir
   steps:
-  - intent: terminar
+  - intent: request_terminar
   - action: utter_terminar
 
 - rule: responder "de nada" sempre que alguém agradecer
@@ -54,12 +54,12 @@ rules:
 
 - rule: dizer uma piada sempre que for pedido
   steps:
-  - intent: piada
+  - intent: request_piada
   - action: utter_piada
 
 - rule: ativar form_name
   steps:
-    - intent: request_mudar_nome
+    - intent: request_change_username
     - action: action_reset_name
     - slot_was_set:
       - requested_slot: username

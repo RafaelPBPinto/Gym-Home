@@ -11,14 +11,14 @@ nlu:
     - boa noite maria
     - maria
 
-- intent: request_mudar_nome
+- intent: request_change_username
   examples: |
     - Quero mudar o meu username
     - Quero mudar o meu nome
     - Quero mudar o meu nome de utilizador
     - Quero alterar o meu nome de utilizador
 
-- intent: username
+- intent: ask_username
   examples: |
     - o meu nome é [Rafael](username)
     - sou o [Rafael](username)
@@ -44,7 +44,7 @@ nlu:
     - xau
     - desligar
 
-- intent: afirmar
+- intent: response_afirmar
   examples: |
     - sim
     - s
@@ -54,7 +54,7 @@ nlu:
     - yep
     - ya
 
-- intent: negar
+- intent: response_negar
   examples: |
     - não
     - n
@@ -62,25 +62,25 @@ nlu:
     - acho que não
     - não me parece
 
-- intent: planos_exercicios
+- intent: request_planos_exercicios
   examples: |
     - planos de exercícios
     - mostra-me os meus planos de exercícios
 
-- intent: selecionar_opcao
+- intent: request_selecionar_opcao
   examples: |
     - selecionar plano de pernas
     - selecionar plano de braços
     - selecionar plano de peito
 
-- intent: voltar
+- intent: request_voltar
   examples: |
     - voltar
     - voltar atrás
     - voltar para trás
     - andar para trás
 
-- intent: avancar
+- intent: request_avancar
   examples: |
     - avançar
     - próximo
@@ -92,7 +92,7 @@ nlu:
     - obrigado
     - obrigada
 
-- intent: terminar
+- intent: request_terminar
   examples: |
     - terminar
     - acabar
@@ -127,7 +127,7 @@ nlu:
     - estou muito mal
     - estou muito mal hoje
 
-- intent: piada
+- intent: request_piada
   examples: |
     - piada
     - conta uma piada

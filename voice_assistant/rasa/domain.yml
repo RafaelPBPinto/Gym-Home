@@ -3,22 +3,22 @@ version: "3.1"
 intents:
   - cumprimentar
   - despedir
-  - afirmar
-  - negar
+  - response_afirmar
+  - response_negar
   - mood_great
   - mood_unhappy
   - bot_challenge
   - wake_up
-  - planos_exercicios
-  - selecionar_opcao
-  - voltar
-  - avancar
-  - username
-  - terminar
+  - request_planos_exercicios
+  - request_selecionar_opcao
+  - request_voltar
+  - request_avancar
+  - request_change_username
+  - request_terminar
   - agradecer
   - ronaldo
-  - piada
-  - request_mudar_nome
+  - request_piada
+  - ask_username
 
 entities:
   - username
