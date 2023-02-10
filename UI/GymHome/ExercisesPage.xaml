@@ -11,7 +11,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="White">
+    <Grid Background="White" KeyDown="Grid_KeyDown" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -21,6 +21,14 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Rectangle Fill="LightBlue" Grid.ColumnSpan="2"/>
+        <Button VerticalAlignment="Center"
+                Command="{Binding GoBackCommand}"
+                BorderBrush="AliceBlue"
+                BorderThickness="3">
+                <TextBlock Text="Go Back"
+                           Foreground="Black"
+                           FontSize="30"/>
+        </Button>
         <TextBlock Foreground="Black" 
                    Text="Excercicios"
                    TextWrapping="WrapWholeWords"
@@ -28,7 +36,9 @@
                    HorizontalAlignment="Center"
                    Grid.ColumnSpan="2"
                    Style="{StaticResource TitleTextBlockStyle}"
-                   Padding="20"/>
+                   Padding="20"
+                   />
+
         <ListView 
                   Grid.Row="1"
                   Grid.Column="0"
@@ -90,7 +100,7 @@
                     Grid.Row="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    >
+                    Command="{Binding StartExerciseCommand}">
                 <TextBlock Text="Comecar" Foreground="Black" FontSize="30"/>
             </Button>
         </Grid>

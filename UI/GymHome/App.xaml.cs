@@ -29,6 +29,9 @@ namespace GymHome
     /// </summary>
     public partial class App : Application
     {
+        private Window m_window;
+        private Frame rootFrame;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -44,13 +47,30 @@ namespace GymHome
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            //save the window in case its needed
             m_window = new Window();
+
+            //create a new frame and navigate to the MainPage
             m_window.Content = rootFrame = new Frame();
             m_window.Activate();
             rootFrame.Navigate(typeof(MainPage));
         }
 
-        private Window m_window;
-        private Frame rootFrame;
+        /// <summary>
+        /// Navigate through pages using the root frame.
+        /// </summary>
+        /// <param name="pageType">The type of the page to navigate to.</param>
+        public void Navigate(Type pageType)
+        {
+            rootFrame.Navigate(pageType);
+        }
+
+        /// <summary>
+        /// Navigate to the most recent page in the page history.
+        /// </summary>
+        public void NavigateToPreviousPage()
+        {
+            rootFrame.GoBack();
+        }
     }
 }

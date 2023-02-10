@@ -19,6 +19,7 @@
   <ItemGroup>
     <None Remove="ExercisesPage.xaml" />
     <None Remove="MainPage.xaml" />
+    <None Remove="VideoPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +57,9 @@
     <None Update="Assets\Muscleman.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="VideoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="ExercisesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

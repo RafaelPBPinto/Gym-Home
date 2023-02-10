@@ -1,0 +1,12 @@
+﻿#geral
+pagina anterior
+
+#pagina de exercicios
+proximo
+anterior
+comecar
+scroll
+
+
+#pagina inicial
+selecionar todos os exercicios ou o plano

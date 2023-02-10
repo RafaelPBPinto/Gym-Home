@@ -23,7 +23,7 @@ using System.Collections.ObjectModel;
 namespace GymHome
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// A page that shows the exercises available to the user.
     /// </summary>
     public sealed partial class ExercisesPage : Page
     {
@@ -31,6 +31,18 @@ namespace GymHome
         {
             this.InitializeComponent();
             DataContext = new ExercisesViewModel();
+        }
+
+        private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            var key = e.Key;
+
+            if (key == Windows.System.VirtualKey.Down)
+                ((ExercisesViewModel)DataContext).NextItem();
+            else if(key == Windows.System.VirtualKey.Up)
+                ((ExercisesViewModel)DataContext).PreviousItem();
+
+            e.Handled= true;
         }
     }
 }
