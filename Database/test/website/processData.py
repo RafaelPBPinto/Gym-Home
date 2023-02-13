@@ -6,6 +6,8 @@ def processData():
     conn.execute('PRAGMA foreign_keys = ON')
     name = 'exercicio.xlsx'
     plaExer = 'ExercicioPlanos.xlsx'
+    plano = 'Planos.xlsx'
+    sessao = 'Sessao.xlsx'
     if os.path.exists(name):
             xlsx = openpyxl.load_workbook(name)
             sheet = xlsx.active
@@ -24,31 +26,29 @@ def processData():
                     conn.commit()
     ###############################################################################            
     #Planos:
-    #1
-    autor = "Fisio. José Silva"
-    nome = 'Força'
-    descricao = 'Ajuda os diferentes músculos do seu corpo\n para se tornar mais forte e mais poderoso'
-    query = f"INSERT INTO Plano (Nome, Descricao, Autor) VALUES ('{nome}', '{descricao}', '{autor}')"
-    conn.execute(query)
-    conn.commit()
-    #2
-    nome = 'Flexibilidade'
-    descricao = 'Assim como os alongamentos, os exercícios de flexibilidade\n são técnicas utilizadas para aumentar a extensão do tecido conjuntivo muscular.'
-    query = f"INSERT INTO Plano (Nome, Descricao, Autor) VALUES ('{nome}', '{descricao}', '{autor}')"
-    conn.execute(query)
-    conn.commit()
-    #3
-    nome = 'Resistencia'
-    descricao = 'Quando fazemos exercícios, nossos músculos precisam de mais energia do que quando descansamos.'
-    query = f"INSERT INTO Plano (Nome, Descricao, Autor) VALUES ('{nome}', '{descricao}', '{autor}')"
-    conn.execute(query)
-    conn.commit()
+    if os.path.exists(plano):
+        xlsx = openpyxl.load_workbook(plano)
+        sheet = xlsx.active
+        linha = sheet.rows
+        for row in linha:
+
+            nome      = row[0].value
+            descricao = row[1].value
+            autor     = row[2].value
+
+            if nome != None:
+
+                query = f"INSERT INTO Plano (Nome, Descricao, Autor) VALUES ('{nome}', '{descricao}', '{autor}')"
+                conn.execute(query)
+                conn.commit()
+
     #plano de exercicios: 
     if os.path.exists(plaExer):
             xlsx = openpyxl.load_workbook(plaExer)
             sheet = xlsx.active
             linha = sheet.rows
             for row in linha:
+
                 tipo            = row[0].value
                 series          = int(row[1].value)
                 repeticao       = int(row[2].value)
@@ -68,37 +68,20 @@ def processData():
     
     #########################################################################################
     #Sessão:
-    dia1 = 'Segunda'
-    dia2 = 'Quarta'
-    dia3 = 'Sexta'
-    #Três users para teste, cada user vai ter o mesmo plano mais vamos alternar o dia
-    #user 1:
-    query1 = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{1}', '{1}', '{dia1}')"
-    query2 = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{1}', '{2}', '{dia2}')"
-    query3 = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{1}', '{3}', '{dia3}')"
-    conn.execute(query1)
-    conn.execute(query2)
-    conn.execute(query3)
-    conn.commit()
-    
-    #user 2:
-    query1 = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{2}', '{3}', '{dia1}')"
-    query2 = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{2}', '{1}', '{dia2}')"
-    query3 = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{2}', '{2}', '{dia3}')"
-    conn.execute(query1)
-    conn.execute(query2)
-    conn.execute(query3)
-    conn.commit()
+    if os.path.exists(sessao):
+        xlsx = openpyxl.load_workbook(sessao)
+        sheet = xlsx.active
+        linha = sheet.rows
+        for row in linha:
 
-    #user 3:
-    query1 = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{3}', '{2}', '{dia1}')"
-    query2 = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{3}', '{3}', '{dia2}')"
-    query3 = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{3}', '{1}', '{dia3}')"
-    conn.execute(query1)
-    conn.execute(query2)
-    conn.execute(query3)
-    conn.commit()
-    conn.close()
+            RefID_utilizador  = int(row[0].value)
+            RefID_plano       = int(row[1].value)
+            Dia               = row[2].value
+            if Dia != None:
+                query = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{RefID_utilizador}', '{RefID_plano}', '{Dia}')"
+                conn.execute(query)
+                conn.commit()
+
 
     #######################################################################
     #img de exer1
