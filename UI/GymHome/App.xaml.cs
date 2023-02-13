@@ -52,8 +52,9 @@ namespace GymHome
 
             //create a new frame and navigate to the MainPage
             m_window.Content = rootFrame = new Frame();
+            m_window.Title = "GymHome";
             m_window.Activate();
-            rootFrame.Navigate(typeof(MainPage));
+            rootFrame.Navigate(typeof(LogInPage));
         }
 
         /// <summary>

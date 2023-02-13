@@ -19,7 +19,7 @@ namespace GymHome
 
         [ObservableProperty]
         ObservableCollection<ExerciseItem> exerciseItems = new ObservableCollection<ExerciseItem>();
-
+        
         public string Title => ExerciseItems[SelectedIndex].Title;
 
 
