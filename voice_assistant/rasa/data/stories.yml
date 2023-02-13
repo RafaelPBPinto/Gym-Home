@@ -17,7 +17,7 @@ stories:
   - action: utter_cheer_up
   - action: utter_piada
   - action: utter_did_that_help
-  - intent: afirmar
+  - intent: response_afirmar
   - action: utter_happy
 
 - story: sad path 2
@@ -28,12 +28,12 @@ stories:
   - action: utter_cheer_up
   - action: utter_piada
   - action: utter_did_that_help
-  - intent: negar
+  - intent: response_negar
   - action: utter_goodbye
 
 - story: path selecionar exercicios
   steps:
-  - intent: planos_exercicios
+  - intent: request_planos_exercicios
   - action: utter_exercicios
-  - intent: selecionar_opcao
+  - intent: request_selecionar_opcao
   - action: utter_opcao

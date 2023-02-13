@@ -1,0 +1,40 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Page
+    x:Class="GymHome.VideoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GymHome"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="LightBlue" Grid.ColumnSpan="2"/>
+        <Button VerticalAlignment="Center"
+                Command="{Binding GoBackCommand}"
+                BorderBrush="AliceBlue"
+                BorderThickness="3">
+            <TextBlock Text="Go Back"
+                           Foreground="Black"
+                           FontSize="30"/>
+        </Button>
+        <TextBlock Foreground="Black" 
+                   Text="Titulo Video"
+                   TextWrapping="WrapWholeWords"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Grid.ColumnSpan="2"
+                   Style="{StaticResource TitleTextBlockStyle}"
+                   Padding="20"
+                   />
+        <MediaPlayerElement AutoPlay="True"
+                            Grid.Row="1"/>
+    </Grid>
+</Page>
