@@ -1,10 +1,22 @@
 import sqlite3
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
+import base64
 
 auth = Blueprint('auth', __name__)
 
-
+@auth.route('/getExercise/id=<id>', methods=['GET', 'POST'])
+def getExercise(id):
+    if request.method == 'GET':
+        conn = sqlite3.connect('PlanosUser.db')
+        query = f"SELECT Exercicio.Nome, Exercicio.Tipo, Exercicio.Descricao, Imagem.ImagemBinary FROM Exercicio INNER JOIN Imagem ON Exercicio.ID = Imagem.RefID_exercicio WHERE Exercicio.ID = '{id}'"
+        result = conn.execute(query)
+        result = result.fetchall()
+        conn.close()
+        img_data = base64.b64encode(result[0][3]).decode('utf-8')
+        response = {'nome': result[0][0], 'tipo': result[0][1], 'descricao': result[0][2], 'imagem': img_data}
+        return jsonify(response), 200
+    return jsonify({'error': 'Invalid request method'}), 400
 
 @auth.route('/', methods=['GET', 'POST'])
 def login():
