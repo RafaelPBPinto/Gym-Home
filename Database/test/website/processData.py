@@ -4,26 +4,27 @@ import os
 def processData():
     conn = sqlite3.connect('..\PlanosUser.db')
     conn.execute('PRAGMA foreign_keys = ON')
-    name = 'exercicio.xlsx'
+    listaExer = 'exercicio.xlsx'
     plaExer = 'ExercicioPlanos.xlsx'
     plano = 'Planos.xlsx'
     sessao = 'Sessao.xlsx'
-    if os.path.exists(name):
-            xlsx = openpyxl.load_workbook(name)
+    if os.path.exists(listaExer):
+            xlsx = openpyxl.load_workbook(listaExer)
             sheet = xlsx.active
             #dimensao = sheet.dimensions
             #values = sheet[dimensao]
             linha = sheet.rows
             for row in linha:
-                nome      = row[0].value
-                tipo      = row[1].value
-                #duracao   = row[2].value
-                descricao = row[3].value
-                if nome != None:
-                    conn.execute('PRAGMA foreign_keys = ON')
-                    query = f"INSERT INTO Exercicio (Nome,Tipo, Descricao) VALUES ('{nome}', '{tipo}', '{descricao}')"
-                    conn.execute(query)
-                    conn.commit()
+                if row[2].value != None:    # Eu acho que alguns erros de None acontecem porque se adiciona uma linha em branco no final do ficheiro excel
+                    nome      = row[0].value
+                    tipo      = row[1].value
+                    duracao   = int(row[2].value)
+                    descricao = row[3].value
+                    if nome != None:
+                        conn.execute('PRAGMA foreign_keys = ON')
+                        query = f"INSERT INTO Exercicio (Nome,Tipo,Duracao,Descricao) VALUES ('{nome}', '{tipo}', '{duracao}', '{descricao}')"
+                        conn.execute(query)
+                        conn.commit()
     ###############################################################################            
     #Planos:
     if os.path.exists(plano):
@@ -52,15 +53,14 @@ def processData():
                 tipo            = row[0].value
                 series          = int(row[1].value)
                 repeticao       = int(row[2].value)
-                duracao         = int(row[3].value)
                 ordem           = int(row[4].value)
                 RefID_exercicio = int(row[5].value)
                 RefID_plano     = int(row[6].value)
                 
                 if tipo != None:
                    
-                    query = f"INSERT INTO ExercicioPlano (Series,Repeticoes, Duracao, Ordem,  RefID_plano, RefID_exercicio)\
-                            VALUES ('{series}', '{repeticao}', '{duracao}', '{ordem}', '{RefID_plano}', '{RefID_exercicio}')"
+                    query = f"INSERT INTO ExercicioPlano (Series,Repeticoes, Ordem,  RefID_plano, RefID_exercicio)\
+                            VALUES ('{series}', '{repeticao}', '{ordem}', '{RefID_plano}', '{RefID_exercicio}')"
                     conn.execute(query)
                     conn.commit()
 
@@ -73,14 +73,14 @@ def processData():
         sheet = xlsx.active
         linha = sheet.rows
         for row in linha:
-
-            RefID_utilizador  = int(row[0].value)
-            RefID_plano       = int(row[1].value)
-            Dia               = row[2].value
-            if Dia != None:
-                query = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{RefID_utilizador}', '{RefID_plano}', '{Dia}')"
-                conn.execute(query)
-                conn.commit()
+            if row[0].value != None:
+                RefID_utilizador  = int(row[0].value)
+                RefID_plano       = int(row[1].value)
+                Dia               = row[2].value
+                if Dia != None:
+                    query = f"INSERT INTO Sessao (RefID_utilizador, RefID_plano, Dia) VALUES ('{RefID_utilizador}', '{RefID_plano}', '{Dia}')"
+                    conn.execute(query)
+                    conn.commit()
 
 
     #######################################################################

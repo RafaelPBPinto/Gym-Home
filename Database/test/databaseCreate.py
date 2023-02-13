@@ -25,6 +25,7 @@ query = ('''CREATE TABLE IF NOT EXISTS Exercicio
         (ID INTEGER PRIMARY KEY,
         Nome TEXT NOT NULL,
         Tipo TEXT NOT NULL,
+        Duracao INTEGER NOT NULL,
         Descricao TEXT NOT NULL);''')
 conn.execute(query)
 
@@ -41,7 +42,6 @@ query = ('''CREATE TABLE IF NOT EXISTS ExercicioPlano
         (ID INTEGER PRIMARY KEY,
         Series INTEGER NOT NULL,
         Repeticoes INTEGER NOT NULL,
-        Duracao INTEGER NOT NULL,
         Ordem INTEGER NOT NULL,
         RefID_plano INTEGER NOT NULL,
         RefID_exercicio INTEGER NOT NULL,
