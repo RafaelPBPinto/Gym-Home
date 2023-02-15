@@ -33,7 +33,7 @@ def getExercise(id):
         response = {'nome': result[0][0], 'tipo': result[0][1], 'duracao': result[0][2], 'descricao': result[0][3], 'imagem': img_data}
         return jsonify(response), 200
     return jsonify({'error': 'Invalid request method'}), 400
-
+"""
 @auth.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -87,21 +87,79 @@ def signup():
         
 
     return render_template('register.html')
+"""
+@auth.route('/', methods=['GET','POST'])
+def login():
+    if request.method == 'POST':
+        data = request.json()
+        email = data['email']
+        password = data['password']
+        
+        conn = sqlite3.connect('PlanosUser.db')
+        query = f"SELECT Passe FROM Utilizador WHERE Email = '{email}'"
+        result = conn.execute(query)
+        result = result.fetchone()
+        
+        if result:
+            if check_password_hash(result[0], password):
+                query = f"SELECT ID FROM Utilizador WHERE Email = '{email}'"
+                ID = conn.execute(query)
+                ID = ID.fetchone()
+                conn.close()
+                return jsonify({'success': 'Logged in successfully!'}), 200
+            else:
+                return jsonify({'error': 'Incorrect password, try again.'}), 400
+        else:
+            return jsonify({'error': 'Email does not exist.'}), 400
+    return jsonify({'error': 'Invalid request method'}), 400
 
+@auth.route('/signup', methods=['GET' , 'POST'])
+def signup():
+    if request.method == 'POST':
+        data = request.json()
+        email = data['email']
+        username = data['username']
+        password = data['password']
+       
+        if len(email) < 4:
+            return jsonify({'error': 'Email must be greater than 3 characters.'}), 400
+        elif len(username) < 3:
+            return jsonify({'error': 'Username must be greater than 2 characters.'}), 400
+        elif len(password) < 7:
+            return jsonify({'error': 'Password must be greater than 6 characters.'}), 400
+        else:
+            conn = sqlite3.connect('PlanosUser.db')
+            query = f"INSERT INTO Utilizador (Email, Nome, Passe) VALUES ('{email}', '{username}', '{generate_password_hash(password, method='sha256')}')"
+            conn.execute(query)
+            conn.commit()
+            conn.close()
+
+            return jsonify({'success': 'Account created!'}), 200
+    return jsonify({'error': 'Invalid request method'}), 400
 @auth.route('/profile/<int:user_id>')
 def profile(user_id):
     conn = sqlite3.connect('PlanosUser.db')
-    query  = f"SELECT Dia, RefID_plano FROM Sessao WHERE RefID_utilizador = '{user_id}'"
+    query  = f"SELECT Sessao.Dia, Plano.Nome, Plano.Autor, Plano.Descricao \
+                FROM Sessao INNER JOIN Plano ON Sessao.RefID_plano = Plano.ID \
+                    WHERE Sessao.RefID_utilizador = '{user_id}'"
     sessao = conn.execute(query)
     dias = []
     planos = []
+    responses = []
     for row in sessao:
-        dias.append(row[0])
-        plan_query = f"SELECT Nome, Autor, Descricao FROM Plano WHERE ID = '{row[1]}'"
-        plan = conn.execute(plan_query)
-        plan = plan.fetchone()
+        if row[0] not in dias:
+            dias.append(row[0])
+        #plan_query = f"SELECT Nome, Autor, Descricao FROM Plano WHERE ID = '{row[1]}'"
+        #plan = conn.execute(plan_query)
+        #plan = plan.fetchone()
+        response = {'dia':row[0],'nome':row[1], 'Autor':row[2], 'descricao': row[3]}
+        responses.append(response)
+
+        plan = (row[1], row[2],row[3])
         planos.append(plan)
+        
     conn.close()
-    return render_template('home.html',dias=dias,planos=planos)
+    return jsonify(responses),200
+    #return render_template('home.html',dias=dias,planos=planos)
 
 

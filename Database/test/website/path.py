@@ -1,12 +1,11 @@
 import sqlite3
-from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from flask import Blueprint,  request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 
 path = Blueprint('path', __name__)
 
-@path.route('/', methods=['GET', 'POST'])
+@path.route('/', methods=['POST'])
 def login():
-    if request.method == 'POST':
         data = request.json()
         email = data['email']
         password = data['password']
@@ -15,50 +14,40 @@ def login():
         query = f"SELECT Passe FROM Utilizador WHERE Email = '{email}'"
         result = conn.execute(query)
         result = result.fetchone()
-        #conn.close()
         
         if result:
             if check_password_hash(result[0], password):
-                flash('Logged in successfully!', category='success')
                 query = f"SELECT ID FROM Utilizador WHERE Email = '{email}'"
                 ID = conn.execute(query)
                 ID = ID.fetchone()
                 conn.close()
-                ##################ver isso com Pompeu##############
-                return redirect(url_for('auth.profile', user_id=ID[0]))
+                return jsonify({'success': 'Logged in successfully!'}), 200
             else:
-                flash('Incorrect password, try again.', category='error')
+                return jsonify({'error': 'Incorrect password, try again.'}), 400
         else:
-            flash('Email does not exist.', category='error')
-     ##################ver isso com Pompeu##############
-    return render_template('login.html')
+            return jsonify({'error': 'Email does not exist.'}), 400
+   
 
-@path.route('/signup', methods=['GET', 'POST'])
+@path.route('/signup', methods=[ 'POST'])
 def signup():
-    if request.method == 'POST':
+
         data = request.json()
         email = data['email']
         username = data['username']
         password = data['password']
-        """
+       
         if len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error') 
+            return jsonify({'error': 'Email must be greater than 3 characters.'}), 400
         elif len(username) < 3:
-            flash('Username must be greater than 2 characters.', category='error')
+            return jsonify({'error': 'Username must be greater than 2 characters.'}), 400
         elif len(password) < 7:
-            flash('Password must be greater than 6 characters.', category='error')
+            return jsonify({'error': 'Password must be greater than 6 characters.'}), 400
         else:
-        """
-        if len(email) > 4:
             conn = sqlite3.connect('PlanosUser.db')
             query = f"INSERT INTO Utilizador (Email, Nome, Passe) VALUES ('{email}', '{username}', '{generate_password_hash(password, method='sha256')}')"
             conn.execute(query)
             conn.commit()
             conn.close()
 
-            #flash('Account created!', category='success')
-          ##################ver isso com Pompeu############## 
-            return redirect('/')
-        
-    ##################ver isso com Pompeu##############
-    return render_template('register.html')
+            return jsonify({'success': 'Account created!'}), 200
+
