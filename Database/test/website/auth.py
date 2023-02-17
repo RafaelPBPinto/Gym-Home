@@ -5,6 +5,44 @@ import base64
 
 auth = Blueprint('auth', __name__)
 
+@auth.route('/addExercise2', methods=['POST'])
+def add_exercise():
+    if request.method == 'POST':
+        exercise_data = request.get_json()
+
+        nome = exercise_data.get('nome')
+        tipo = exercise_data.get('tipo')
+        duracao = exercise_data.get('duracao')
+        descricao = exercise_data.get('descricao')
+
+        conn = sqlite3.connect('PlanosUser.db')
+        query = "INSERT INTO Exercicio (Nome, Tipo, Duracao, Descricao) VALUES (?, ?, ?, ?)"
+        conn.execute(query, (nome, tipo, duracao, descricao))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'Exercise added successfully'})
+    else:
+        return jsonify({'error': 'Invalid request method'}), 400
+
+@auth.route('/addExercise', methods=['POST'])
+def addExercise():
+    if request.method == 'POST':
+        nome = request.form.get('nome')
+        tipo = request.form.get('tipo')
+        duracao = request.form.get('duracao')
+        descricao = request.form.get('descricao')
+        # imagem = request.files.get('imagem').read()
+
+        conn = sqlite3.connect('PlanosUser.db')
+        query = f"INSERT INTO Exercicio (Nome, Tipo, Duracao, Descricao) VALUES ('{nome}', '{tipo}', '{duracao}', '{descricao}')"
+        conn.execute(query)
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for('auth.getExercises'))
+    return jsonify({'error': 'Invalid request method'}), 400
+
 @auth.route('/getExercises', methods=['GET', 'POST'])
 def getExercises():
     if request.method == 'GET':

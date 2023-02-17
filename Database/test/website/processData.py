@@ -4,7 +4,7 @@ import os
 def processData():
     conn = sqlite3.connect('..\PlanosUser.db')
     conn.execute('PRAGMA foreign_keys = ON')
-    listaExer = '\DocemntosExecel\exercicio.xlsx'
+    listaExer = 'exercicio.xlsx'
     plaExer = '\DocemntosExecel\ExercicioPlanos.xlsx'
     plano = '\DocemntosExecel\Planos.xlsx'
     sessao = '\DocemntosExecel\Sessao.xlsx'
@@ -85,50 +85,50 @@ def processData():
 
     #######################################################################
     #img de exer1
-    photo = convert2BinData('imagem\prancha.png')
+    photo = convert2BinData('imagem\ponte.jpg') 
     insertImage("Ponte",photo,1)
     #img de exer2
-    photo = convert2BinData('imagem\ganacadeira.png')
+    photo = convert2BinData('imagem\AgachamentoCadeira.jpg') 
     insertImage('Agachamento na cadeira',photo,2)
     #img de exer3
-    photo = convert2BinData('imagem\Treinocadeiraisometrica.png')
-    insertImage('Agachamento Isometrica',photo,3)
+    photo = convert2BinData('imagem\Gemeos.jpg') 
+    insertImage('Gemeos',photo,3)
     #img de exer4
-    photo = convert2BinData('imagem\stiff_unilateral.png')
-    insertImage('Stiff Unilateral',photo,4)
+    photo = convert2BinData('imagem\legExtension.jpg') 
+    insertImage('Leg Extension',photo,4)
     #img de exer5
-    photo = convert2BinData('imagem\Flexao_de_braco.png')
-    insertImage('Flexão de Braço',photo,5)
+    photo = convert2BinData('imagem\FlexaoParede.jpg') 
+    insertImage('Flexão contra a parede',photo,5)
     #img de exer6
-    photo = convert2BinData('imagem\Abdominal.png')
+    photo = convert2BinData('imagem\Abdominal.png')  
     insertImage('Abdominal',photo,6)
     #img de exer7
-    photo = convert2BinData('imagem\corda.png')
-    insertImage('Pular Corda',photo,7)
+    photo = convert2BinData('imagem\singleLegStand.jpg') 
+    insertImage('Apoio numa perna',photo,7)
     #img de exer8
-    photo = convert2BinData('imagem\corrida.png')
-    insertImage('Corrida Estacionário',photo,8)
+    photo = convert2BinData('imagem\TandemStanding.jpg') 
+    insertImage('Pés seguidos',photo,8)
     #img de exer9
-    photo = convert2BinData('imagem\Triceps_no_banco.png')
-    insertImage('Tríceps na Cadeira',photo,9)
+    photo = convert2BinData('imagem\sideBendStretch.jpg') 
+    insertImage('Alongamento curva lateral',photo,9)
     #img de exer10
-    photo = convert2BinData('imagem\Bicicleta_imaginaria.png')
-    insertImage('Bicicleta Imaginária',photo,10)
+    photo = convert2BinData('imagem\AlongamentoPeito.jpg') 
+    insertImage('Alongamento peito',photo,10)
     #img de exer11
-    photo = convert2BinData('imagem\Elevacoes.png')
-    insertImage('Elevações',photo,11)
+    photo = convert2BinData('imagem\TandemWalking.png')
+    insertImage('Andar em pés seguidos',photo,11)
     #img de exer12
-    photo = convert2BinData('imagem\Agachamentos.png')
-    insertImage('Agachamento',photo,12)
+    photo = convert2BinData('imagem\ChutoLateral.jpg') 
+    insertImage('Chuto lateral',photo,12)
     #img de exer13
-    photo = convert2BinData('imagem\Quadriceps.png')
-    insertImage('Quadriceps',photo,13)
+    photo = convert2BinData('imagem\AlongamentoOmbro.jpg') 
+    insertImage('Alongamento ombro',photo,13)
     #img de exer14
-    photo = convert2BinData('imagem\Spine_Twist.png')
-    insertImage('Spine Twist',photo,14)
+    photo = convert2BinData('imagem\AlongamentoQuadricep.jpg') 
+    insertImage('Alongamento quadríceps',photo,14)
     #img de exer15
-    photo = convert2BinData('imagem\Flexao_coxo_femural.png')
-    insertImage('Flexão coxo-Femural',photo,15)
+    photo = convert2BinData('imagem\AlongamentoAbdominal.jpg') 
+    insertImage('Alongamento abdominal',photo,15)
 
 
 def convert2BinData(filename):
