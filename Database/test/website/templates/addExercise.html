@@ -1,0 +1,33 @@
+<head>
+  <link rel="stylesheet" href="../static/css/style.css"/>
+  <script src="../static/index.js"></script>
+</head>
+
+<form onsubmit="return validateDuration()" action="/addExercise" method="POST" enctype="multipart/form-data">
+    <!DOCTYPE html>
+    <h2>Adicionar exercício</h2>
+    <div>
+      <label style="font-weight: bold;" for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+    </div>
+    <div>
+      <label style="font-weight: bold;" for="tipo">Tipo:</label>
+      <input type="text" id="tipo" name="tipo" required>
+    </div>
+    <div>
+      <label style="font-weight: bold;" for="duracao">Duração:</label>
+      <input type="text" id="duracao" name="duracao" required>
+    </div>
+    <div>
+      <label style="font-weight: bold;" for="descricao">Descrição:</label>
+      <textarea id="descricao" name="descricao" required></textarea>
+    </div>
+    <div>
+        <label style="font-weight: bold;" for="imagem">Imagem:</label>
+        <input type="file" id="imagem" name="imagem" accept="image/*" multiple>
+    </div>
+    <p></p>
+    <div>
+      <input type="submit" value="Adicionar">
+    </div>
+  </form>

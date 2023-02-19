@@ -16,7 +16,7 @@
     color: #333;
     font-weight: bold;
     text-align: center;
-    margin-top: 40px;
+    margin-top: 20px;
   }
 
   .login {
@@ -40,24 +40,77 @@
   .control-group {
   margin-bottom: 10px;
   }
-  
-  input {
-  text-align: center;
-  background-color: #ECF0F1;
-  border: 2px solid transparent;
-  border-radius: 3px;
-  font-size: 16px;
-  font-weight: 200;
-  padding: 10px 0;
-  width: 250px;
-  transition: border .5s;
+
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #ccc;
+  }
+  label {
+    display: inline-block;
+    width: 120px;
+    margin-bottom: 10px;
+  }
+  input[type="text"] {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: inherit;
+  }
+  textarea {
+    height: 100px;
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: inherit;
+  }
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  input[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
+  input[type="file"] {
+    height: 50px;
+    font-size: 16px;
+  }
+
+  /*input{
+    text-align: center;
+    background-color: #ECF0F1;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    width: 250px;
+    transition: border .5s;
   }
   
   input:focus {
   border: 2px solid #3498DB;
   box-shadow: none;
-  }
-  
+  }*/
+
   .btn {
     border: 2px solid transparent;
     background: #3498DB;

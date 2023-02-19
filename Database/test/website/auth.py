@@ -25,39 +25,60 @@ def add_exercise():
     else:
         return jsonify({'error': 'Invalid request method'}), 400
 
-@auth.route('/addExercise', methods=['POST'])
+@auth.route('/addExercise', methods=['GET', 'POST'])
 def addExercise():
     if request.method == 'POST':
         nome = request.form.get('nome')
         tipo = request.form.get('tipo')
         duracao = request.form.get('duracao')
         descricao = request.form.get('descricao')
-        # imagem = request.files.get('imagem').read()
+
+        if 'imagem' in request.files:
+            # get the image file from the form and read it as binary
+            imagem = request.files.get('imagem').read()
+        else:
+            imagem = None
 
         conn = sqlite3.connect('PlanosUser.db')
         query = f"INSERT INTO Exercicio (Nome, Tipo, Duracao, Descricao) VALUES ('{nome}', '{tipo}', '{duracao}', '{descricao}')"
         conn.execute(query)
+
+        refID_exercicio = conn.execute("SELECT MAX(ID) FROM Exercicio").fetchone()[0]
+        if imagem:
+            query = f"INSERT INTO Imagem (Nome, ImagemBinary, RefID_exercicio) VALUES (?, ?, ?)"
+            conn.execute(query, (nome, imagem, refID_exercicio))
+
         conn.commit()
         conn.close()
 
         return redirect(url_for('auth.getExercises'))
-    return jsonify({'error': 'Invalid request method'}), 400
+    return render_template('addExercise.html')
 
+
+# para já só vai buscar os excs com imagem (por causa do INNER JOIN)
 @auth.route('/getExercises', methods=['GET', 'POST'])
 def getExercises():
     if request.method == 'GET':
         conn = sqlite3.connect('PlanosUser.db')
         query = f"SELECT Exercicio.Nome, Exercicio.Tipo, Exercicio.Duracao, Exercicio.Descricao, Imagem.ImagemBinary FROM Exercicio INNER JOIN Imagem ON Exercicio.ID = Imagem.RefID_exercicio"
         result = conn.execute(query)
-        result = result.fetchall()
-        conn.close()
+        # result = result.fetchall()
+        
         responses = []
-        for row in result:
-            img_data = base64.b64encode(row[4]).decode('utf-8')            
-            response = {'nome': row[0], 'tipo': row[1], 'duracao': row[2], 'descricao': row[3], 'imagem': img_data}
+        
+        row = result.fetchone()  
+        while row is not None:
+            if row[4] is not None:
+                img_data = base64.b64encode(row[4]).decode('utf-8')            
+            response = {'nome': row[0], 'tipo': row[1], 'duracao': row[2], 'descricao': row[3]}#, 'imagem': img_data}
             responses.append(response)
+            row = result.fetchone()
+
+        conn.close()
         return jsonify(responses), 200
     return jsonify({'error': 'Invalid request method'}), 400
+
+# Buscar todos os excs com ID igual ao do plano (da sessao)
 
 @auth.route('/getExercise/id=<id>', methods=['GET', 'POST'])
 def getExercise(id):
@@ -174,6 +195,9 @@ def signup():
 
             return jsonify({'success': 'Account created!'}), 200
     return jsonify({'error': 'Invalid request method'}), 400
+
+# Aqui temos a ir buscar as sessoes de cada utilizador
+
 @auth.route('/profile/<int:user_id>')
 def profile(user_id):
     conn = sqlite3.connect('PlanosUser.db')
