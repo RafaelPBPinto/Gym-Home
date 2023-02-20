@@ -27,6 +27,7 @@ def add_exercise():
 
 @auth.route('/addExercise', methods=['GET', 'POST'])
 def addExercise():
+    alert_message = ''
     if request.method == 'POST':
         nome = request.form.get('nome')
         tipo = request.form.get('tipo')
@@ -50,10 +51,38 @@ def addExercise():
 
         conn.commit()
         conn.close()
+        alert_message = 'Exercício adicionado com sucesso!'
+        #return jsonify({'message': 'Exercício adicionado com sucesso!'})
+        #return redirect(url_for('auth.getExercises'))
+    return render_template('addExercise.html', alert_message=alert_message)
 
-        return redirect(url_for('auth.getExercises'))
-    return render_template('addExercise.html')
+@auth.route('/removeExercise', methods=['GET','POST'])
+def removeExercise():
+    alert_message = ''
+    if request.method == 'POST':
+        nome = request.form.get('nome')
 
+        conn = sqlite3.connect('PlanosUser.db')
+        query = "SELECT * FROM Exercicio WHERE Nome = ?"
+        result = conn.execute(query, (nome,)).fetchone()
+
+        if result is not None:
+            RefID_exercicio = result[0]
+            query = "DELETE FROM Exercicio WHERE Nome = ?"
+            conn.execute(query, (nome,))
+
+            query = "DELETE FROM Imagem WHERE RefID_exercicio = ?"
+            conn.execute(query, (RefID_exercicio,))
+
+            conn.commit()
+            conn.close()
+            alert_message = 'Exercício removido com sucesso!'
+            #return jsonify({'message': 'Exercise removed successfully'})
+        else:
+            alert_message = 'Exercício não encontrado...'
+            conn.close()
+            #return jsonify({'message': 'Exercise not found'})
+    return render_template('removeExercise.html', alert_message=alert_message)
 
 # para já só vai buscar os excs com imagem (por causa do INNER JOIN)
 @auth.route('/getExercises', methods=['GET', 'POST'])

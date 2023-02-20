@@ -7,3 +7,6 @@ function validateDuration() {
     }
     return true;
   }
+
+
+
