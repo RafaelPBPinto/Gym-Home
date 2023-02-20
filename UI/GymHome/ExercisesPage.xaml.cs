@@ -16,6 +16,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -43,6 +44,11 @@ namespace GymHome
                 ((ExercisesViewModel)DataContext).PreviousItem();
 
             e.Handled= true;
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await ((ExercisesViewModel)DataContext).PageLoaded();
         }
     }
 }
