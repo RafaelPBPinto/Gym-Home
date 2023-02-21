@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css"/>
+    <script src="../static/index.js"></script>
+    <!--<title>Document</title>-->
+</head>
+<body>
+    {% if alert_message %}
+    <div style="color: #11ad3b" class="alert alert-success" role="alert">
+      {{ alert_message }}
+    </div>
+    <p></p>
+  {% endif %}
+<form action="/addSessao" method="POST" enctype="multipart/form-data">
+    <h2>Adicionar Sessão</h2>
+    <div>
+      <label style="font-weight: bold;" for="Dia">Dia:</label>
+      <input type="text" id="dia" name="dia" required>
+    </div>
+
+    <div>
+      <label style="font-weight: bold;" for=" ref_user">Id do Utilizador:</label>
+      <br>
+      <input height="50px" type="number" id="ref_user" name="ref_user" required>
+    </div>
+    <div>
+        <span>Por agora é adicionado nesta sessão o ultimo plano adicionado na base de dados</span>
+    </div>
+    <!--
+    <div>
+        <label style="font-weight: bold;" for="duracao">Id do Plano:</label>
+        <input type="number" id="ref_plano" name="ref_plano" required>
+      </div>
+    -->
+    <p></p>
+    <div>
+      <input type="submit" value="Adicionar">
+    </div>
+  </form>
+
+  <p></p>
+  <a href="/addPlano" class="button">Adicionar Plano</a>
+  <a href="/addExercise" class="button">Adicionar Exercício</a>
+  <a href="/removeExercise" class="button">Remover Exercício</a>
+</body>
+</html>
