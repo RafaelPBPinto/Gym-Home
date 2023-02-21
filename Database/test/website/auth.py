@@ -232,22 +232,25 @@ def addSessao():
 @auth.route('/profileComplet/user_id=<user_id>', methods = ['GET', 'POST'])
 def getMySesson(user_id):
     conn = sqlite3.connect('PlanosUser.db')
-    query  = f"SELECT Sessao.Dia, Plano.Nome, Plano.Autor, Plano.Descricao \
-             ExercicioPlano.Series, ExercicioPlano.Repeticoes, ExercicioPlano.Ordem\
-             Exercicio.Nome, Exercicio.Tipo, Exercicio.Descricao, Imagem.Nome, Imagem.ImagemBinary\
-                FROM Sessao INNER JOIN Plano ON Sessao.RefID_plano = Plano.ID\
-                    INNER JOIN ExercicioPlano ON ExercicioPlano.RefID_plano = Plano.ID \
-                    INNER JOIN Exercicio ON Exercicio.ID =  ExercicioPlano.RefID_exercicio\
-                    INNER JOIN Imagem ON Imagem.RefID_exercicio = Exercicio.ID\
-                    WHERE Sessao.RefID_utilizador = '{user_id}'"
+    query  = f"\
+    SELECT Sessao.Dia, Plano.Nome, Plano.Autor, Plano.Descricao,\
+        ExercicioPlano.Series, ExercicioPlano.Repeticoes, ExercicioPlano.Ordem,\
+        Exercicio.Nome, Exercicio.Tipo, Exercicio.Descricao, Imagem.Nome, Imagem.ImagemBinary\
+    FROM Sessao INNER JOIN Plano ON Sessao.RefID_plano = Plano.ID\
+        INNER JOIN ExercicioPlano ON ExercicioPlano.RefID_plano = Plano.ID \
+        INNER JOIN Exercicio ON Exercicio.ID =  ExercicioPlano.RefID_exercicio\
+        INNER JOIN Imagem ON Imagem.RefID_exercicio = Exercicio.ID\
+        WHERE Sessao.RefID_utilizador = '{user_id}'\
+    "
 
     sessao = conn.execute(query)
     #sessao = sessao.fetchall()
     responses = []
     for row in sessao:
+        img_data = base64.b64encode(row[11]).decode('utf-8')
         exerData = {'series': row[4], 'repeticoes':row[5],'ordem':row[6],\
                     'nome':row[7], 'tipo':row[8], 'descricao':row[9],\
-                    'imagem':{'nome':row[10], 'img':row[11]} 
+                    'imagem':{'nome':row[10], 'img':img_data} 
                    }
 
         response = {'dia':row[0],'nome':row[1], 'Autor':row[2], 'descricao': row[3], 'exercicio':exerData}
