@@ -54,7 +54,15 @@ namespace GymHome
         public async Task PageLoaded()
         {
             HttpClient client = new HttpClient();
-            var items = await client.GetFromJsonAsync<List<ExerciseItem>>("http://localhost:5000/getExercises");
+            List<ExerciseItem> items = null;
+            try
+            {
+                items = await client.GetFromJsonAsync<List<ExerciseItem>>("http://localhost:5000/getExercises");
+            }
+            catch(Exception ex) 
+            {
+                return;
+            }
 
             foreach (ExerciseItem item in items)
             {

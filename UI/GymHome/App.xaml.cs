@@ -9,11 +9,16 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using MQTTnet;
+using MQTTnet.Client;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -29,8 +34,7 @@ namespace GymHome
     /// </summary>
     public partial class App : Application
     {
-        private Window m_window;
-        private Frame rootFrame;
+        
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -39,6 +43,16 @@ namespace GymHome
         public App()
         {
             this.InitializeComponent();
+            m_mqttFactory = new MqttFactory();
+            m_mqttClient = m_mqttFactory.CreateMqttClient();
+            try
+            {
+                StartMqttListener("localhost", 1883);
+            }
+            catch(Exception ex) 
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         /// <summary>
@@ -51,10 +65,10 @@ namespace GymHome
             m_window = new Window();
 
             //create a new frame and navigate to the MainPage
-            m_window.Content = rootFrame = new Frame();
+            m_window.Content = m_rootFrame = new Frame();
             m_window.Title = "GymHome";
             m_window.Activate();
-            rootFrame.Navigate(typeof(ExercisesPage));
+            m_rootFrame.Navigate(typeof(MainPage));
         }
 
         /// <summary>
@@ -63,7 +77,7 @@ namespace GymHome
         /// <param name="pageType">The type of the page to navigate to.</param>
         public void Navigate(Type pageType)
         {
-            rootFrame.Navigate(pageType);
+            m_rootFrame.Navigate(pageType);
         }
 
         /// <summary>
@@ -71,7 +85,33 @@ namespace GymHome
         /// </summary>
         public void NavigateToPreviousPage()
         {
-            rootFrame.GoBack();
+            m_rootFrame.GoBack();
+        }
+
+        private Window m_window;
+        private Frame m_rootFrame;
+        private MqttFactory m_mqttFactory;
+        private IMqttClient m_mqttClient;
+
+        private async Task StartMqttListener(string serverName,int serverPort)
+        {
+            var mqttClientOptions = new MqttClientOptionsBuilder().WithClientId("GymHomeUI").WithTcpServer(serverName,serverPort).Build();
+
+            m_mqttClient.ApplicationMessageReceivedAsync += MessageReceived;
+
+            await m_mqttClient.ConnectAsync(mqttClientOptions,CancellationToken.None);
+
+            var mqttSubscriberOptions = m_mqttFactory.CreateSubscribeOptionsBuilder().WithTopicFilter(f =>
+            {
+                f.WithTopic("comandos");
+            }).Build();
+
+            await m_mqttClient.SubscribeAsync(mqttSubscriberOptions,CancellationToken.None);
+        }
+
+        private Task MessageReceived(MqttApplicationMessageReceivedEventArgs arg)
+        {
+            throw new NotImplementedException();
         }
     }
 }
