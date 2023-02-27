@@ -33,6 +33,7 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 
 import paho.mqtt.publish as publish
+import json
 
 class ActionResetName(Action):
 
@@ -54,9 +55,8 @@ class ActionMostrarPlanosExercicios(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        json = {"comando": "planos_exercicios"}
-        json = str(json)
-        publish.single(topic="comandos/voz/UI", payload=json, hostname="localhost")
+        msg = {"comando": "planos_exercicios"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
         
         return []
         
@@ -81,9 +81,8 @@ class ActionSelecionarOpcao(Action):
 
         slot_value = tracker.get_slot('opcao')
         
-        json = {"comando": "selecionar_opcao", "opcao": slot_value}
-        json = str(json)
-        publish.single(topic="comandos/voz/UI", payload=json, hostname="localhost")
+        msg = {"comando": "selecionar_opcao", "opcao": slot_value}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
 
         return []
 
@@ -96,9 +95,8 @@ class ActionComecar(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        json = {"comando": "comecar"}
-        json = str(json)
-        publish.single(topic="comandos/voz/UI", payload=json, hostname="localhost")
+        msg = {"comando": "comecar"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
         
         return []
 
@@ -111,9 +109,8 @@ class ActionAvancar(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        json = {"comando": "avancar"}
-        json = str(json)
-        publish.single(topic="comandos/voz/UI", payload=json, hostname="localhost")
+        msg = {"comando": "avancar"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
         
         return []
 
@@ -126,9 +123,8 @@ class ActionVoltar(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        json = {"comando": "voltar"}
-        json = str(json)
-        publish.single(topic="comandos/voz/UI", payload=json, hostname="localhost")
+        msg = {"comando": "voltar"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
         
         return []
 
@@ -141,9 +137,8 @@ class ActionTerminar(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        json = {"comando": "terminar"}
-        json = str(json)
-        publish.single(topic="comandos/voz/UI", payload=json, hostname="localhost")
+        msg = {"comando": "terminar"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
         
         return []
 
@@ -156,9 +151,8 @@ class ActionVirarCamaraEsquerda(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        json = {"comando": "esquerda"}
-        json = str(json)
-        publish.single(topic="comandos/voz/camara", payload=json, hostname="localhost")
+        msg = {"comando": "esquerda"}
+        publish.single(topic="comandos/voz/camara", payload=json.dumps(msg), hostname="localhost")
         
         return []
         
@@ -171,9 +165,8 @@ class ActionVirarCamaraDireita(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        json = {"comando": "direita"}
-        json = str(json)
-        publish.single(topic="comandos/voz/camara", payload=json, hostname="localhost")
+        msg = {"comando": "direita"}
+        publish.single(topic="comandos/voz/camara", payload=json.dumps(msg), hostname="localhost")
         
         return []
         
@@ -186,9 +179,8 @@ class ActionVirarCamaraCima(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        json = {"comando": "cima"}
-        json = str(json)
-        publish.single(topic="comandos/voz/camara", payload=json, hostname="localhost")
+        msg = {"comando": "cima"}
+        publish.single(topic="comandos/voz/camara", payload=json.dumps(msg), hostname="localhost")
         
         return []
     
@@ -201,8 +193,7 @@ class ActionVirarCamaraBaixo(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        json = {"comando": "baixo"}
-        json = str(json)
-        publish.single(topic="comandos/voz/camara", payload=json, hostname="localhost")
+        msg = {"comando": "baixo"}
+        publish.single(topic="comandos/voz/camara", payload=json.dumps(msg), hostname="localhost")
         
         return []
