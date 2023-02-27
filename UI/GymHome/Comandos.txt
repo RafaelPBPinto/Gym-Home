@@ -2,11 +2,10 @@
 pagina anterior
 
 #pagina de exercicios
-proximo
-anterior
+proximo (avancar para o proximo elemento da lista)
+anterior (ir para o elemento anterior da lista)
 comecar
 scroll
-
 
 #pagina inicial
 selecionar todos os exercicios ou o plano

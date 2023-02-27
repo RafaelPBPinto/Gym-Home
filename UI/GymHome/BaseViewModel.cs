@@ -29,5 +29,20 @@ namespace GymHome
         {
             ((App)App.Current).NavigateToPreviousPage();
         }
+
+        public void AddCommand(Action<string> action,string keyword)
+        {
+            ((App)App.Current).AddCommand(action,keyword);
+        }
+
+        public void RemoveCommand(string keyword)
+        {
+            ((App)App.Current).RemoveCommand(keyword);
+        }
+
+        public bool KeywordExists(string keyword) 
+        {
+            return ((App)App.Current).keywordExists(keyword);
+        }
     }
 }

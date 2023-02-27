@@ -11,6 +11,7 @@ intents:
   - wake_up
   - request_planos_exercicios
   - request_selecionar_opcao
+  - request_comecar
   - request_voltar
   - request_avancar
   - request_change_username
@@ -19,14 +20,23 @@ intents:
   - ronaldo
   - request_piada
   - ask_username
+  - request_virar_camara_esquerda
+  - request_virar_camara_direita
+  - request_virar_camara_cima
+  - request_virar_camara_baixo
 
 entities:
   - username
+  - opcao
   
 forms:
   form_name:
     required_slots:
       - username
+  
+  form_opcao:
+    required_slots:
+      - opcao
 
 slots:
   username:
@@ -38,9 +48,30 @@ slots:
         conditions:
           - active_loop: form_name
             requested_slot: username
+  
+  opcao:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: form_opcao
+            requested_slot: opcao
 
 actions:
   - action_reset_name
+  - action_mostrar_planos_exercicios
+  - action_reset_opcao
+  - action_comecar
+  - action_avancar
+  - action_voltar
+  - action_terminar
+  - action_selecionar_opcao
+  - action_virar_camara_esquerda
+  - action_virar_camara_direita
+  - action_virar_camara_cima
+  - action_virar_camara_baixo
+  
 
 responses:
   utter_greet:
@@ -74,7 +105,10 @@ responses:
   - text: "Aqui estão os seus planos de exercícios!"
 
   utter_opcao:
-  - text: "selecionando [opcao](planos_exercicios)"
+  - text: "selecionando {opcao}"
+
+  utter_comecar:
+  - text: "Começando..."
 
   utter_voltar:
   - text: "Voltando..."
