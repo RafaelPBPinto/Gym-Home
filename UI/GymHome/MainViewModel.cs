@@ -13,7 +13,14 @@ namespace GymHome
     {
         public MainViewModel() 
         {
-            
+            AddCommand(ListAllExercises, "todos os exercicios");
+            if (!KeywordExists("previous page"))
+                AddCommand(NavigateToPreviousPage, "previous page");
+        }
+
+        ~MainViewModel()
+        {
+            RemoveCommand("todos os exercicios");
         }
 
         /// <summary>
@@ -24,6 +31,24 @@ namespace GymHome
         public void ListAllExercises()
         {
             Navigate(typeof(ExercisesPage));
+        }
+
+        /// <summary>
+        /// Wrapper function for voice command to call <see cref="ListAllExercises"/>
+        /// </summary>
+        /// <param name="obj">not required. ignored</param>
+        private void ListAllExercises(string obj = null)
+        {
+            ListAllExercises();
+        }
+
+        /// <summary>
+        /// Wrapper function for voice command to call <see cref="BaseViewModel.NavigateToPreviousPage"/>
+        /// </summary>
+        /// <param name="obj"></param>
+        private void NavigateToPreviousPage(string obj = null)
+        {
+            NavigateToPreviousPage();
         }
     }
 }

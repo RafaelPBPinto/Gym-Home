@@ -19,10 +19,13 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -81,6 +84,36 @@ namespace GymHome
         }
 
         /// <summary>
+        /// Adds a command to be called when the given keyword is received from the mqtt system.
+        /// Any existing command is overriden if the <paramref name="keyword"/> is the same.
+        /// If <paramref name="keyword"/> is null then the command wont be added.
+        /// </summary>
+        /// <param name="action">Action to be called</param>
+        /// <param name="keyword">Keyword used to call <paramref name="action"/></param>
+        public void AddCommand(Action<string> action,string keyword)
+        {
+            if (keyword == null)
+                return;
+
+            m_mqttActions[keyword] = action;
+        }
+
+        public void RemoveCommand(string keyword) 
+        {
+            m_mqttActions.Remove(keyword);
+        }
+
+        /// <summary>
+        /// Checks if the <paramref name="keyword"/> exists in the list.
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        public bool keywordExists(string keyword) 
+        {
+            return m_mqttActions.ContainsKey(keyword);
+        }
+
+        /// <summary>
         /// Navigate to the most recent page in the page history.
         /// </summary>
         public void NavigateToPreviousPage()
@@ -92,6 +125,7 @@ namespace GymHome
         private Frame m_rootFrame;
         private MqttFactory m_mqttFactory;
         private IMqttClient m_mqttClient;
+        private Dictionary<string,Action<string>> m_mqttActions = new Dictionary<string, Action<string>>();
 
         private async Task StartMqttListener(string serverName,int serverPort)
         {
@@ -109,9 +143,28 @@ namespace GymHome
             await m_mqttClient.SubscribeAsync(mqttSubscriberOptions,CancellationToken.None);
         }
 
+        private struct MqttCommand
+        {
+            [JsonPropertyName("comando")]
+            public string command = null;
+            [JsonPropertyName("opcao")]
+            public string arg = null;
+
+            public MqttCommand()
+            {
+                command = null;
+                arg = null;
+            }
+        }
+
         private Task MessageReceived(MqttApplicationMessageReceivedEventArgs arg)
         {
-            throw new NotImplementedException();
+            MqttCommand command = JsonSerializer.Deserialize<MqttCommand>(Encoding.UTF8.GetString(arg.ApplicationMessage.Payload));
+            
+            m_mqttActions[command.command]?.Invoke(command.arg);
+
+            return Task.CompletedTask;
+
         }
     }
 }

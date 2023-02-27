@@ -49,6 +49,16 @@ namespace GymHome
 
         public ExercisesViewModel()
         {
+            AddCommand(StartExercise, "comecar");
+            AddCommand(NextItem, "proximo");
+            AddCommand(PreviousItem, "anterior");
+        }
+
+        ~ExercisesViewModel()
+        {
+            RemoveCommand("comecar");
+            RemoveCommand("proximo");
+            RemoveCommand("anterior");
         }
 
         public async Task PageLoaded()
@@ -59,7 +69,7 @@ namespace GymHome
             {
                 items = await client.GetFromJsonAsync<List<ExerciseItem>>("http://localhost:5000/getExercises");
             }
-            catch(Exception ex) 
+            catch 
             {
                 return;
             }
@@ -103,6 +113,33 @@ namespace GymHome
         {
             if (ExerciseItems.Count > 0 && SelectedIndex > 0) 
                 SelectedIndex--;
+        }
+
+        /// <summary>
+        /// Wrapper function for voice command to call <see cref="StartExercise"/>
+        /// </summary>
+        /// <param name="obj"></param>
+        private void StartExercise(string obj = null)
+        {
+            StartExercise();
+        }
+
+        /// <summary>
+        /// Wrapper function for voice command to call <see cref="NextItem"/>
+        /// </summary>
+        /// <param name="obj"></param>
+        private void NextItem(string obj = null) 
+        {
+            NextItem();
+        }
+
+        /// <summary>
+        /// Wrapper function for voice command to call <see cref="PreviousItem"/>
+        /// </summary>
+        /// <param name="obj"></param>
+        private void PreviousItem(string obj = null) 
+        {
+            PreviousItem();
         }
     }
 }
