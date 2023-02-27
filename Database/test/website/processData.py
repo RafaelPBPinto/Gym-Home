@@ -5,9 +5,9 @@ def processData():
     conn = sqlite3.connect('..\PlanosUser.db')
     conn.execute('PRAGMA foreign_keys = ON')
     listaExer = 'exercicio.xlsx'
-    plaExer = '\DocemntosExecel\ExercicioPlanos.xlsx'
-    plano = '\DocemntosExecel\Planos.xlsx'
-    sessao = '\DocemntosExecel\Sessao.xlsx'
+    plaExer = 'DocemntosExecel\ExercicioPlanos.xlsx'
+    plano = 'DocemntosExecel\Planos.xlsx'
+    sessao = 'DocemntosExecel\Sessao.xlsx'
     if os.path.exists(listaExer):
             xlsx = openpyxl.load_workbook(listaExer)
             sheet = xlsx.active
