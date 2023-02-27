@@ -69,9 +69,20 @@ nlu:
 
 - intent: request_selecionar_opcao
   examples: |
-    - selecionar plano de pernas
-    - selecionar plano de braços
-    - selecionar plano de peito
+    - selecionar [plano de pernas](opcao)
+    - selecionar opcao [plano de pernas](opcao)
+    - escolher [plano de pernas](opcao)
+    - escolher opcao [plano de pernas](opcao)
+    - quero fazer o [plano de pernas](opcao)
+    - quero fazer o [plano de pernas](opcao) hoje
+    - apetece-me fazer o [plano de pernas](opcao)
+
+- intent: request_comecar
+  examples: |
+    - começar
+    - iniciar
+    - começar o plano
+    - iniciar o plano
 
 - intent: request_voltar
   examples: |
@@ -146,3 +157,23 @@ nlu:
     - és um robô?
     - és um humano?
     - és humano?
+
+- intent: request_virar_camara_esquerda
+  examples: |
+    - virar a câmara para a esquerda
+    - virar a câmara esquerda
+
+- intent: request_virar_camara_direita
+  examples: |
+    - virar a câmara para a direita
+    - virar a câmara direita
+
+- intent: request_virar_camara_cima
+  examples: |
+    - virar a câmara para cima
+    - virar a câmara cima
+
+- intent: request_virar_camara_baixo
+  examples: |
+    - virar a câmara para baixo
+    - virar a câmara baixo

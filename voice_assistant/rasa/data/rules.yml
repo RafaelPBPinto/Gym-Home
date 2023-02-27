@@ -15,22 +15,26 @@ rules:
 - rule: Mostrar planos de exercicios sempre que a pessoa pedir
   steps:
   - intent: request_planos_exercicios
+  - action: action_mostrar_planos_exercicios
   - action: utter_exercicios
+
+- rule: Comecar sempre que a pessoa pedir
+  steps:
+  - intent: request_comecar
+  - action: action_comecar
+  - action: utter_comecar
 
 - rule: Voltar atras sempre que a pessoa pedir
   steps:
   - intent: request_voltar
+  - action: action_voltar
   - action: utter_voltar
 
 - rule: Avancar sempre que a pessoa pedir
   steps:
   - intent: request_avancar
+  - action: action_avancar
   - action: utter_avancar
-
-- rule: Selecionar opcao sempre que a pessoa pedir
-  steps:
-  - intent: request_selecionar_opcao
-  - action: utter_opcao
 
 - rule: Wake up sempre que alguem chamar
   steps:
@@ -40,6 +44,7 @@ rules:
 - rule: Terminar sempre que pedir
   steps:
   - intent: request_terminar
+  - action: action_terminar
   - action: utter_terminar
 
 - rule: responder "de nada" sempre que alguém agradecer
@@ -76,3 +81,49 @@ rules:
       - requested_slot: null
     - action: utter_submit
     - action: utter_slots_values
+
+- rule: mostrar planos de exercicios
+  steps:
+  - intent: request_planos_exercicios
+  - action: action_mostrar_planos_exercicios
+  - action: utter_exercicios
+
+- rule: ativar form_opcao
+  steps:
+    - intent: request_selecionar_opcao
+    - action: action_reset_opcao
+    - slot_was_set:
+      - requested_slot: opcao
+    - action: form_opcao
+    - active_loop: form_opcao
+
+- rule: selecionar opcao
+  condition:
+    - active_loop: form_opcao
+  steps:
+    - action: form_opcao
+    - active_loop: null
+    - slot_was_set:
+      - requested_slot: null
+    - action: action_selecionar_opcao
+    - action: utter_opcao
+
+- rule: virar a camara para a esquerda
+  steps:
+  - intent: request_virar_camara_esquerda
+  - action: action_virar_camara_esquerda
+
+- rule: virar a camara para a direita
+  steps:
+  - intent: request_virar_camara_direita
+  - action: action_virar_camara_direita
+
+- rule: virar a camara para cima
+  steps:
+  - intent: request_virar_camara_cima
+  - action: action_virar_camara_cima
+
+- rule: virar a camara para baixo
+  steps:
+  - intent: request_virar_camara_baixo
+  - action: action_virar_camara_baixo
