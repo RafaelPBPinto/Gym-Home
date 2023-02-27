@@ -26,6 +26,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Microsoft.UI.Dispatching;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -37,8 +38,6 @@ namespace GymHome
     /// </summary>
     public partial class App : Application
     {
-        
-
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -50,7 +49,7 @@ namespace GymHome
             m_mqttClient = m_mqttFactory.CreateMqttClient();
             try
             {
-                StartMqttListener("localhost", 1883);
+                StartMqttListener("localhost", 1883).GetAwaiter();
             }
             catch(Exception ex) 
             {
@@ -78,9 +77,9 @@ namespace GymHome
         /// Navigate through pages using the root frame.
         /// </summary>
         /// <param name="pageType">The type of the page to navigate to.</param>
-        public void Navigate(Type pageType)
+        public void Navigate(Type pageType,object param = null)
         {
-            m_rootFrame.Navigate(pageType);
+            m_rootFrame.Navigate(pageType,param);
         }
 
         /// <summary>
@@ -126,6 +125,7 @@ namespace GymHome
         private MqttFactory m_mqttFactory;
         private IMqttClient m_mqttClient;
         private Dictionary<string,Action<string>> m_mqttActions = new Dictionary<string, Action<string>>();
+        private readonly DispatcherQueue m_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         private async Task StartMqttListener(string serverName,int serverPort)
         {
@@ -143,25 +143,22 @@ namespace GymHome
             await m_mqttClient.SubscribeAsync(mqttSubscriberOptions,CancellationToken.None);
         }
 
-        private struct MqttCommand
-        {
-            [JsonPropertyName("comando")]
-            public string command = null;
-            [JsonPropertyName("opcao")]
-            public string arg = null;
-
-            public MqttCommand()
-            {
-                command = null;
-                arg = null;
-            }
-        }
-
         private Task MessageReceived(MqttApplicationMessageReceivedEventArgs arg)
         {
-            MqttCommand command = JsonSerializer.Deserialize<MqttCommand>(Encoding.UTF8.GetString(arg.ApplicationMessage.Payload));
-            
-            m_mqttActions[command.command]?.Invoke(command.arg);
+            string message = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload);
+            try
+            {
+                MqttCommand command = JsonSerializer.Deserialize<MqttCommand>(message);
+                bool res = m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
+                    () =>
+                    {
+                        m_mqttActions[command.Command]?.Invoke(command.Arg);
+                    });
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
 
             return Task.CompletedTask;
 

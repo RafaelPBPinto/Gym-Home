@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,11 @@ namespace GymHome
 {
     partial class VideoViewModel : BaseViewModel
     {
-        public VideoViewModel() 
+        public string Title => m_exerciseItem == null ? string.Empty : m_exerciseItem.Title;
+
+        public VideoViewModel(ExerciseItem item) 
         {
+            m_exerciseItem = item;
         }
 
         [RelayCommand]
@@ -18,6 +23,7 @@ namespace GymHome
         {
             NavigateToPreviousPage();
         }
-    
+
+        private ExerciseItem m_exerciseItem = null;
     }
 }

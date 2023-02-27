@@ -29,7 +29,13 @@ namespace GymHome
         public VideoPage()
         {
             this.InitializeComponent();
-            DataContext = new VideoViewModel();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            ExerciseItem item = (ExerciseItem)e.Parameter;
+            DataContext = new VideoViewModel(item);
         }
     }
 }
