@@ -258,3 +258,30 @@ def getMySesson(user_id):
 
     conn.close()
     return jsonify(responses),200
+
+@auth.route('/getPlanos', methods = ['GET', 'POST'])
+def getPlanos():
+    conn = sqlite3.connect('PlanosUser.db')
+    query  = f"\
+    SELECT Plano.Nome, Plano.Autor, Plano.Descricao,\
+        ExercicioPlano.Series, ExercicioPlano.Repeticoes, ExercicioPlano.Ordem,\
+        Exercicio.Nome, Exercicio.Tipo, Exercicio.Descricao, Imagem.ImagemBinary\
+    FROM Plano\
+        INNER JOIN ExercicioPlano ON ExercicioPlano.RefID_plano = Plano.ID \
+        INNER JOIN Exercicio ON Exercicio.ID =  ExercicioPlano.RefID_exercicio\
+        INNER JOIN Imagem ON Imagem.RefID_exercicio = Exercicio.ID\
+    "
+    planos = conn.execute(query)
+    responses = []
+    for row in planos:
+        img_data = base64.b64encode(row[9]).decode('utf-8')
+        exerData = {'series': row[3], 'repeticoes':row[4],'ordem':row[5],\
+                    'nome':row[6], 'tipo':row[7], 'descricao':row[8]#,\
+                    #'imagem':img_data
+                   }
+
+        response = {'nome':row[0], 'Autor':row[1], 'descricao': row[2], 'exercicio':exerData}
+        responses.append(response)
+
+    conn.close()
+    return jsonify(responses),200
