@@ -70,7 +70,7 @@ namespace GymHome
             m_window.Content = m_rootFrame = new Frame();
             m_window.Title = "GymHome";
             m_window.Activate();
-            m_rootFrame.Navigate(typeof(MainPage));
+            m_rootFrame.Navigate(typeof(LogInPage));
         }
 
         /// <summary>

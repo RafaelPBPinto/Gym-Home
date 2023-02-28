@@ -11,10 +11,16 @@ namespace GymHome
 {
     partial class MainViewModel : BaseViewModel
     {
+        int userID = 0;
         public MainViewModel() 
         {
             AddCommand(ListAllExercises, "todos os exercicios");
-            
+        }
+
+        public MainViewModel(int id)
+        {
+            userID = id;
+            AddCommand(ListAllExercises, "todos os exercicios");
         }
 
         /// <summary>
@@ -22,9 +28,15 @@ namespace GymHome
         /// Shows all exercises available to the user.
         /// </summary>
         [RelayCommand]
-        public void ListAllExercises()
+        void ListAllExercises()
         {
             Navigate(typeof(ExercisesPage));
+        }
+
+        [RelayCommand]
+        void ShowPlans()
+        {
+            Navigate(typeof(PlanPage), userID);
         }
 
         /// <summary>

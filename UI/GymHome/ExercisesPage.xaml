@@ -65,7 +65,7 @@
                                 HorizontalAlignment="Left" LineHeight="20" Foreground="Black" Margin="0 20 0 0"/>
                             <TextBlock Grid.Row="1" Text="{x:Bind Author}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
                                                Foreground="Black" FontSize="16"/>
-                            <TextBlock Grid.Row="2" Text="{x:Bind DurationText}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
+                            <TextBlock Grid.Row="2" Text="{x:Bind DurationString}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
                                                Foreground="Black" FontSize="16"/>
                         </Grid>
 
