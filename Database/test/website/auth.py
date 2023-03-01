@@ -150,7 +150,7 @@ def login():
 @auth.route('/signup', methods=['GET' , 'POST'])
 def signup():
     if request.method == 'POST':
-        data = request.json()
+        #data = request.json()
         data = request.get_json()
         email = data['email']
         username = data['username']
@@ -243,44 +243,23 @@ def getMySesson(user_id):
         WHERE Sessao.RefID_utilizador = '{user_id}'\
     "
 
-    sessao = conn.execute(query)
-    #sessao = sessao.fetchall()
     responses = []
-    force = []
-    resistencia = []
-    flexibilidade= []
-    indefinido = []
-    planoData = []
+    sessao = conn.execute(query)
+    plansName = []
+    # get all exercises for each plan in the session
     for row in sessao:
-        img_data = base64.b64encode(row[11]).decode('utf-8')
-        exerData = {'series': row[4], 'repeticoes':row[5],'ordem':row[6],\
-                    'nome':row[7], 'tipo':row[8], 'descricao':row[9]#,\
-                    #'imagem':{'nome':row[10], 'img':img_data} 
-                   }
-        if row[8] == 'Força':
-            force.append(exerData)
-        elif row[8] == 'Flexibilidade':
-            flexibilidade.append(exerData)
-        elif row[8] == 'Equilíbrio':
-            resistencia.append(exerData)
+        if row[1] not in plansName:
+            plansName.append(row[1])
+            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9]}#, 'imagem': row[11]}
+            response = {'dia':row[0],'nome':row[1], 'Autor':row[2], 'descricao': row[3], 'exercicios': [exerData]}
+            responses.append(response)
         else:
-            indefinido.append(exerData)
-        plano = (row[0],row[1],row[2],row[3])
-        if plano not in planoData:
-            planoData.append(plano)
-
-    for plano in planoData:
-
-        if plano[1] == 'Força':    
-            response = {'dia':plano[0],'nome':plano[1], 'Autor':plano[2], 'descricao': plano[3], 'exercicio':force}
-        elif plano[1] == 'Resistencia':
-            response = {'dia':plano[0],'nome':plano[1], 'Autor':plano[2], 'descricao': plano[3], 'exercicio':resistencia}
-        elif plano[1] == 'Flexibilidade':
-            response = {'dia':plano[0],'nome':plano[1], 'Autor':plano[2], 'descricao': plano[3], 'exercicio':flexibilidade}
-        else:
-            response = {'dia':plano[0],'nome':'Outros', 'Autor':plano[2], 'descricao': plano[3], 'exercicio':indefinido}
-        responses.append(response)
-
+            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9]}#, 'imagem': row[11]}
+            for plan in responses:
+                if plan['nome'] == row[1]:
+                    plan['exercicios'].append(exerData)
+                    break
+    #     
     conn.close()
     return jsonify(responses),200
 
