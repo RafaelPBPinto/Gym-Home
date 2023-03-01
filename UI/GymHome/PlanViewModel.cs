@@ -47,7 +47,7 @@ namespace GymHome
 
         public PlanViewModel() 
         {
-            
+            AddCommand(SelectPlan, "selecionar_opcao");
         }
 
         private Expander m_lastOpenExpander = null;
@@ -63,7 +63,7 @@ namespace GymHome
             }
 
             var index = int.Parse(((TextBlock)((Grid)expander.Header).Children[0]).Text);
-            SelectedIndex = index;
+            SelectedIndex = index-1;
         }
 
         public async Task PageLoaded(int userID)
@@ -97,9 +97,34 @@ namespace GymHome
             NavigateToPreviousPage();
         }
 
+        private void SelectPlan(string obj = null)
+        {
+            if (obj == null)
+                return;
+
+            int index = 0;
+
+            try
+            {
+                index = int.Parse(obj);
+            }
+            catch
+            {
+                Debug.WriteLine($"invalid index: {obj}");
+                return;
+            }
+
+            index--;
+            if(index < 0 || index > Plans.Count - 1)
+                return;
+
+            SelectedIndex = index;
+        }
+
         protected override void OnNavigatedFrom()
         {
             Plan.ResetIndex();
+            RemoveCommand("selecionar_opcao");
         }
     }
 }

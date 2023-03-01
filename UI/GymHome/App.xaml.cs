@@ -152,7 +152,8 @@ namespace GymHome
                 bool res = m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
                     () =>
                     {
-                        m_mqttActions[command.Command]?.Invoke(command.Arg);
+                        if(m_mqttActions.ContainsKey(command.Command))
+                            m_mqttActions[command.Command].Invoke(command.Arg);
                     });
             }
             catch(Exception ex)

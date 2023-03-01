@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -52,6 +53,7 @@ namespace GymHome
             AddCommand(StartExercise, "comecar");
             AddCommand(NextItem, "proximo");
             AddCommand(PreviousItem, "anterior");
+            AddCommand(SelectExercise, "selecionar_opcao");
         }
 
         public async Task PageLoaded()
@@ -133,6 +135,30 @@ namespace GymHome
         private void PreviousItem(string obj = null) 
         {
             PreviousItem();
+        }
+
+        private void SelectExercise(string obj = null)
+        {
+            if (obj == null)
+                return;
+
+            int index = 0;
+
+            try
+            {
+                index = int.Parse(obj);
+            }
+            catch
+            {
+                Debug.WriteLine($"invalid index: {obj}");
+                return;
+            }
+
+            index--;
+            if (index < 0 || index > ExerciseItems.Count - 1)
+                return;
+
+            SelectedIndex = index;
         }
 
         protected override void OnNavigatedFrom()

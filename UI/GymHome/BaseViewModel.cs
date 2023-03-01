@@ -12,8 +12,8 @@ namespace GymHome
     {
         public BaseViewModel() 
         {
-            if (!KeywordExists("previous page"))
-                AddCommand(NavigateToPreviousPage, "previous page");
+            if (!KeywordExists("voltar"))
+                AddCommand(NavigateToPreviousPage, "voltar");
         }
 
         /// <summary>

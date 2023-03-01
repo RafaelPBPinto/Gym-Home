@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.VoiceCommands;
 
 namespace GymHome
 {
@@ -14,13 +15,13 @@ namespace GymHome
         int userID = 0;
         public MainViewModel() 
         {
-            AddCommand(ListAllExercises, "todos os exercicios");
+            InitCommands();
         }
 
         public MainViewModel(int id)
         {
             userID = id;
-            AddCommand(ListAllExercises, "todos os exercicios");
+            InitCommands();
         }
 
         /// <summary>
@@ -39,18 +40,26 @@ namespace GymHome
             Navigate(typeof(PlanPage), userID);
         }
 
-        /// <summary>
-        /// Wrapper function for voice command to call <see cref="ListAllExercises"/>
-        /// </summary>
-        /// <param name="obj">not required. ignored</param>
-        private void ListAllExercises(string obj = null)
+        private void SelectOption(string obj = null)
         {
-            ListAllExercises();
+            if (obj == null)
+                return;
+
+            if (obj == "todos_exercicios")
+                ListAllExercises();
+            else if (obj == "planos_exercicios")
+                ShowPlans();
+        }
+
+
+        private void InitCommands()
+        {
+            AddCommand(SelectOption, "selecionar_opcao");
         }
 
         protected override void OnNavigatedFrom()
         {
-            RemoveCommand("todos os exercicios");
+            RemoveCommand("selecionar_opcao");
         }
     }
 }

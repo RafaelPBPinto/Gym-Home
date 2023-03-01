@@ -61,7 +61,7 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="{x:Bind Title}" FontSize="20" FontWeight="SemiBold" Style="{ThemeResource BaseTextBlockStyle}"
+                            <TextBlock Grid.Row="0" Text="{x:Bind TitleString}" FontSize="20" FontWeight="SemiBold" Style="{ThemeResource BaseTextBlockStyle}"
                                 HorizontalAlignment="Left" LineHeight="20" Foreground="Black" Margin="0 20 0 0"/>
                             <TextBlock Grid.Row="1" Text="{x:Bind Author}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
                                                Foreground="Black" FontSize="16"/>

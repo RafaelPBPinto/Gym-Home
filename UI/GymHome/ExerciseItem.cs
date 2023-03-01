@@ -4,11 +4,17 @@ namespace GymHome
 {
     class ExerciseItem
     {
+        private static int index = 0;
+
+        public int Index { get; private set; }
+
         /// <summary>
         /// Gets or sets the title of the exercise
         /// </summary>
         [JsonPropertyName("nome")]
         public string Title { get; set; }
+
+        public string TitleString => $"{Title}({Index})";
 
         /// <summary>
         /// Gets or sets the author of the exercise
@@ -43,13 +49,17 @@ namespace GymHome
         /// <param name="duration">Duration in seconds of the exercise</param>
         /// <param name="description">Description of the exercise</param>
         /// <param name="type">Type of the exercise</param>
-        public ExerciseItem(string title = "", string author = "", int duration = 0, string description = "", string type = "")
+        [JsonConstructor]
+        public ExerciseItem(string title, string author, int duration, string description, string type)
         {
             Title = title;
             Author = author;
             Duration = duration;
             Description = description;
             Type = type;
+            Index = index+1;
+
+            index++;
         }
     }
 }

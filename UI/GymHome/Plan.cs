@@ -18,6 +18,8 @@ namespace GymHome
         [JsonPropertyName("nome")]
         public string Title { get; set; }
 
+        public string TitleString => $"{Title}({IndexString})";
+
         [JsonPropertyName("Autor")]
         public string Author { get; set; }
 
@@ -31,22 +33,25 @@ namespace GymHome
         [JsonPropertyName("descricao")]
         public string Description { get; set; }
 
-        [JsonPropertyName("exercicio")]
-        public PlanExercise bufferPlanExercise { get; set; }
+        [JsonPropertyName("exercicios")]
+        public PlanExercise[] bufferPlanExercise { get; set; }
 
         [ObservableProperty]
         public ObservableCollection<PlanExercise> planExercise = new ObservableCollection<PlanExercise>();
 
         [JsonConstructor]
-        public Plan(string title, string author, string day, string description, PlanExercise bufferPlanExercise)
+        public Plan(string title, string author, string day, string description, PlanExercise[] bufferPlanExercise)
         {
             Title = title;
             Author = author;
             Day = day;
             Description = description;
             this.bufferPlanExercise = bufferPlanExercise;
-            PlanExercise.Add(bufferPlanExercise);
-            IndexString = index.ToString();
+
+            foreach (var exercise in bufferPlanExercise)
+                PlanExercise.Add(exercise);
+
+            IndexString = (index+1).ToString();
             index++;
         }
 
