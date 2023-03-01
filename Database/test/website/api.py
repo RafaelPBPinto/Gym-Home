@@ -3,9 +3,9 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from werkzeug.security import generate_password_hash, check_password_hash
 import base64
 
-auth = Blueprint('auth', __name__)
+api = Blueprint('api', __name__)
 
-@auth.route('/addExercise2', methods=['POST'])
+@api.route('/addExercise2', methods=['POST'])
 def add_exercise():
     if request.method == 'POST':
         exercise_data = request.get_json()
@@ -25,7 +25,7 @@ def add_exercise():
     else:
         return jsonify({'error': 'Invalid request method'}), 400
 
-@auth.route('/addExercise', methods=['GET', 'POST'])
+@api.route('/addExercise', methods=['GET', 'POST'])
 def addExercise():
     alert_message = ''
     if request.method == 'POST':
@@ -53,10 +53,10 @@ def addExercise():
         conn.close()
         alert_message = 'Exercício adicionado com sucesso!'
         #return jsonify({'message': 'Exercício adicionado com sucesso!'})
-        #return redirect(url_for('auth.getExercises'))
+        #return redirect(url_for('api.getExercises'))
     return render_template('addExercise.html', alert_message=alert_message)
 
-@auth.route('/removeExercise', methods=['GET','POST'])
+@api.route('/removeExercise', methods=['GET','POST'])
 def removeExercise():
     alert_message = ''
     if request.method == 'POST':
@@ -85,7 +85,7 @@ def removeExercise():
     return render_template('removeExercise.html', alert_message=alert_message)
 
 # para já só vai buscar os excs com imagem (por causa do INNER JOIN)
-@auth.route('/getExercises', methods=['GET', 'POST'])
+@api.route('/getExercises', methods=['GET', 'POST'])
 def getExercises():
     if request.method == 'GET':
         conn = sqlite3.connect('PlanosUser.db')
@@ -109,7 +109,7 @@ def getExercises():
 
 # Buscar todos os excs com ID igual ao do plano (da sessao)
 
-@auth.route('/getExercise/id=<id>', methods=['GET', 'POST'])
+@api.route('/getExercise/id=<id>', methods=['GET', 'POST'])
 def getExercise(id):
     if request.method == 'GET':
         conn = sqlite3.connect('PlanosUser.db')
@@ -122,7 +122,7 @@ def getExercise(id):
         return jsonify(response), 200
     return jsonify({'error': 'Invalid request method'}), 400
 
-@auth.route('/', methods=['GET','POST'])
+@api.route('/', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
         data = request.json()
@@ -147,10 +147,10 @@ def login():
             return jsonify({'error': 'Email does not exist.'}), 400
     return jsonify({'error': 'Invalid request method'}), 400
 
-@auth.route('/signup', methods=['GET' , 'POST'])
+@api.route('/signup', methods=['GET' , 'POST'])
 def signup():
     if request.method == 'POST':
-        data = request.json()
+        #data = request.json()
         data = request.get_json()
         email = data['email']
         username = data['username']
@@ -174,7 +174,7 @@ def signup():
 
 # Aqui temos a ir buscar as sessoes de cada utilizador
 
-@auth.route('/profile/user_Id=<user_id>')
+@api.route('/profile/user_Id=<user_id>')
 def profile(user_id):
     conn = sqlite3.connect('PlanosUser.db')
     query  = f"SELECT Sessao.Dia, Plano.Nome, Plano.Autor, Plano.Descricao \
@@ -197,7 +197,7 @@ def profile(user_id):
     return jsonify(responses),200
     #return render_template('home.html',dias=dias,planos=planos)
 
-@auth.route('/addPlano', methods =['GET' , 'POST'])
+@api.route('/addPlano', methods =['GET' , 'POST'])
 def addPlano():
     alert_message = ''
     if request.method == 'POST':
@@ -213,7 +213,7 @@ def addPlano():
         alert_message = 'Plano adicionado com sucesso!'
     return render_template('addPlano.html', alert_message=alert_message)
 
-@auth.route('/addSessao', methods =['GET' , 'POST'])
+@api.route('/addSessao', methods =['GET' , 'POST'])
 def addSessao():
     alert_message = ''
     if request.method == 'POST':
@@ -229,7 +229,7 @@ def addSessao():
         alert_message = 'Sessão adicionado com sucesso!'
     return render_template('addSessao.html', alert_message=alert_message)
 
-@auth.route('/profileComplet/user_id=<user_id>', methods = ['GET', 'POST'])
+@api.route('/profileComplet/user_id=<user_id>', methods = ['GET', 'POST'])
 def getMySesson(user_id):
     conn = sqlite3.connect('PlanosUser.db')
     query  = f"\
@@ -243,48 +243,27 @@ def getMySesson(user_id):
         WHERE Sessao.RefID_utilizador = '{user_id}'\
     "
 
-    sessao = conn.execute(query)
-    #sessao = sessao.fetchall()
     responses = []
-    force = []
-    resistencia = []
-    flexibilidade= []
-    indefinido = []
-    planoData = []
+    sessao = conn.execute(query)
+    plansName = []
+    # get all exercises for each plan in the session
     for row in sessao:
-        img_data = base64.b64encode(row[11]).decode('utf-8')
-        exerData = {'series': row[4], 'repeticoes':row[5],'ordem':row[6],\
-                    'nome':row[7], 'tipo':row[8], 'descricao':row[9],\
-                    'imagem':{'nome':row[10], 'img':img_data} 
-                   }
-        if row[8] == 'Força':
-            force.append(exerData)
-        elif row[8] == 'Flexibilidade':
-            flexibilidade.append(exerData)
-        elif row[8] == 'Equilíbrio':
-            resistencia.append(exerData)
+        if row[1] not in plansName:
+            plansName.append(row[1])
+            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9]}#, 'imagem': row[11]}
+            response = {'dia':row[0],'nome':row[1], 'Autor':row[2], 'descricao': row[3], 'exercicios': [exerData]}
+            responses.append(response)
         else:
-            indefinido.append(exerData)
-        plano = (row[0],row[1],row[2],row[3])
-        if plano not in planoData:
-            planoData.append(plano)
-
-    for plano in planoData:
-
-        if plano[1] == 'Força':    
-            response = {'dia':plano[0],'nome':plano[1], 'Autor':plano[2], 'descricao': plano[3], 'exercicio':force}
-        elif plano[1] == 'Resistencia':
-            response = {'dia':plano[0],'nome':plano[1], 'Autor':plano[2], 'descricao': plano[3], 'exercicio':resistencia}
-        elif plano[1] == 'Flexibilidade':
-            response = {'dia':plano[0],'nome':plano[1], 'Autor':plano[2], 'descricao': plano[3], 'exercicio':flexibilidade}
-        else:
-            response = {'dia':plano[0],'nome':'Outros', 'Autor':plano[2], 'descricao': plano[3], 'exercicio':indefinido}
-        responses.append(response)
-
+            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9]}#, 'imagem': row[11]}
+            for plan in responses:
+                if plan['nome'] == row[1]:
+                    plan['exercicios'].append(exerData)
+                    break
+    #     
     conn.close()
     return jsonify(responses),200
 
-@auth.route('/getPlanos', methods = ['GET', 'POST'])
+@api.route('/getPlanos', methods = ['GET', 'POST'])
 def getPlanos():
     conn = sqlite3.connect('PlanosUser.db')
     query  = f"\
@@ -298,15 +277,25 @@ def getPlanos():
     "
     planos = conn.execute(query)
     responses = []
+    plansNames = []
     for row in planos:
-        img_data = base64.b64encode(row[9]).decode('utf-8')
-        exerData = {'series': row[3], 'repeticoes':row[4],'ordem':row[5],\
-                    'nome':row[6], 'tipo':row[7], 'descricao':row[8]#,\
-                    #'imagem':img_data
-                   }
-
-        response = {'nome':row[0], 'Autor':row[1], 'descricao': row[2], 'exercicio':exerData}
-        responses.append(response)
+        if(row[0] not in plansNames):
+            plansNames.append(row[0])
+            exerData = []
+            img_data = base64.b64encode(row[9]).decode('utf-8')
+            exerData.append({'series': row[3], 'repeticoes':row[4],'ordem':row[5],\
+                        'nome':row[6], 'tipo':row[7], 'descricao':row[8]#,\
+                        #'imagem':img_data
+                       })
+            response = {'nome':row[0], 'Autor':row[1], 'descricao': row[2], 'exercicio':exerData}
+            responses.append(response)
+        else:
+            img_data = base64.b64encode(row[9]).decode('utf-8')
+            exerData = {'series': row[3], 'repeticoes':row[4],'ordem':row[5],\
+                        'nome':row[6], 'tipo':row[7], 'descricao':row[8]#,\
+                        #'imagem':img_data
+                       }
+            response['exercicio'].append(exerData)
 
     conn.close()
     return jsonify(responses),200

@@ -29,6 +29,15 @@ query = ('''CREATE TABLE IF NOT EXISTS Exercicio
         Descricao TEXT NOT NULL);''')
 conn.execute(query)
 
+query = ('''CREATE TABLE IF NOT EXISTS Video
+        (ID INTEGER PRIMARY KEY,
+        Nome TEXT NOT NULL,
+        VideoBinary BLOB,
+        RefID_exercicio  INTEGER NOT NULL,
+        FOREIGN KEY(RefID_exercicio) REFERENCES Exercicio(ID)
+        );''')
+conn.execute(query)
+
 query = ('''CREATE TABLE IF NOT EXISTS Imagem 
         (ID INTEGER PRIMARY KEY,
         Nome TEXT NOT NULL,

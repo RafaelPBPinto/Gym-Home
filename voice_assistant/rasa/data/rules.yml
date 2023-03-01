@@ -127,3 +127,19 @@ rules:
   steps:
   - intent: request_virar_camara_baixo
   - action: action_virar_camara_baixo
+
+- rule: scroll up
+  steps:
+  - intent: request_scroll_up
+  - action: action_scroll_up
+
+- rule: scroll down
+  steps:
+  - intent: request_scroll_down
+  - action: action_scroll_down
+
+- rule: mostrar todos os exercicios
+  steps:
+  - intent: request_todos_exercicios
+  - action: action_mostrar_todos_exercicios
+  - action: utter_todos_exercicios
