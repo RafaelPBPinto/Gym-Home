@@ -172,8 +172,31 @@ nlu:
   examples: |
     - virar a câmara para cima
     - virar a câmara cima
+    - subir câmara
+    - subir a câmara
 
 - intent: request_virar_camara_baixo
   examples: |
     - virar a câmara para baixo
     - virar a câmara baixo
+    - descer câmara
+    - descer a câmara
+
+- intent: request_scroll_up
+  examples: |
+    - scroll up
+    - scroll para cima
+    - subir
+    - subir a página
+
+- intent: request_scroll_down
+  examples: |
+    - scroll down
+    - scroll para baixo
+    - descer
+    - descer a página
+
+- intent: request_todos_exercicios
+  examples: |
+    - todos os exercícios
+    - mostrar todos

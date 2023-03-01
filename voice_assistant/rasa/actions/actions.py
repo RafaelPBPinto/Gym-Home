@@ -55,7 +55,7 @@ class ActionMostrarPlanosExercicios(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        msg = {"comando": "planos_exercicios"}
+        msg = {"comando": "selecionar_opcao", "opcao": "planos_exercicios"}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
         
         return []
@@ -197,3 +197,46 @@ class ActionVirarCamaraBaixo(Action):
         publish.single(topic="comandos/voz/camara", payload=json.dumps(msg), hostname="localhost")
         
         return []
+
+class ActionScrollUp(Action):
+    
+    def name(self) -> Text:
+        return "action_scroll_up"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        msg = {"comando": "scroll_up"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
+        
+        return []
+
+class ActionScrollDown(Action):
+    
+    def name(self) -> Text:
+        return "action_scroll_down"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        msg = {"comando": "scroll_down"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
+        
+        return []
+
+class ActionMostrarTodosExercicios(Action):
+    
+    def name(self) -> Text:
+        return "action_mostrar_todos_exercicios"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        msg = {"comando": "selecionar_opcao", "opcao": "todos_exercicios"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
+        
+        return []
+    
