@@ -137,7 +137,7 @@ namespace GymHome
 
             var mqttSubscriberOptions = m_mqttFactory.CreateSubscribeOptionsBuilder().WithTopicFilter(f =>
             {
-                f.WithTopic("comandos");
+                f.WithTopic("comandos/voz/UI");
             }).Build();
 
             await m_mqttClient.SubscribeAsync(mqttSubscriberOptions,CancellationToken.None);
