@@ -54,13 +54,6 @@ namespace GymHome
             AddCommand(PreviousItem, "anterior");
         }
 
-        ~ExercisesViewModel()
-        {
-            RemoveCommand("comecar");
-            RemoveCommand("proximo");
-            RemoveCommand("anterior");
-        }
-
         public async Task PageLoaded()
         {
             HttpClient client = new HttpClient();
@@ -88,7 +81,7 @@ namespace GymHome
         public void StartExercise()
         {
             if (ExerciseItems.Count > 0)
-                Navigate(typeof(VideoPage));
+                Navigate(typeof(VideoPage), ExerciseItems[SelectedIndex]);
         }
 
         [RelayCommand]
@@ -140,6 +133,13 @@ namespace GymHome
         private void PreviousItem(string obj = null) 
         {
             PreviousItem();
+        }
+
+        protected override void OnNavigatedFrom()
+        {
+            RemoveCommand("comecar");
+            RemoveCommand("proximo");
+            RemoveCommand("anterior");
         }
     }
 }

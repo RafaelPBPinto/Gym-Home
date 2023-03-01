@@ -11,16 +11,16 @@ namespace GymHome
 {
     partial class MainViewModel : BaseViewModel
     {
+        int userID = 0;
         public MainViewModel() 
         {
             AddCommand(ListAllExercises, "todos os exercicios");
-            if (!KeywordExists("previous page"))
-                AddCommand(NavigateToPreviousPage, "previous page");
         }
 
-        ~MainViewModel()
+        public MainViewModel(int id)
         {
-            RemoveCommand("todos os exercicios");
+            userID = id;
+            AddCommand(ListAllExercises, "todos os exercicios");
         }
 
         /// <summary>
@@ -28,9 +28,15 @@ namespace GymHome
         /// Shows all exercises available to the user.
         /// </summary>
         [RelayCommand]
-        public void ListAllExercises()
+        void ListAllExercises()
         {
             Navigate(typeof(ExercisesPage));
+        }
+
+        [RelayCommand]
+        void ShowPlans()
+        {
+            Navigate(typeof(PlanPage), userID);
         }
 
         /// <summary>
@@ -42,13 +48,9 @@ namespace GymHome
             ListAllExercises();
         }
 
-        /// <summary>
-        /// Wrapper function for voice command to call <see cref="BaseViewModel.NavigateToPreviousPage"/>
-        /// </summary>
-        /// <param name="obj"></param>
-        private void NavigateToPreviousPage(string obj = null)
+        protected override void OnNavigatedFrom()
         {
-            NavigateToPreviousPage();
+            RemoveCommand("todos os exercicios");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,18 @@ namespace GymHome
     {
         public BaseViewModel() 
         {
+            if (!KeywordExists("previous page"))
+                AddCommand(NavigateToPreviousPage, "previous page");
         }
 
         /// <summary>
         /// Navigate to a page.
         /// </summary>
         /// <param name="pageType">The type of the page to navigate to.</param>
-        public void Navigate(Type pageType)
+        public void Navigate(Type pageType,object param = null)
         {
-            ((App)App.Current).Navigate(pageType);
+            OnNavigatedFrom();
+            ((App)App.Current).Navigate(pageType,param);
         }
 
         /// <summary>
@@ -27,6 +31,7 @@ namespace GymHome
         /// </summary>
         public void NavigateToPreviousPage()
         {
+            OnNavigatedFrom();
             ((App)App.Current).NavigateToPreviousPage();
         }
 
@@ -43,6 +48,19 @@ namespace GymHome
         public bool KeywordExists(string keyword) 
         {
             return ((App)App.Current).keywordExists(keyword);
+        }
+
+        /// <summary>
+        /// Wrapper function for voice command to call <see cref="NavigateToPreviousPage"/>
+        /// </summary>
+        /// <param name="obj"></param>
+        private void NavigateToPreviousPage(string obj = null)
+        {
+            NavigateToPreviousPage();
+        }
+
+        protected virtual void OnNavigatedFrom()
+        {
         }
     }
 }

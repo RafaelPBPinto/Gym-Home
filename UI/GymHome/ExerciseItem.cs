@@ -21,7 +21,7 @@ namespace GymHome
         [JsonPropertyName("duracao")]
         public int Duration { get; set; }
 
-        public string DurationText => "Duracao: " + Duration.ToString() + "seg";
+        public string DurationString => $"Duracao: {Duration} seg";
 
         /// <summary>
         /// Gets or sets the description of the exercise

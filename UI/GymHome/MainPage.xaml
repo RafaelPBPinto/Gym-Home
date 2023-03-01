@@ -48,7 +48,7 @@
                         CornerRadius="20"
                         Background="LightBlue"
                         VerticalAlignment="Center"
-                        Command="{Binding ListAllExercisesCommand}">
+                        Command="{Binding ShowPlansCommand}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>

@@ -17,6 +17,53 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+            <Button CornerRadius="20"
+                    BorderThickness="3"
+                    BorderBrush="Aqua"
+                    Command="{Binding MariaLogInCommand}"
+                    Background="LightBlue"
+                    Width="400"
+                    Height="100">
+                <TextBlock Foreground="Black"
+                           FontSize="20"
+                           Text="Maria"/>
+            </Button>
+            <Button CornerRadius="20"
+                    Margin="0 20 0 0"
+                    BorderThickness="3"
+                    BorderBrush="Aqua"
+                    Command="{Binding AlbertoLogInCommand}"
+                    Background="LightBlue"
+                    Width="400"
+                    Height="100">
+                <TextBlock Foreground="Black"
+                           FontSize="20"
+                           Text="Alberto"/>
+            </Button>
+            <Button CornerRadius="20"
+                    Margin="0 20 0 0"
+                    BorderThickness="3"
+                    BorderBrush="Aqua"
+                    Command="{Binding AntonioLogInCommand}"
+                    Background="LightBlue"
+                    Width="400"
+                    Height="100">
+                <TextBlock Foreground="Black"
+                           FontSize="20"
+                           Text="Sara"/>
+            </Button>
+        </StackPanel>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid Grid.Row="1" CornerRadius="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -59,6 +106,6 @@
                     <TextBlock Text="LogIn" FontSize="30"/>
                 </Button>
             </StackPanel>
-        </Grid>
+        </Grid>-->
     </Grid>
 </Page>

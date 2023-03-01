@@ -246,15 +246,77 @@ def getMySesson(user_id):
     sessao = conn.execute(query)
     #sessao = sessao.fetchall()
     responses = []
+    force = []
+    resistencia = []
+    flexibilidade= []
+    indefinido = []
+    planoData = []
     for row in sessao:
         img_data = base64.b64encode(row[11]).decode('utf-8')
         exerData = {'series': row[4], 'repeticoes':row[5],'ordem':row[6],\
-                    'nome':row[7], 'tipo':row[8], 'descricao':row[9],\
-                    'imagem':{'nome':row[10], 'img':img_data} 
+                    'nome':row[7], 'tipo':row[8], 'descricao':row[9]#,\
+                    #'imagem':{'nome':row[10], 'img':img_data} 
                    }
+        if row[8] == 'Força':
+            force.append(exerData)
+        elif row[8] == 'Flexibilidade':
+            flexibilidade.append(exerData)
+        elif row[8] == 'Equilíbrio':
+            resistencia.append(exerData)
+        else:
+            indefinido.append(exerData)
+        plano = (row[0],row[1],row[2],row[3])
+        if plano not in planoData:
+            planoData.append(plano)
 
-        response = {'dia':row[0],'nome':row[1], 'Autor':row[2], 'descricao': row[3], 'exercicio':exerData}
+    for plano in planoData:
+
+        if plano[1] == 'Força':    
+            response = {'dia':plano[0],'nome':plano[1], 'Autor':plano[2], 'descricao': plano[3], 'exercicio':force}
+        elif plano[1] == 'Resistencia':
+            response = {'dia':plano[0],'nome':plano[1], 'Autor':plano[2], 'descricao': plano[3], 'exercicio':resistencia}
+        elif plano[1] == 'Flexibilidade':
+            response = {'dia':plano[0],'nome':plano[1], 'Autor':plano[2], 'descricao': plano[3], 'exercicio':flexibilidade}
+        else:
+            response = {'dia':plano[0],'nome':'Outros', 'Autor':plano[2], 'descricao': plano[3], 'exercicio':indefinido}
         responses.append(response)
+
+    conn.close()
+    return jsonify(responses),200
+
+@auth.route('/getPlanos', methods = ['GET', 'POST'])
+def getPlanos():
+    conn = sqlite3.connect('PlanosUser.db')
+    query  = f"\
+    SELECT Plano.Nome, Plano.Autor, Plano.Descricao,\
+        ExercicioPlano.Series, ExercicioPlano.Repeticoes, ExercicioPlano.Ordem,\
+        Exercicio.Nome, Exercicio.Tipo, Exercicio.Descricao, Imagem.ImagemBinary\
+    FROM Plano\
+        INNER JOIN ExercicioPlano ON ExercicioPlano.RefID_plano = Plano.ID \
+        INNER JOIN Exercicio ON Exercicio.ID =  ExercicioPlano.RefID_exercicio\
+        INNER JOIN Imagem ON Imagem.RefID_exercicio = Exercicio.ID\
+    "
+    planos = conn.execute(query)
+    responses = []
+    plansNames = []
+    for row in planos:
+        if(row[0] not in plansNames):
+            plansNames.append(row[0])
+            exerData = []
+            img_data = base64.b64encode(row[9]).decode('utf-8')
+            exerData.append({'series': row[3], 'repeticoes':row[4],'ordem':row[5],\
+                        'nome':row[6], 'tipo':row[7], 'descricao':row[8]#,\
+                        #'imagem':img_data
+                       })
+            response = {'nome':row[0], 'Autor':row[1], 'descricao': row[2], 'exercicio':exerData}
+            responses.append(response)
+        else:
+            img_data = base64.b64encode(row[9]).decode('utf-8')
+            exerData = {'series': row[3], 'repeticoes':row[4],'ordem':row[5],\
+                        'nome':row[6], 'tipo':row[7], 'descricao':row[8]#,\
+                        #'imagem':img_data
+                       }
+            response['exercicio'].append(exerData)
 
     conn.close()
     return jsonify(responses),200
