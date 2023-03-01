@@ -3,9 +3,9 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from werkzeug.security import generate_password_hash, check_password_hash
 import base64
 
-auth = Blueprint('auth', __name__)
+api = Blueprint('api', __name__)
 
-@auth.route('/addExercise2', methods=['POST'])
+@api.route('/addExercise2', methods=['POST'])
 def add_exercise():
     if request.method == 'POST':
         exercise_data = request.get_json()
@@ -25,7 +25,7 @@ def add_exercise():
     else:
         return jsonify({'error': 'Invalid request method'}), 400
 
-@auth.route('/addExercise', methods=['GET', 'POST'])
+@api.route('/addExercise', methods=['GET', 'POST'])
 def addExercise():
     alert_message = ''
     if request.method == 'POST':
@@ -53,10 +53,10 @@ def addExercise():
         conn.close()
         alert_message = 'Exercício adicionado com sucesso!'
         #return jsonify({'message': 'Exercício adicionado com sucesso!'})
-        #return redirect(url_for('auth.getExercises'))
+        #return redirect(url_for('api.getExercises'))
     return render_template('addExercise.html', alert_message=alert_message)
 
-@auth.route('/removeExercise', methods=['GET','POST'])
+@api.route('/removeExercise', methods=['GET','POST'])
 def removeExercise():
     alert_message = ''
     if request.method == 'POST':
@@ -85,7 +85,7 @@ def removeExercise():
     return render_template('removeExercise.html', alert_message=alert_message)
 
 # para já só vai buscar os excs com imagem (por causa do INNER JOIN)
-@auth.route('/getExercises', methods=['GET', 'POST'])
+@api.route('/getExercises', methods=['GET', 'POST'])
 def getExercises():
     if request.method == 'GET':
         conn = sqlite3.connect('PlanosUser.db')
@@ -109,7 +109,7 @@ def getExercises():
 
 # Buscar todos os excs com ID igual ao do plano (da sessao)
 
-@auth.route('/getExercise/id=<id>', methods=['GET', 'POST'])
+@api.route('/getExercise/id=<id>', methods=['GET', 'POST'])
 def getExercise(id):
     if request.method == 'GET':
         conn = sqlite3.connect('PlanosUser.db')
@@ -122,7 +122,7 @@ def getExercise(id):
         return jsonify(response), 200
     return jsonify({'error': 'Invalid request method'}), 400
 
-@auth.route('/', methods=['GET','POST'])
+@api.route('/', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
         data = request.json()
@@ -147,7 +147,7 @@ def login():
             return jsonify({'error': 'Email does not exist.'}), 400
     return jsonify({'error': 'Invalid request method'}), 400
 
-@auth.route('/signup', methods=['GET' , 'POST'])
+@api.route('/signup', methods=['GET' , 'POST'])
 def signup():
     if request.method == 'POST':
         #data = request.json()
@@ -174,7 +174,7 @@ def signup():
 
 # Aqui temos a ir buscar as sessoes de cada utilizador
 
-@auth.route('/profile/user_Id=<user_id>')
+@api.route('/profile/user_Id=<user_id>')
 def profile(user_id):
     conn = sqlite3.connect('PlanosUser.db')
     query  = f"SELECT Sessao.Dia, Plano.Nome, Plano.Autor, Plano.Descricao \
@@ -197,7 +197,7 @@ def profile(user_id):
     return jsonify(responses),200
     #return render_template('home.html',dias=dias,planos=planos)
 
-@auth.route('/addPlano', methods =['GET' , 'POST'])
+@api.route('/addPlano', methods =['GET' , 'POST'])
 def addPlano():
     alert_message = ''
     if request.method == 'POST':
@@ -213,7 +213,7 @@ def addPlano():
         alert_message = 'Plano adicionado com sucesso!'
     return render_template('addPlano.html', alert_message=alert_message)
 
-@auth.route('/addSessao', methods =['GET' , 'POST'])
+@api.route('/addSessao', methods =['GET' , 'POST'])
 def addSessao():
     alert_message = ''
     if request.method == 'POST':
@@ -229,7 +229,7 @@ def addSessao():
         alert_message = 'Sessão adicionado com sucesso!'
     return render_template('addSessao.html', alert_message=alert_message)
 
-@auth.route('/profileComplet/user_id=<user_id>', methods = ['GET', 'POST'])
+@api.route('/profileComplet/user_id=<user_id>', methods = ['GET', 'POST'])
 def getMySesson(user_id):
     conn = sqlite3.connect('PlanosUser.db')
     query  = f"\
@@ -263,7 +263,7 @@ def getMySesson(user_id):
     conn.close()
     return jsonify(responses),200
 
-@auth.route('/getPlanos', methods = ['GET', 'POST'])
+@api.route('/getPlanos', methods = ['GET', 'POST'])
 def getPlanos():
     conn = sqlite3.connect('PlanosUser.db')
     query  = f"\
