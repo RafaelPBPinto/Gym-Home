@@ -44,7 +44,20 @@ namespace GymHome
         /// </summary>
         public App()
         {
+            if (!File.Exists(m_loggerPath))
+            {
+                var file = File.Create(m_loggerPath);
+                file.Dispose();
+                //file.Close();
+            }
+
+            Logger.Init(m_loggerPath);
+            Logger.Log("logger initialized");
+            Logger.Log("Initializing base component");
+
             this.InitializeComponent();
+
+            Logger.Log("Initializing mqtt");
             m_mqttFactory = new MqttFactory();
             m_mqttClient = m_mqttFactory.CreateMqttClient();
             try
@@ -53,6 +66,7 @@ namespace GymHome
             }
             catch(Exception ex) 
             {
+                Logger.Error($"Failed to initialize mqtt. {ex.Message}");
                 Debug.WriteLine(ex.Message);
             }
         }
@@ -66,7 +80,7 @@ namespace GymHome
             //save the window in case its needed
             m_window = new Window();
 
-            //create a new frame and navigate to the MainPage
+            //create a new frame and navigate to the initial page
             m_window.Content = m_rootFrame = new Frame();
             m_window.Title = "GymHome";
             m_window.Activate();
@@ -126,6 +140,7 @@ namespace GymHome
         private IMqttClient m_mqttClient;
         private Dictionary<string,Action<string>> m_mqttActions = new Dictionary<string, Action<string>>();
         private readonly DispatcherQueue m_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        private readonly string m_loggerPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"log.txt");
 
         private async Task StartMqttListener(string serverName,int serverPort)
         {
