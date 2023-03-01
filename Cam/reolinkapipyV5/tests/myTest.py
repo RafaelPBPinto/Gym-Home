@@ -24,7 +24,7 @@ class TestCamera(unittest.TestCase, PtzAPIMixin):
 
     def setUpClass(cls) -> None:
         cls.config = read_config('../secrets.cfg')
-    # Atualizar o caminho, CORRIGIR ESTE PEDAÇO DE CODIGO, QUANDO TIVER TUDO A FUNFAR
+
     def setUp(self) -> None:
         self.cam = Camera(self.config.get('camera', 'ip'), self.config.get('camera', 'username'), self.config.get('camera', 'password'))
 
