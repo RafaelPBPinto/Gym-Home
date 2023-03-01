@@ -254,8 +254,8 @@ def getMySesson(user_id):
     for row in sessao:
         img_data = base64.b64encode(row[11]).decode('utf-8')
         exerData = {'series': row[4], 'repeticoes':row[5],'ordem':row[6],\
-                    'nome':row[7], 'tipo':row[8], 'descricao':row[9],\
-                    'imagem':{'nome':row[10], 'img':img_data} 
+                    'nome':row[7], 'tipo':row[8], 'descricao':row[9]#,\
+                    #'imagem':{'nome':row[10], 'img':img_data} 
                    }
         if row[8] == 'Força':
             force.append(exerData)
@@ -298,15 +298,25 @@ def getPlanos():
     "
     planos = conn.execute(query)
     responses = []
+    plansNames = []
     for row in planos:
-        img_data = base64.b64encode(row[9]).decode('utf-8')
-        exerData = {'series': row[3], 'repeticoes':row[4],'ordem':row[5],\
-                    'nome':row[6], 'tipo':row[7], 'descricao':row[8]#,\
-                    #'imagem':img_data
-                   }
-
-        response = {'nome':row[0], 'Autor':row[1], 'descricao': row[2], 'exercicio':exerData}
-        responses.append(response)
+        if(row[0] not in plansNames):
+            plansNames.append(row[0])
+            exerData = []
+            img_data = base64.b64encode(row[9]).decode('utf-8')
+            exerData.append({'series': row[3], 'repeticoes':row[4],'ordem':row[5],\
+                        'nome':row[6], 'tipo':row[7], 'descricao':row[8]#,\
+                        #'imagem':img_data
+                       })
+            response = {'nome':row[0], 'Autor':row[1], 'descricao': row[2], 'exercicio':exerData}
+            responses.append(response)
+        else:
+            img_data = base64.b64encode(row[9]).decode('utf-8')
+            exerData = {'series': row[3], 'repeticoes':row[4],'ordem':row[5],\
+                        'nome':row[6], 'tipo':row[7], 'descricao':row[8]#,\
+                        #'imagem':img_data
+                       }
+            response['exercicio'].append(exerData)
 
     conn.close()
     return jsonify(responses),200
