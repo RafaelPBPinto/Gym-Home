@@ -24,6 +24,9 @@ intents:
   - request_virar_camara_direita
   - request_virar_camara_cima
   - request_virar_camara_baixo
+  - request_scroll_up
+  - request_scroll_down
+  - request_todos_exercicios
 
 entities:
   - username
@@ -41,7 +44,7 @@ forms:
 slots:
   username:
     type: text
-    initial_value: "Gym@Home user"
+    initial_value: "Gym at Home user"
     influence_conversation: true
     mappings:
       - type: from_text
@@ -71,6 +74,9 @@ actions:
   - action_virar_camara_direita
   - action_virar_camara_cima
   - action_virar_camara_baixo
+  - action_scroll_up
+  - action_scroll_down
+  - action_mostrar_todos_exercicios
   
 
 responses:
@@ -131,6 +137,9 @@ responses:
   - text: "Qual a bebida favorita do pai natal?, O Gin Gobel."
   - text: "Como se chama um cão sem patas?, Não se chama, vai-se buscar."
   - text: "Como saber se o teu computador está velho?, Quando a placa mãe vira avó."
+
+  utter_todos_exercicios:
+  - text: "Aqui estão todos os exercícios!"
 
 session_config:
   session_expiration_time: 60

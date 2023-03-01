@@ -1,0 +1,12 @@
+Comandos MQTT:
+
+UI:
+selecionar_opcao -> opcao
+comecar
+avancar
+voltar
+terminar
+scroll_up
+scroll_down
+
+
