@@ -11,6 +11,10 @@ namespace GymHome
 {
     public partial class Plan : ObservableObject
     {
+        private static int index = 0;
+
+        public string IndexString { get; private set; }
+
         [JsonPropertyName("nome")]
         public string Title { get; set; }
 
@@ -42,6 +46,13 @@ namespace GymHome
             Description = description;
             this.bufferPlanExercise = bufferPlanExercise;
             PlanExercise.Add(bufferPlanExercise);
+            IndexString = index.ToString();
+            index++;
+        }
+
+        public static void ResetIndex()
+        {
+            index = 0;
         }
     }
 

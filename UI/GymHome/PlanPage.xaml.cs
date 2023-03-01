@@ -43,5 +43,10 @@ namespace GymHome
         {
             await ((PlanViewModel)DataContext).PageLoaded(userID);
         }
+
+        private void Expander_Expanding(Expander sender, ExpanderExpandingEventArgs args)
+        {
+            ((PlanViewModel)DataContext).Expander_Expanding(sender);
+        }
     }
 }

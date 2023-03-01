@@ -135,7 +135,7 @@ namespace GymHome
             PreviousItem();
         }
 
-        protected override void RemoveCommands()
+        protected override void OnNavigatedFrom()
         {
             RemoveCommand("comecar");
             RemoveCommand("proximo");

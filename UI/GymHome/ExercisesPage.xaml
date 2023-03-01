@@ -79,19 +79,20 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="{Binding Title}" FontSize="24" 
-                           Foreground="Black" 
-                           VerticalAlignment="Top"
-                           HorizontalAlignment="Center"
-                           Margin="0 20 0 20"
-                           TextWrapping="WrapWholeWords"/>
+            <TextBlock Text="{Binding Title}" FontSize="30" 
+                       Foreground="Black" 
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"
+                       Margin="0 20 0 20"
+                       FontWeight="SemiBold"
+                       TextWrapping="WrapWholeWords"/>
             <ScrollViewer
-                  HorizontalScrollBarVisibility="Disabled" 
-                  VerticalScrollBarVisibility="Auto"
-                  Grid.Row="1"
+                HorizontalScrollBarVisibility="Disabled" 
+                VerticalScrollBarVisibility="Auto"
+                Grid.Row="1"
                 Margin="20 0 20 0">
-                <TextBlock TextWrapping="Wrap" Foreground="Black" FontSize="50"
-            Text="{Binding Description}"/>
+                <TextBlock TextWrapping="Wrap" Foreground="Black" FontSize="25"
+                           Text="{Binding Description}"/>
             </ScrollViewer>
             <Button CornerRadius="15"
                     Background="LightBlue"

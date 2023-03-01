@@ -22,7 +22,7 @@ namespace GymHome
         /// <param name="pageType">The type of the page to navigate to.</param>
         public void Navigate(Type pageType,object param = null)
         {
-            RemoveCommands();
+            OnNavigatedFrom();
             ((App)App.Current).Navigate(pageType,param);
         }
 
@@ -31,7 +31,7 @@ namespace GymHome
         /// </summary>
         public void NavigateToPreviousPage()
         {
-            RemoveCommands();
+            OnNavigatedFrom();
             ((App)App.Current).NavigateToPreviousPage();
         }
 
@@ -59,7 +59,7 @@ namespace GymHome
             NavigateToPreviousPage();
         }
 
-        protected virtual void RemoveCommands()
+        protected virtual void OnNavigatedFrom()
         {
         }
     }

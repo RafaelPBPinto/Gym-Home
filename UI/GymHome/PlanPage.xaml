@@ -39,7 +39,6 @@
                    Style="{StaticResource TitleTextBlockStyle}"
                    Padding="20"
                    />
-
         <ListView 
                   Grid.Row="1"
                   Grid.Column="0"
@@ -50,13 +49,15 @@
                   SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:Plan">
-                    <Expander HorizontalAlignment="Stretch">
+                    <Expander HorizontalAlignment="Stretch"
+                              Expanding="Expander_Expanding">
                         <Expander.Header>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
+                                <TextBlock Visibility="Collapsed" Text="{x:Bind IndexString}" />
                                 <Image Source="./Assets/calendar-regular.svg" MaxHeight="75"
                                     Margin="0 0 20 0"/>
                                 <Grid Grid.Column="1">
@@ -104,19 +105,20 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="{Binding Title}" FontSize="24" 
-                           Foreground="Black" 
-                           VerticalAlignment="Top"
-                           HorizontalAlignment="Center"
-                           Margin="0 20 0 20"
-                           TextWrapping="WrapWholeWords"/>
+            <TextBlock Text="{Binding Title}" FontSize="30" 
+                       FontWeight="SemiBold"
+                       Foreground="Black" 
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"
+                       Margin="0 20 0 20"
+                       TextWrapping="WrapWholeWords"/>
             <ScrollViewer
-                  HorizontalScrollBarVisibility="Disabled" 
-                  VerticalScrollBarVisibility="Auto"
-                  Grid.Row="1"
+                HorizontalScrollBarVisibility="Disabled" 
+                VerticalScrollBarVisibility="Auto"
+                Grid.Row="1"
                 Margin="20 0 20 0">
-                <TextBlock TextWrapping="Wrap" Foreground="Black" FontSize="50"
-            Text="{Binding Description}"/>
+                <TextBlock TextWrapping="Wrap" Foreground="Black" FontSize="25"
+                           Text="{Binding Description}"/>
             </ScrollViewer>
             <Button CornerRadius="15"
                     Background="LightBlue"

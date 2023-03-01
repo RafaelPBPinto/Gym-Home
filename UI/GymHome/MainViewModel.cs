@@ -48,7 +48,7 @@ namespace GymHome
             ListAllExercises();
         }
 
-        protected override void RemoveCommands()
+        protected override void OnNavigatedFrom()
         {
             RemoveCommand("todos os exercicios");
         }
