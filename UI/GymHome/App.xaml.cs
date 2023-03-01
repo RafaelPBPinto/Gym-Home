@@ -1,32 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
 using MQTTnet;
 using MQTTnet.Client;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Text;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using Microsoft.UI.Dispatching;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -108,11 +95,13 @@ namespace GymHome
             if (keyword == null)
                 return;
 
+            Logger.Info($"Added command with keyword \"{keyword}\"");
             m_mqttActions[keyword] = action;
         }
 
         public void RemoveCommand(string keyword) 
         {
+            Logger.Info($"Removing command wiht keyword \"{keyword}\"");
             m_mqttActions.Remove(keyword);
         }
 
@@ -131,7 +120,14 @@ namespace GymHome
         /// </summary>
         public void NavigateToPreviousPage()
         {
-            m_rootFrame.GoBack();
+            try
+            {
+                m_rootFrame.GoBack();
+            }
+            catch(Exception ex) 
+            {
+                Logger.Error($"Failed to navigate to previous page. {ex.Message}");
+            }
         }
 
         private Window m_window;
@@ -140,7 +136,7 @@ namespace GymHome
         private IMqttClient m_mqttClient;
         private Dictionary<string,Action<string>> m_mqttActions = new Dictionary<string, Action<string>>();
         private readonly DispatcherQueue m_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        private readonly string m_loggerPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"log.txt");
+        private readonly string m_loggerPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"log.txt");
 
         private async Task StartMqttListener(string serverName,int serverPort)
         {
@@ -161,18 +157,22 @@ namespace GymHome
         private Task MessageReceived(MqttApplicationMessageReceivedEventArgs arg)
         {
             string message = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload);
+            Logger.Log($"Mqtt message received. Message: {message}");
             try
             {
                 MqttCommand command = JsonSerializer.Deserialize<MqttCommand>(message);
                 bool res = m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
                     () =>
                     {
-                        if(m_mqttActions.ContainsKey(command.Command))
-                            m_mqttActions[command.Command].Invoke(command.Arg);
+                        if (m_mqttActions.ContainsKey(command.Command))
+                               m_mqttActions[command.Command].Invoke(command.Arg);
+                        else
+                            Logger.Warning($"Unknown command received. {command.Command}");
                     });
             }
             catch(Exception ex)
             {
+                Logger.Error($"Caught exception while trying to execute received mqtt command. {ex.Message}");
                 Debug.WriteLine(ex.Message);
             }
 

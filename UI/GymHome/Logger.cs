@@ -42,6 +42,11 @@ namespace GymHome
             LogMessage($"- Info: {message}");
         }
 
+        public static void Warning(string message)
+        {
+            LogMessage($"- Warning: {message}");
+        }
+
         private static void LogMessage(string message) 
         {
             if (writer == null)
