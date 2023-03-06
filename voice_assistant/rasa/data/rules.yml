@@ -2,15 +2,15 @@ version: "3.1"
 
 rules:
 
+- rule: Cumprimentar sempre que a pessoa cumprimenta
+  steps:
+  - intent: cumprimentar
+  - action: utter_greet
+
 - rule: Say goodbye anytime the user says goodbye
   steps:
   - intent: despedir
   - action: utter_goodbye
-
-- rule: Say 'I am a bot' anytime the user challenges
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
 
 - rule: Mostrar planos de exercicios sempre que a pessoa pedir
   steps:
@@ -56,11 +56,6 @@ rules:
   steps:
   - intent: ronaldo
   - action: utter_ronaldo
-
-- rule: dizer uma piada sempre que for pedido
-  steps:
-  - intent: request_piada
-  - action: utter_piada
 
 - rule: ativar form_name
   steps:

@@ -5,9 +5,6 @@ intents:
   - despedir
   - response_afirmar
   - response_negar
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
   - wake_up
   - request_planos_exercicios
   - request_selecionar_opcao
@@ -18,7 +15,6 @@ intents:
   - request_terminar
   - agradecer
   - ronaldo
-  - request_piada
   - ask_username
   - request_virar_camara_esquerda
   - request_virar_camara_direita
@@ -27,6 +23,7 @@ intents:
   - request_scroll_up
   - request_scroll_down
   - request_todos_exercicios
+  - response_selecionar_opcao
 
 entities:
   - username
@@ -44,7 +41,7 @@ forms:
 slots:
   username:
     type: text
-    initial_value: "Gym at Home user"
+    initial_value: "Maria"
     influence_conversation: true
     mappings:
       - type: from_text
@@ -92,20 +89,8 @@ responses:
   utter_slots_values:
   - text: "Vou guardar o teu nome como {username}"
 
-  utter_cheer_up:
-  - text: "Aqui está algo para te animar:"
-
-  utter_did_that_help:
-  - text: "Ajudou-te?"
-
-  utter_happy:
-  - text: "Boa, continua assim!"
-
   utter_goodbye:
   - text: "Adeus"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
 
   utter_exercicios:
   - text: "Aqui estão os seus planos de exercícios!"
@@ -131,15 +116,11 @@ responses:
   utter_ronaldo:
   - text: "SIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
 
-  utter_piada:
-  - text: "Como as enzimas se reproduzem?, Fica uma enzima da outra."
-  - text: "Para onde o mamão vai passar as férias?, Papaya"
-  - text: "Qual a bebida favorita do pai natal?, O Gin Gobel."
-  - text: "Como se chama um cão sem patas?, Não se chama, vai-se buscar."
-  - text: "Como saber se o teu computador está velho?, Quando a placa mãe vira avó."
-
   utter_todos_exercicios:
   - text: "Aqui estão todos os exercícios!"
+
+  utter_ask_opcao:
+  - text: "Qual opção deseja selecionar?"
 
 session_config:
   session_expiration_time: 60

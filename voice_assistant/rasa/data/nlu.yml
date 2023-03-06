@@ -69,13 +69,27 @@ nlu:
 
 - intent: request_selecionar_opcao
   examples: |
-    - selecionar [plano de pernas](opcao)
-    - selecionar opcao [plano de pernas](opcao)
-    - escolher [plano de pernas](opcao)
-    - escolher opcao [plano de pernas](opcao)
-    - quero fazer o [plano de pernas](opcao)
-    - quero fazer o [plano de pernas](opcao) hoje
-    - apetece-me fazer o [plano de pernas](opcao)
+    - selecionar uma opção
+    - selecionar opção
+    - escolher uma opção
+    - escolher opção
+    - quero escolher uma opção
+    - quero escolher opção
+    - quero selecionar uma opção
+    - quero selecionar opção
+
+- intent: response_selecionar_opcao
+  examples: |
+    - [um](opcao)
+    - [dois](opcao)
+    - [três](opcao)
+    - [quatro](opcao)
+    - [cinco](opcao)
+    - [seis](opcao)
+    - [sete](opcao)
+    - [oito](opcao)
+    - [nove](opcao)
+    - [dez](opcao)
 
 - intent: request_comecar
   examples: |
@@ -109,54 +123,12 @@ nlu:
     - acabar
     - parar
 
-- intent: mood_great
-  examples: |
-    - estou bem
-    - estou ótimo
-    - estou muito bem
-    - estou muito bem, obrigado
-    - estou muito bem, e tu?
-    - sinto-me bem
-    - perfeito
-    - tive um dia ótimo
-    - feliz
-    - muito feliz
-    - estou muito feliz
-    - estou muito feliz hoje
-    - estou feliz
-
-- intent: mood_unhappy
-  examples: |
-    - triste
-    - não estou bem
-    - não estou muito bem
-    - muito triste
-    - tive um dia péssimo
-    - tive um dia horrível
-    - mal
-    - estou mal
-    - estou muito mal
-    - estou muito mal hoje
-
-- intent: request_piada
-  examples: |
-    - piada
-    - conta uma piada
-    - diz uma piada
-
 - intent: ronaldo
   examples: |
     - ronaldo
     - cr7
     - cristiano ronaldo
     - ronaldo
-
-- intent: bot_challenge
-  examples: |
-    - és um bot?
-    - és um robô?
-    - és um humano?
-    - és humano?
 
 - intent: request_virar_camara_esquerda
   examples: |
