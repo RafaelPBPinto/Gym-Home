@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GymHome
@@ -23,31 +21,14 @@ namespace GymHome
         [ObservableProperty]
         ObservableCollection<Plan> plans = new ObservableCollection<Plan>();
 
-        public string Title
+        public string Title => Plans.Count == 0 ? string.Empty : Plans[SelectedIndex].Title;
+
+        public string Description => Plans.Count == 0 ? string.Empty : Plans[SelectedIndex].Description;
+
+        public PlanViewModel()
         {
-            get
-            {
-                if(Plans.Count > 0)
-                    return Plans[SelectedIndex].Title;
-
-                return string.Empty;
-            }
-        }
-
-        public string Description
-        {
-            get
-            {
-                if(Plans.Count > 0)
-                    return Plans[SelectedIndex].Description;
-
-                return string.Empty;
-            }
-        }
-
-        public PlanViewModel() 
-        {
-            AddCommand(SelectPlan, "selecionar_opcao");
+            InitCommands();
+            Plan.ResetIndex();
         }
 
         private Expander m_lastOpenExpander = null;
@@ -63,7 +44,7 @@ namespace GymHome
             }
 
             var index = int.Parse(((TextBlock)((Grid)expander.Header).Children[0]).Text);
-            SelectedIndex = index-1;
+            SelectedIndex = index - 1;
         }
 
         public async Task PageLoaded(int userID)
@@ -81,7 +62,7 @@ namespace GymHome
                 return;
             }
 
-            foreach (Plan plan in m_plans) 
+            foreach (Plan plan in m_plans)
             {
                 Plans.Add(plan);
             }
@@ -115,16 +96,20 @@ namespace GymHome
             }
 
             index--;
-            if(index < 0 || index > Plans.Count - 1)
+            if (index < 0 || index > Plans.Count - 1)
                 return;
 
             SelectedIndex = index;
         }
 
+        private void InitCommands()
+        {
+            AddCommand(SelectPlan, Settings.VoiceKeywords.PlanPageSelectPlan);
+        }
+
         protected override void OnNavigatedFrom()
         {
-            Plan.ResetIndex();
-            RemoveCommand("selecionar_opcao");
+            RemoveCommand(Settings.VoiceKeywords.PlanPageSelectPlan);
         }
     }
 }

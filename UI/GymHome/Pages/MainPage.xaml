@@ -54,7 +54,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="./Assets/calendar-regular.svg" MaxHeight="75"
+                        <Image Source="../Assets/calendar-regular.svg" MaxHeight="75"
                                Margin="0 0 20 0"/>
                         <TextBlock Grid.Column="1"
                                    Text="Plano de exercicios"
@@ -79,7 +79,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="./Assets/Muscleman.png" MaxHeight="75"
+                        <Image Source="../Assets/Muscleman.png" MaxHeight="75"
                                Margin="0 0 20 0"/>
                         <TextBlock Grid.Column="1"
                                    Text="Mostrar todos os exercicios"
@@ -94,7 +94,7 @@
                 </Button>
             </Grid>
         </Grid>
-        <Image Source="./Assets/MainPageImage.jpg"
+        <Image Source="../Assets/MainPageImage.jpg"
                Grid.Column="1"
                Grid.Row="1"
                VerticalAlignment="Center"

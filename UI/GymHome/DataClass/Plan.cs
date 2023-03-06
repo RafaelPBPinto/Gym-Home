@@ -61,7 +61,7 @@ namespace GymHome
         }
     }
 
-    public class PlanExercise
+    public class PlanExercise : IExerciseItem
     {
         [JsonPropertyName("nome")]
         public string Title { get; set; }
@@ -69,13 +69,7 @@ namespace GymHome
         [JsonPropertyName("series")]
         public int Series { get; set; }
 
-        public string SeriesString
-        {
-            get
-            {
-                return $"{Series} series";
-            }
-        }
+        public string SeriesString => $"{Series} series";
 
         [JsonPropertyName("repeticoes")]
         public int Repetitions { get; set; }
