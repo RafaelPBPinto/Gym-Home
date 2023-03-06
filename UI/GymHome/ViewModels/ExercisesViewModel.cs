@@ -163,8 +163,6 @@ namespace GymHome
             PageNumber--;
         }
 
-        
-
         /// <summary>
         /// Wrapper function for voice command to call <see cref="StartExercise"/>
         /// </summary>

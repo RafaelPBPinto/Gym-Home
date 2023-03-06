@@ -9,6 +9,9 @@ namespace GymHome
         {
             if (!KeywordExists(Settings.VoiceKeywords.NavigateToPreviousPage))
                 AddCommand(NavigateToPreviousPage, Settings.VoiceKeywords.NavigateToPreviousPage);
+
+            if(!KeywordExists(Settings.VoiceKeywords.NavigateToMainPage))
+                AddCommand(NavigateToMainPage,Settings.VoiceKeywords.NavigateToMainPage);
         }
 
         /// <summary>
@@ -45,6 +48,10 @@ namespace GymHome
             return ((App)App.Current).keywordExists(keyword);
         }
 
+        protected virtual void OnNavigatedFrom()
+        {
+        }
+
         /// <summary>
         /// Wrapper function for voice command to call <see cref="NavigateToPreviousPage"/>
         /// </summary>
@@ -54,8 +61,10 @@ namespace GymHome
             NavigateToPreviousPage();
         }
 
-        protected virtual void OnNavigatedFrom()
+        private void NavigateToMainPage(string obj = null)
         {
+            Navigate(typeof(MainPage));
         }
+        
     }
 }
