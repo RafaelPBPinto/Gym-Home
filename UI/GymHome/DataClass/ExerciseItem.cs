@@ -2,7 +2,7 @@
 
 namespace GymHome
 {
-    class ExerciseItem
+    public class ExerciseItem : IExerciseItem
     {
         private static int index = 0;
 
@@ -39,7 +39,7 @@ namespace GymHome
         /// Gets or sets the type of exercise
         /// </summary>
         [JsonPropertyName("tipo")]
-        public string Type { get; set; }
+        public string ExerciseType { get; set; }
 
         /// <summary>
         /// Represents an exercise
@@ -48,18 +48,23 @@ namespace GymHome
         /// <param name="author">Author of the exercise</param>
         /// <param name="duration">Duration in seconds of the exercise</param>
         /// <param name="description">Description of the exercise</param>
-        /// <param name="type">Type of the exercise</param>
+        /// <param name="exerciseType">Type of the exercise</param>
         [JsonConstructor]
-        public ExerciseItem(string title, string author, int duration, string description, string type)
+        public ExerciseItem(string title, string author, int duration, string description, string exerciseType)
         {
             Title = title;
             Author = author;
             Duration = duration;
             Description = description;
-            Type = type;
+            ExerciseType = exerciseType;
             Index = index+1;
 
             index++;
+        }
+
+        public static void ResetIndex()
+        {
+            index = 0;
         }
     }
 }

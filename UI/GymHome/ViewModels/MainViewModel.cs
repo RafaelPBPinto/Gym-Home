@@ -54,12 +54,12 @@ namespace GymHome
 
         private void InitCommands()
         {
-            AddCommand(SelectOption, "selecionar_opcao");
+            AddCommand(SelectOption, Settings.VoiceKeywords.MainPageSelectOption);
         }
 
         protected override void OnNavigatedFrom()
         {
-            RemoveCommand("selecionar_opcao");
+            RemoveCommand(Settings.VoiceKeywords.MainPageSelectOption);
         }
     }
 }

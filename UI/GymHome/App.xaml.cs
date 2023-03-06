@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -35,11 +36,41 @@ namespace GymHome
             {
                 var file = File.Create(m_loggerPath);
                 file.Dispose();
-                //file.Close();
             }
 
             Logger.Init(m_loggerPath);
             Logger.Log("logger initialized");
+            Settings.SetDefaults();
+
+            //Logger.Log("Reading settings file");
+            //if (!File.Exists(m_settingsPath))
+            //{
+            //    Logger.Warning("Settings file not found. Creating file");
+            //    var file = File.Create(m_settingsPath);
+            //    file.Dispose();
+            //    try
+            //    {
+            //        Settings.SetDefaults();
+            //        string json = JsonSerializer.Serialize(new Settings());
+            //    }
+            //    catch(Exception ex) 
+            //    {
+            //        Debug.WriteLine(ex.Message);
+            //    }
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        JsonSerializer.Deserialize<Settings>(m_settingsPath);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Logger.Error($"Can't deserialize settings file. Message: {ex.Message}");
+            //        Settings.SetDefaults();
+            //    }
+            //}
+
             Logger.Log("Initializing base component");
 
             this.InitializeComponent();
@@ -62,7 +93,7 @@ namespace GymHome
         /// Invoked when the application is launched.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             //save the window in case its needed
             m_window = new Window();
@@ -86,22 +117,50 @@ namespace GymHome
         /// <summary>
         /// Adds a command to be called when the given keyword is received from the mqtt system.
         /// Any existing command is overriden if the <paramref name="keyword"/> is the same.
-        /// If <paramref name="keyword"/> is null then the command wont be added.
         /// </summary>
         /// <param name="action">Action to be called</param>
         /// <param name="keyword">Keyword used to call <paramref name="action"/></param>
-        public void AddCommand(Action<string> action,string keyword)
+        /// <exception cref="ArgumentNullException"></exception>
+        public void AddCommand(Action<string> action,string keyword, [CallerMemberName] string caller = "")
         {
-            if (keyword == null)
-                return;
+            if(action == null)
+            {
+                Logger.Error($"{caller} tried to add a null action.");
+                throw new ArgumentNullException("action");
+            }
 
-            Logger.Info($"Added command with keyword \"{keyword}\"");
+            if (keyword == null)
+            {
+                Logger.Error($"{caller} tried to add a null keyword.");
+                throw new ArgumentNullException("keyword");
+            }
+
+            Logger.Info($"{caller} added command \"{action}\" with keyword \"{keyword}\"");
             m_mqttActions[keyword] = action;
         }
 
-        public void RemoveCommand(string keyword) 
+        /// <summary>
+        /// Removes a registered command based on the <paramref name="keyword"/>.
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="caller"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Exception"></exception>
+        public void RemoveCommand(string keyword, [CallerMemberName] string caller = "") 
         {
-            Logger.Info($"Removing command wiht keyword \"{keyword}\"");
+            if(keyword == null)
+            {
+                Logger.Error($"{caller} tried to remove a command with a null keyword");
+                throw new ArgumentNullException("keyword");
+            }
+
+            if(!m_mqttActions.ContainsKey(keyword))
+            {
+                Logger.Error($"{caller} tried to remove a command with keyword \"{keyword}\", which doesn't exist.");
+                throw new Exception($"keyword \"{keyword}\" doesn't exist. Can't remove.");
+            }
+
+            Logger.Info($"{caller} removed a command with keyword \"{keyword}\"");
             m_mqttActions.Remove(keyword);
         }
 
@@ -112,6 +171,8 @@ namespace GymHome
         /// <returns></returns>
         public bool keywordExists(string keyword) 
         {
+            if (keyword == null)
+                return true;
             return m_mqttActions.ContainsKey(keyword);
         }
 
@@ -137,6 +198,7 @@ namespace GymHome
         private Dictionary<string,Action<string>> m_mqttActions = new Dictionary<string, Action<string>>();
         private readonly DispatcherQueue m_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         private readonly string m_loggerPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"log.txt");
+        private readonly string m_settingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json");
 
         private async Task StartMqttListener(string serverName,int serverPort)
         {
