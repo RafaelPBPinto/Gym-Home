@@ -236,7 +236,7 @@ def getMySesson(user_id):
     SELECT Sessao.Dia, Plano.Nome, Plano.Autor, Plano.Descricao,\
         ExercicioPlano.Series, ExercicioPlano.Repeticoes, ExercicioPlano.Ordem,\
         Exercicio.Nome, Exercicio.Tipo, Exercicio.Descricao, Imagem.Nome, Imagem.ImagemBinary,\
-        Video.Nome, Video.VideoBinary\
+        Video.Nome, Video.VideoPath\
     FROM Sessao INNER JOIN Plano ON Sessao.RefID_plano = Plano.ID\
         INNER JOIN ExercicioPlano ON ExercicioPlano.RefID_plano = Plano.ID \
         INNER JOIN Exercicio ON Exercicio.ID =  ExercicioPlano.RefID_exercicio\
@@ -252,14 +252,14 @@ def getMySesson(user_id):
     for row in sessao:
         if row[1] not in plansName:
             plansName.append(row[1])
-            video_data = base64.b64encode(row[13]).decode('utf-8')
-            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'video':video_data}#, 'imagem': row[11]}
+            #video_data = base64.b64encode(row[13]).decode('utf-8')
+            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'video':row[13]}#, 'imagem': row[11]}
             response = {'dia':row[0],'nome':row[1], 'Autor':row[2], 'descricao': row[3], 'exercicios': [exerData]}
             responses.append(response)
         else:
             
-            video_data = base64.b64encode(row[13]).decode('utf-8')
-            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'video':video_data}#, 'imagem': row[11]}
+            #video_data = base64.b64encode(row[13]).decode('utf-8')
+            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'video':row[13]}#, 'imagem': row[11]}
     
             for plan in responses:
                 if plan['nome'] == row[1]:
