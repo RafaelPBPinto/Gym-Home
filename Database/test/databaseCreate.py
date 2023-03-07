@@ -32,7 +32,7 @@ conn.execute(query)
 query = ('''CREATE TABLE IF NOT EXISTS Video
         (ID INTEGER PRIMARY KEY,
         Nome TEXT NOT NULL,
-        VideoBinary BLOB,
+        VideoPath TEXT,
         RefID_exercicio  INTEGER NOT NULL,
         FOREIGN KEY(RefID_exercicio) REFERENCES Exercicio(ID)
         );''')
