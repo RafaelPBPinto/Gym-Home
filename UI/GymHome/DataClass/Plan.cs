@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -39,6 +40,10 @@ namespace GymHome
         [ObservableProperty]
         public ObservableCollection<PlanExercise> planExercise = new ObservableCollection<PlanExercise>();
 
+        public string ImageSource => "";
+
+        private string m_imagePath;
+
         [JsonConstructor]
         public Plan(string title, string author, string day, string description, PlanExercise[] bufferPlanExercise)
         {
@@ -52,12 +57,24 @@ namespace GymHome
                 PlanExercise.Add(exercise);
 
             IndexString = (index+1).ToString();
+            m_imagePath = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images"), $"{TitleString}.png");
+
+            if(!File.Exists(m_imagePath))
+                SaveImage(PlanExercise[0].ImageBytes);
+
             index++;
         }
 
         public static void ResetIndex()
         {
             index = 0;
+        }
+
+        private void SaveImage(byte[] imageBytes)
+        {
+            if (imageBytes == null)
+                return;
+            File.WriteAllBytes(m_imagePath, imageBytes);
         }
     }
 
@@ -80,5 +97,12 @@ namespace GymHome
         public string ExerciseType { get; set; }
 
         public string ExerciseTypeString => $"Tipo: {ExerciseType}";
+
+        [JsonPropertyName("videoID")]
+        public int VideoID { get; set; }
+
+        [JsonPropertyName("imagem")]
+        [JsonConverter(typeof(ImageDataConverter))]
+        public byte[] ImageBytes { get; set; }
     }
 }

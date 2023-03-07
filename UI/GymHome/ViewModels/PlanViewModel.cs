@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -76,6 +77,16 @@ namespace GymHome
         public void GoBack()
         {
             NavigateToPreviousPage();
+        }
+
+        [RelayCommand]
+        public void StartPlan()
+        {
+            if (Plans.Count == 0)
+                return;
+
+            Plan plan = Plans[SelectedIndex];
+            Navigate(typeof(VideoPage), plan.PlanExercise.ToArray());
         }
 
         private void SelectPlan(string obj = null)

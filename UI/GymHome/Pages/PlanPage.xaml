@@ -127,7 +127,7 @@
                     Grid.Row="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Command="{Binding StartExerciseCommand}">
+                    Command="{Binding StartPlanCommand}">
                 <TextBlock Text="Comecar" Foreground="Black" FontSize="30"/>
             </Button>
         </Grid>

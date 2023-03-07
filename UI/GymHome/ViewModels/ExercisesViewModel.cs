@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -28,49 +30,52 @@ namespace GymHome
 
         private ExerciseItem[] ex =
         {
-            new ExerciseItem("test","antonio",20,"descricao","forca"),
-            new ExerciseItem("item","manuel",50,"desc","tipo"),
-            new ExerciseItem("alo","manuel",50,"desc","tipo"),
-            new ExerciseItem("aaaaa","manuel",50,"desc","tipo"),
-            new ExerciseItem("bbbbb","manuel",50,"desc","tipo"),
-            new ExerciseItem("ccccc","manuel",50,"desc","tipo"),
-            new ExerciseItem("itzzzem","manuel",50,"desc","tipo"),
-            new ExerciseItem("iggggtem","manuel",50,"desc","tipo"),
-            new ExerciseItem("hhhhh","manuel",50,"desc","tipo"),
-            new ExerciseItem("qqqqq","manuel",50,"desc","tipo"),
-            new ExerciseItem("ttttt","manuel",50,"desc","tipo"),
-            new ExerciseItem("123513","manuel",50,"desc","tipo")
+            //new ExerciseItem("test","antonio",20,"descricao","forca"),
+            //new ExerciseItem("item","manuel",50,"desc","tipo"),
+            //new ExerciseItem("alo","manuel",50,"desc","tipo"),
+            //new ExerciseItem("aaaaa","manuel",50,"desc","tipo"),
+            //new ExerciseItem("bbbbb","manuel",50,"desc","tipo"),
+            //new ExerciseItem("ccccc","manuel",50,"desc","tipo"),
+            //new ExerciseItem("itzzzem","manuel",50,"desc","tipo"),
+            //new ExerciseItem("iggggtem","manuel",50,"desc","tipo"),
+            //new ExerciseItem("hhhhh","manuel",50,"desc","tipo"),
+            //new ExerciseItem("qqqqq","manuel",50,"desc","tipo"),
+            //new ExerciseItem("ttttt","manuel",50,"desc","tipo"),
+            //new ExerciseItem("123513","manuel",50,"desc","tipo")
         };
         public async Task PageLoaded()
         {
-            for(int i = 0; i < ex.Length && i < m_elementsPerPage; i++)
-            {
-                ExerciseItems.Add(ex[i]);
-            }
-            SelectedIndex = 0;
-            OnPropertyChanged(nameof(Title));
-            OnPropertyChanged(nameof(Description));
-            PageNumber = 1;
-            return;
-            //HttpClient client = new HttpClient();
-            //List<ExerciseItem> items = null;
-            //try
+            //for(int i = 0; i < ex.Length && i < m_elementsPerPage; i++)
             //{
-            //    items = await client.GetFromJsonAsync<List<ExerciseItem>>("http://localhost:5000/getExercises");
+            //    ExerciseItems.Add(ex[i]);
             //}
-            //catch 
-            //{
-            //    return;
-            //}
-
-            //foreach (ExerciseItem item in items)
-            //{
-            //    ExerciseItems.Add(item);
-            //}
-
             //SelectedIndex = 0;
             //OnPropertyChanged(nameof(Title));
             //OnPropertyChanged(nameof(Description));
+            //PageNumber = 1;
+            //return;
+            HttpClient client = new HttpClient();
+            List<ExerciseItem> items = null;
+            try
+            {
+                if (!Directory.Exists("./Images"))
+                    Directory.CreateDirectory("./Images");
+                items = await client.GetFromJsonAsync<List<ExerciseItem>>("http://localhost:5000/getExercises");
+                
+            }
+            catch
+            {
+                return;
+            }
+
+            foreach (ExerciseItem item in items)
+            {
+                ExerciseItems.Add(item);
+            }
+
+            SelectedIndex = 0;
+            OnPropertyChanged(nameof(Title));
+            OnPropertyChanged(nameof(Description));
         }
 
         /// <summary>
