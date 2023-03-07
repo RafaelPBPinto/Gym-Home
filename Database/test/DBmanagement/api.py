@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, flash, redirect, send_file, url_for, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 import base64
 
@@ -229,14 +229,14 @@ def addSessao():
         alert_message = 'Sessão adicionado com sucesso!'
     return render_template('addSessao.html', alert_message=alert_message)
 
-@api.route('/profileComplet/user_id=<user_id>', methods = ['GET', 'POST'])
+@api.route('/profileComplete/user_id=<user_id>', methods = ['GET', 'POST'])
 def getMySesson(user_id):
     conn = sqlite3.connect('PlanosUser.db')
     query  = f"\
     SELECT Sessao.Dia, Plano.Nome, Plano.Autor, Plano.Descricao,\
         ExercicioPlano.Series, ExercicioPlano.Repeticoes, ExercicioPlano.Ordem,\
         Exercicio.Nome, Exercicio.Tipo, Exercicio.Descricao, Imagem.Nome, Imagem.ImagemBinary,\
-        Video.Nome, Video.VideoPath\
+        Video.ID\
     FROM Sessao INNER JOIN Plano ON Sessao.RefID_plano = Plano.ID\
         INNER JOIN ExercicioPlano ON ExercicioPlano.RefID_plano = Plano.ID \
         INNER JOIN Exercicio ON Exercicio.ID =  ExercicioPlano.RefID_exercicio\
@@ -267,6 +267,21 @@ def getMySesson(user_id):
                     break   
     conn.close()
     return jsonify(responses),200
+
+@api.route('/getVideo/video_id=<video_id>', methods = ['GET', 'POST'])
+def getVideo(video_id):
+    conn = sqlite3.connect('PlanosUser.db')
+    query  = f"SELECT Video.VideoName FROM Video WHERE Video.ID = '{video_id}'"
+    sessao = conn.execute(query)
+    # with the name of the video get the binary data on the folder video and return it with json
+    for row in sessao:
+        video = row[0]
+        break
+    conn.close()
+    return send_file(f'video/{video}', mimetype='video/mp4')
+    
+
+
 
 @api.route('/getPlanos', methods = ['GET', 'POST'])
 def getPlanos():
