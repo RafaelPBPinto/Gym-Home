@@ -253,13 +253,13 @@ def getMySesson(user_id):
         if row[1] not in plansName:
             plansName.append(row[1])
             #video_data = base64.b64encode(row[13]).decode('utf-8')
-            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'video':row[13]}#, 'imagem': row[11]}
+            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'videoID':row[12]}#, 'imagem': row[11]}
             response = {'dia':row[0],'nome':row[1], 'Autor':row[2], 'descricao': row[3], 'exercicios': [exerData]}
             responses.append(response)
         else:
             
             #video_data = base64.b64encode(row[13]).decode('utf-8')
-            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'video':row[13]}#, 'imagem': row[11]}
+            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'videoID':row[12]}#, 'imagem': row[11]}
     
             for plan in responses:
                 if plan['nome'] == row[1]:
