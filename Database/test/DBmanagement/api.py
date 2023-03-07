@@ -89,7 +89,7 @@ def removeExercise():
 def getExercises():
     if request.method == 'GET':
         conn = sqlite3.connect('PlanosUser.db')
-        query = f"SELECT Exercicio.Nome, Exercicio.Tipo, Exercicio.Duracao, Exercicio.Descricao, Imagem.ImagemBinary FROM Exercicio INNER JOIN Imagem ON Exercicio.ID = Imagem.RefID_exercicio"
+        query = f"SELECT Exercicio.Nome, Exercicio.Tipo, Exercicio.Duracao, Exercicio.Descricao, Imagem.ImagemBinary, Video.ID FROM Exercicio INNER JOIN Imagem ON Exercicio.ID = Imagem.RefID_exercicio INNER JOIN Video ON Exercicio.ID = Video.RefID_exercicio"
         result = conn.execute(query)
         # result = result.fetchall()
         
@@ -99,7 +99,7 @@ def getExercises():
         while row is not None:
             if row[4] is not None:
                 img_data = base64.b64encode(row[4]).decode('utf-8')            
-            response = {'nome': row[0], 'tipo': row[1], 'duracao': row[2], 'descricao': row[3]}#, 'imagem': img_data}
+            response = {'nome': row[0], 'tipo': row[1], 'duracao': row[2], 'descricao': row[3], 'videoID': row[5]}#, 'imagem': img_data}
             responses.append(response)
             row = result.fetchone()
 
