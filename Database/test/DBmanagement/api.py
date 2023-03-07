@@ -99,7 +99,7 @@ def getExercises():
         while row is not None:
             if row[4] is not None:
                 img_data = base64.b64encode(row[4]).decode('utf-8')            
-            response = {'nome': row[0], 'tipo': row[1], 'duracao': row[2], 'descricao': row[3], 'videoID': row[5]}#, 'imagem': img_data}
+            response = {'nome': row[0], 'tipo': row[1], 'duracao': row[2], 'descricao': row[3], 'videoID': row[5], 'imagem': img_data}
             responses.append(response)
             row = result.fetchone()
 
@@ -252,15 +252,16 @@ def getMySesson(user_id):
     for row in sessao:
         if row[1] not in plansName:
             plansName.append(row[1])
-            #video_data = base64.b64encode(row[13]).decode('utf-8')
-            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'videoID':row[12]}#, 'imagem': row[11]}
+            if row[11] is not None:
+                img_data = base64.b64encode(row[11]).decode('utf-8')
+            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'videoID':row[12], 'imagem': img_data}
             response = {'dia':row[0],'nome':row[1], 'Autor':row[2], 'descricao': row[3], 'exercicios': [exerData]}
             responses.append(response)
         else:
-            
+            if row[11] is not None:
+                img_data = base64.b64encode(row[11]).decode('utf-8')
             #video_data = base64.b64encode(row[13]).decode('utf-8')
-            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'videoID':row[12]}#, 'imagem': row[11]}
-    
+            exerData = { 'series': row[4], 'repeticoes': row[5], 'ordem': row[6], 'nome': row[7], 'tipo': row[8], 'descricao': row[9], 'videoID':row[12],'imagem': img_data}
             for plan in responses:
                 if plan['nome'] == row[1]:
                     plan['exercicios'].append(exerData)
