@@ -10,8 +10,6 @@ namespace GymHome
 {
     public class ExerciseItem : IExerciseItem
     {
-        private static int index = 0;
-
         public int Index { get; private set; }
 
         /// <summary>
@@ -53,9 +51,9 @@ namespace GymHome
 
         public string ImageSource => m_imagePath;
 
-        public int VideoID { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        [JsonPropertyName("videoID")]
+        public int VideoID { get; set; }
 
-        private string m_imagePath;
         /// <summary>
         /// Represents an exercise
         /// </summary>
@@ -64,7 +62,7 @@ namespace GymHome
         /// <param name="duration">Duration in seconds of the exercise</param>
         /// <param name="description">Description of the exercise</param>
         /// <param name="exerciseType">Type of the exercise</param>
-        public ExerciseItem(string title, string author, int duration, string description, string exerciseType, byte[] imageBytes = null)
+        public ExerciseItem(string title, string author, int duration, string description, string exerciseType, int videoID, byte[] imageBytes = null)
         {
             Title = title;
             Author = author;
@@ -72,21 +70,27 @@ namespace GymHome
             Description = description;
             ExerciseType = exerciseType;
             ImageBytes = imageBytes;
+            VideoID = videoID;
             Index = index + 1;
-            m_imagePath = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images"),$"{TitleString}.png");
+            m_imagePath = Path.Combine(m_imagesFolderPath, $"{TitleString}.png");
             SaveImage();
 
             index++;
         }
 
-        private void SaveImage() 
-        {
-            File.WriteAllBytes(m_imagePath, ImageBytes);
-        }
-
         public static void ResetIndex()
         {
             index = 0;
+        }
+
+
+        private static int index = 0;
+        private static string m_imagesFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+        private string m_imagePath;
+
+        private void SaveImage()
+        {
+            File.WriteAllBytes(m_imagePath, ImageBytes);
         }
     }
 
