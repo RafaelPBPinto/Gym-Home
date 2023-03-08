@@ -4,7 +4,7 @@ def processData():
     conn = sqlite3.connect('..\PlanosUser.db')
     cursor = conn.cursor()
    
-    sql = "DROP TABLE IF EXISTS Video;"
+    sql = "DROP TABLE IF EXISTS Imagem;"
 
     cursor.execute(sql)
     conn.commit()
