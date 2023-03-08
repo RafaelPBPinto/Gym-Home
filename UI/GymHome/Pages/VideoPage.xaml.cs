@@ -30,11 +30,5 @@ namespace GymHome
         {
             await ((VideoViewModel)DataContext).PageLoadedAsync();
         }
-
-        protected override async void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-            await ((VideoViewModel)DataContext).NavigatedFromAsync();
-        }
     }
 }

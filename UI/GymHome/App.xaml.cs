@@ -227,7 +227,10 @@ namespace GymHome
                     () =>
                     {
                         if (m_mqttActions.ContainsKey(command.Command))
-                               m_mqttActions[command.Command].Invoke(command.Arg);
+                        {
+                            Logger.Log($"executed command associated with key {command.Command}");
+                            m_mqttActions[command.Command].Invoke(command.Arg);
+                        }
                         else
                             Logger.Warning($"Unknown command received. {command.Command}");
                     });

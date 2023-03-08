@@ -29,14 +29,7 @@ namespace GymHome
         public MainPage()
         {
             this.InitializeComponent();
-            //DataContext = new MainViewModel();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            int id = (int)e.Parameter;
-            DataContext = new MainViewModel(id);
+            DataContext = new MainViewModel();
         }
     }
 }

@@ -41,19 +41,22 @@ namespace GymHome
         [RelayCommand]
         private void MariaLogIn()
         {
-            Navigate(typeof(MainPage), 1);
+            Settings.UserID = 1;
+            Navigate(typeof(MainPage));
         }
         
         [RelayCommand]
         private void AlbertoLogIn()
         {
-            Navigate(typeof(MainPage), 2);
+            Settings.UserID = 2;
+            Navigate(typeof(MainPage));
         }
         
         [RelayCommand]
         private void AntonioLogIn()
         {
-            Navigate(typeof(MainPage), 3);
+            Settings.UserID = 3;
+            Navigate(typeof(MainPage));
         }
 
     }

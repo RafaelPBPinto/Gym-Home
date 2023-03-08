@@ -59,6 +59,8 @@ namespace GymHome
 
         public VoiceKeywords voiceKeyword { get; set; }
 
+        public static int UserID { get; set; }
+
         public static void SetDefaults()
         {
             VoiceKeywords.SetDefaults();

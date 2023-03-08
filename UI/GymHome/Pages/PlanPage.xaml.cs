@@ -26,22 +26,15 @@ namespace GymHome
     /// </summary>
     public sealed partial class PlanPage : Page
     {
-        int userID;
         public PlanPage()
         {
             this.InitializeComponent();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
             DataContext = new PlanViewModel();
-            userID = (int)e.Parameter;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await ((PlanViewModel)DataContext).PageLoaded(userID);
+            await ((PlanViewModel)DataContext).PageLoaded();
         }
 
         private void Expander_Expanding(Expander sender, ExpanderExpandingEventArgs args)
