@@ -7,6 +7,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.Media.Core;
+using Windows.UI.Core;
 
 namespace GymHome
 {
@@ -42,7 +43,16 @@ namespace GymHome
             NavigateToPreviousPage();
         }
 
-        public async Task PageLoaded()
+        public async Task NavigatedFromAsync()
+        {
+            MediaPlayer.MediaPlayer.Pause();
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                MediaPlayer.MediaPlayer.Dispose();
+            });
+        }
+
+        public async Task PageLoadedAsync()
         {
             MediaPlayer = new MediaPlayerElement();
             MediaPlayer.AreTransportControlsEnabled = true;

@@ -28,7 +28,13 @@ namespace GymHome
 
         private async void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            await ((VideoViewModel)DataContext).PageLoaded();
+            await ((VideoViewModel)DataContext).PageLoadedAsync();
+        }
+
+        protected override async void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            await ((VideoViewModel)DataContext).NavigatedFromAsync();
         }
     }
 }

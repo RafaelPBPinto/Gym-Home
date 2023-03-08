@@ -114,7 +114,7 @@ namespace GymHome
         private void StartExercise()
         {
             if (ExerciseItems.Count > 0)
-                Navigate(typeof(VideoPage), ExerciseItems[SelectedIndex]);
+                Navigate(typeof(VideoPage), new IExerciseItem[1] { ExerciseItems[SelectedIndex] });
         }
 
         [RelayCommand]
