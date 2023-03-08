@@ -89,24 +89,20 @@ def removeExercise():
 def getExercises():
     if request.method == 'GET':
         conn = sqlite3.connect('PlanosUser.db')
-        query = f"SELECT Exercicio.ID, Exercicio.Nome, Exercicio.Tipo, Exercicio.Duracao, Exercicio.Descricao, Imagem.ImagemBinary, Video.ID FROM Exercicio INNER JOIN Imagem ON Exercicio.ID = Imagem.RefID_exercicio INNER JOIN Video ON Exercicio.ID = Video.RefID_exercicio"
+        query = f"SELECT Exercicio.Nome, Exercicio.Tipo, Exercicio.Duracao, Exercicio.Descricao, Imagem.ImagemBinary, Video.ID FROM Exercicio INNER JOIN Imagem ON Exercicio.ID = Imagem.RefID_exercicio INNER JOIN Video ON Exercicio.ID = Video.RefID_exercicio"
         result = conn.execute(query)
         # result = result.fetchall()
         
-        #responses = []
-        exercises = {}
+        responses = []
+        
+        row = result.fetchone()  
+        while row is not None:
+            if row[4] is not None:
+                img_data = base64.b64encode(row[4]).decode('utf-8')            
+            response = {'nome': row[0], 'tipo': row[1], 'duracao': row[2], 'descricao': row[3], 'videoID': row[5], 'imagem': img_data}
+            responses.append(response)
+            row = result.fetchone()
 
-        for row in result:
-            exercise_id = row[0]
-            if exercise_id not in exercises:
-                exercises[exercise_id] = {'nome': row[1], 'tipo': row[2], 'duracao': row[3], 'descricao': row[4], 'videoID': row[6], 'imagem': []}
-            
-            if row[5] is not None:
-                img_data = base64.b64encode(row[5]).decode('utf-8')   
-                exercises[exercise_id]['imagem'].append(img_data) 
-
-        #response = {'nome': row[0], 'tipo': row[1], 'duracao': row[2], 'descricao': row[3], 'videoID': row[5], 'imagem': img_data}
-        responses = list(exercises.values())
         conn.close()
         return jsonify(responses), 200
     return jsonify({'error': 'Invalid request method'}), 400
