@@ -1,0 +1,35 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Window
+    x:Class="StreamViewer.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StreamViewer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <WebView2 x:Name="webview"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical"
+                    Background="LightGray"
+                    CornerRadius="15"
+                    x:Name="panel"
+                    Padding="10">
+            <TextBlock Text="Stream ID" Foreground="Black" FontSize="20"
+                       Margin="10"/>
+            <TextBox Text="{x:Bind streamID,Mode=TwoWay}" Foreground="Black" FontSize="15" CornerRadius="10"
+                     Margin="10" Background="DarkGray" Width="200"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button Click="ButtonOkClick" Margin="10" Background="DimGray">
+                    <TextBlock Text="Ok" Foreground="Black" FontSize="20"/>
+                </Button>
+                <Button Click="ButtonCancelClick" Background="DimGray">
+                    <TextBlock Text="Cancel" Foreground="Black" FontSize="20"/>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
