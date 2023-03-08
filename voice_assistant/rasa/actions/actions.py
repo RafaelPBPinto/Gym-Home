@@ -239,4 +239,18 @@ class ActionMostrarTodosExercicios(Action):
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
         
         return []
+
+class ActionPaginaInicial(Action):
+    
+    def name(self) -> Text:
+        return "action_pagina_inicial"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        msg = {"comando": "sair"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
+        
+        return []
     

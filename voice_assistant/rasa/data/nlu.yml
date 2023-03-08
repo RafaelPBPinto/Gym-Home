@@ -105,6 +105,13 @@ nlu:
     - voltar para trás
     - andar para trás
 
+- intent: request_pagina_inicial
+  examples: |
+    - página inicial
+    - voltar para a página inicial
+    - voltar página inicial
+    - sair 
+
 - intent: request_avancar
   examples: |
     - avançar

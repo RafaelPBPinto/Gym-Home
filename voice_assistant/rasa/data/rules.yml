@@ -30,6 +30,12 @@ rules:
   - action: action_voltar
   - action: utter_voltar
 
+- rule: Voltar para a pagina inicial sempre que a pessoa pedir
+  steps:
+  - intent: request_pagina_inicial
+  - action: action_pagina_inicial
+  - action: utter_pagina_inicial
+
 - rule: Avancar sempre que a pessoa pedir
   steps:
   - intent: request_avancar
