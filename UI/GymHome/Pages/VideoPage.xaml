@@ -35,7 +35,7 @@
                    Style="{StaticResource TitleTextBlockStyle}"
                    Padding="20"
                    />
-        <ContentControl Content="{Binding MediaPlayer}"
+        <ContentControl Content="{Binding MediaPlayerElement}"
                         HorizontalAlignment="Stretch"
                         Grid.Row="1"/>
     </Grid>
