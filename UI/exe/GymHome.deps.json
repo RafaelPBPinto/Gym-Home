@@ -12,7 +12,7 @@
           "CommunityToolkit.Mvvm": "8.1.0",
           "MQTTnet": "4.1.4.563",
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.755",
-          "Microsoft.WindowsAppSDK": "1.2.230118.102",
+          "Microsoft.WindowsAppSDK": "1.2.230217.4",
           "runtimepack.Microsoft.NETCore.App.Runtime.win-x64": "6.0.13",
           "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.19041.28"
         },
@@ -878,7 +878,7 @@
         }
       },
       "Microsoft.Windows.SDK.BuildTools/10.0.22621.755": {},
-      "Microsoft.WindowsAppSDK/1.2.230118.102": {
+      "Microsoft.WindowsAppSDK/1.2.230217.4": {
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.755"
         },
@@ -889,7 +889,7 @@
           },
           "lib/net6.0-windows10.0.18362.0/Microsoft.WinUI.dll": {
             "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.0.2301"
+            "fileVersion": "3.0.0.2302"
           },
           "lib/net6.0-windows10.0.18362.0/Microsoft.Windows.AppLifecycle.Projection.dll": {
             "assemblyVersion": "1.2.0.0",
@@ -986,12 +986,12 @@
       "path": "microsoft.windows.sdk.buildtools/10.0.22621.755",
       "hashPath": "microsoft.windows.sdk.buildtools.10.0.22621.755.nupkg.sha512"
     },
-    "Microsoft.WindowsAppSDK/1.2.230118.102": {
+    "Microsoft.WindowsAppSDK/1.2.230217.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-MyHPzz4NSo+ulXkQ1sVo83SaZTFUcz429oy1m7lTfaxyU5St48p3TgzKKFRwe3WtpUf9OAUReYBCczIkojfmTQ==",
-      "path": "microsoft.windowsappsdk/1.2.230118.102",
-      "hashPath": "microsoft.windowsappsdk.1.2.230118.102.nupkg.sha512"
+      "sha512": "sha512-mGFBn5UKpH569iYAUZq7dS2ALG9vzxe25n/xGRBK3sdfm96BgyIiL1GZ/vb3M8BFwMj65GbcgFxseNZeajJXOg==",
+      "path": "microsoft.windowsappsdk/1.2.230217.4",
+      "hashPath": "microsoft.windowsappsdk.1.2.230217.4.nupkg.sha512"
     },
     "MQTTnet/4.1.4.563": {
       "type": "package",

@@ -40,16 +40,20 @@ namespace GymHome
         [RelayCommand]
         public void GoBack()
         {
-            NavigateToPreviousPage();
-        }
-
-        public async Task NavigatedFromAsync()
-        {
-            MediaPlayer.MediaPlayer.Pause();
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            if(MediaPlayer != null)
             {
-                MediaPlayer.MediaPlayer.Dispose();
-            });
+                MediaPlayer.MediaPlayer.Pause();
+                MediaPlayer = null;
+            }
+
+            try
+            {
+                NavigateToPreviousPage();
+            }
+            catch(Exception ex) 
+            {
+                Logger.Error($"error while leaving video page. {ex.Message}");
+            }
         }
 
         public async Task PageLoadedAsync()
@@ -73,7 +77,8 @@ namespace GymHome
             }
 
             SaveVideo(videoBytes);
-            MediaPlayer.Source = MediaSource.CreateFromUri(new Uri(Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Videos"), $"{Title}.mp4")));
+            if(MediaPlayer != null)
+                MediaPlayer.Source = MediaSource.CreateFromUri(new Uri(Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Videos"), $"{Title}.mp4")));
         }
 
         private IExerciseItem[] m_exerciseItems = null;

@@ -12,7 +12,6 @@ namespace GymHome
 {
     partial class MainViewModel : BaseViewModel
     {
-        int userID = 0;
         public MainViewModel() 
         {
             InitCommands();
@@ -20,7 +19,6 @@ namespace GymHome
 
         public MainViewModel(int id)
         {
-            userID = id;
             InitCommands();
         }
 
@@ -37,7 +35,7 @@ namespace GymHome
         [RelayCommand]
         void ShowPlans()
         {
-            Navigate(typeof(PlanPage), userID);
+            Navigate(typeof(PlanPage));
         }
 
         private void SelectOption(string obj = null)

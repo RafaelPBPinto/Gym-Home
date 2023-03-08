@@ -48,14 +48,14 @@ namespace GymHome
             SelectedIndex = index - 1;
         }
 
-        public async Task PageLoaded(int userID)
+        public async Task PageLoaded()
         {
             HttpClient client = new HttpClient();
             List<Plan> m_plans = null;
 
             try
             {
-                m_plans = await client.GetFromJsonAsync<List<Plan>>($"http://localhost:5000/profileComplete/user_id={userID}");
+                m_plans = await client.GetFromJsonAsync<List<Plan>>($"http://localhost:5000/profileComplete/user_id={Settings.UserID}");
             }
             catch (Exception ex)
             {
