@@ -140,11 +140,16 @@ namespace GymHome
             PreviousListPage();
         }
 
+        private void StartPlan(string obj = null)
+        {
+            StartPlan();
+        }
+
         private readonly Dictionary<string, int> m_stringNumToInt = new Dictionary<string, int>
         {
             {"um",1},
             {"dois",2 },
-            {"três",3 },
+            {"tres",3 },
             {"quatro",4 },
             {"cinco",5 },
             {"seis",6 },
@@ -175,6 +180,7 @@ namespace GymHome
             AddCommand(SelectPlan, Settings.VoiceKeywords.PlanPageSelectPlan);
             AddCommand(NextListPage, Settings.VoiceKeywords.ExercisesPageNextListPage);
             AddCommand(PreviousListPage, Settings.VoiceKeywords.ExercisesPagePreviousListPage);
+            AddCommand(StartPlan, Settings.VoiceKeywords.ExercisesPageStartExercise);
         }
 
         protected override void OnNavigatedFrom()
@@ -182,6 +188,7 @@ namespace GymHome
             RemoveCommand(Settings.VoiceKeywords.PlanPageSelectPlan);
             AddCommand(NextListPage, Settings.VoiceKeywords.ExercisesPageNextListPage);
             AddCommand(PreviousListPage, Settings.VoiceKeywords.ExercisesPagePreviousListPage);
+            AddCommand(StartPlan, Settings.VoiceKeywords.ExercisesPageStartExercise);
         }
     }
 }

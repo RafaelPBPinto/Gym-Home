@@ -43,8 +43,8 @@ namespace GymHome
                 ExercisesPageNextItem = "proximo";
                 ExercisesPagePreviousItem = "anterior";
                 ExercisesPageSelectExercise = "selecionar_opcao";
-                ExercisesPageNextListPage = "lista_proximo";
-                ExercisesPagePreviousListPage = "lista_anterior";
+                ExercisesPageNextListPage = "avancar";
+                ExercisesPagePreviousListPage = "voltar";
                 PlanPageSelectPlan = "selecionar_opcao";
                 NavigateToPreviousPage = "voltar";
                 NavigateToMainPage = "sair";
