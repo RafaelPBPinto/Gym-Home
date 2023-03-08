@@ -68,8 +68,7 @@
                            FontSize="20"/>
             </Button>
         </Grid>
-        <ListView 
-                  Grid.Row="2"
+        <ListView Grid.Row="2"
                   Grid.Column="0"
                   BorderBrush="LightBlue"
                   BorderThickness="0 0 2 0"

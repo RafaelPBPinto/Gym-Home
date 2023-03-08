@@ -36,6 +36,8 @@ namespace GymHome
             [JsonInclude]
             public static string NavigateToMainPage { get; private set; }
 
+            public static string VideoPageEndPlan { get; private set; }
+
             public static void SetDefaults()
             {
                 MainPageSelectOption = "selecionar_opcao";
@@ -43,11 +45,12 @@ namespace GymHome
                 ExercisesPageNextItem = "proximo";
                 ExercisesPagePreviousItem = "anterior";
                 ExercisesPageSelectExercise = "selecionar_opcao";
-                ExercisesPageNextListPage = "lista_proximo";
-                ExercisesPagePreviousListPage = "lista_anterior";
+                ExercisesPageNextListPage = "avancar";
+                ExercisesPagePreviousListPage = "voltar";
                 PlanPageSelectPlan = "selecionar_opcao";
                 NavigateToPreviousPage = "voltar";
                 NavigateToMainPage = "sair";
+                VideoPageEndPlan = "terminar";
             }
             //[JsonConstructor]
             //public VoiceKeywords(string mainPageSelectOption,string exercisesPageStartExercie,string exercisesPageNextItem,string exercisesPagePreviousItem,string exercisesPageSelectExercise

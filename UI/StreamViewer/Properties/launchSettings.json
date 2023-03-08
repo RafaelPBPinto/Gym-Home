@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "StreamViewer (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "StreamViewer (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
