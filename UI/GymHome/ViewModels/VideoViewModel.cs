@@ -23,6 +23,7 @@ namespace GymHome
 
         public VideoViewModel(IExerciseItem[] exerciseItems)
         {
+            InitCommands();
             if (exerciseItems == null)
             {
                 Logger.Error("VideoViewModel received a null list of exercise items.");
@@ -39,6 +40,22 @@ namespace GymHome
             Title = m_exerciseItems[0].Title;
             if (!Directory.Exists("./Videos"))
                 Directory.CreateDirectory("./Videos");
+        }
+
+        private void InitCommands()
+        {
+            AddCommand(FinishPlan, Settings.VoiceKeywords.VideoPageEndPlan);
+        }
+
+        private void FinishPlan(string obj)
+        {
+            if (MediaPlayerElement != null)
+            {
+                MediaPlayerElement.MediaPlayer.Pause();
+                MediaPlayerElement = null;
+            }
+
+            NavigateToMainPage();
         }
 
         [RelayCommand]
@@ -121,6 +138,17 @@ namespace GymHome
         private void SaveVideo(byte[] videoBytes)
         {
             File.WriteAllBytes(Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Videos"), $"{Title}.mp4"), videoBytes);
+        }
+
+        private void RemoveCommands()
+        {
+            RemoveCommand(Settings.VoiceKeywords.VideoPageEndPlan);
+        }
+
+        protected override void OnNavigatedFrom()
+        {
+            base.OnNavigatedFrom();
+            RemoveCommands();
         }
     }
 }

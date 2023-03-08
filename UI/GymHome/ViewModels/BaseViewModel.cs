@@ -61,7 +61,7 @@ namespace GymHome
             NavigateToPreviousPage();
         }
 
-        private void NavigateToMainPage(string obj = null)
+        protected void NavigateToMainPage(string obj = null)
         {
             Navigate(typeof(MainPage));
         }
