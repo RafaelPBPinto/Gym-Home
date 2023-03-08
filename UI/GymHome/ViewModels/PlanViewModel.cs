@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -16,7 +17,10 @@ namespace GymHome
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Title))]
         [NotifyPropertyChangedFor(nameof(Description))]
-        int selectedIndex = 0;
+        private int selectedIndex = 0;
+
+        [ObservableProperty]
+        private int pageNumber = 0;
 
         [ObservableProperty]
         ObservableCollection<Plan> plans = new ObservableCollection<Plan>();
@@ -32,6 +36,9 @@ namespace GymHome
         }
 
         private Expander m_lastOpenExpander = null;
+        private List<Plan> m_allPlans;
+        private readonly int m_elementsPerPage = 10;
+
         public void Expander_Expanding(Expander expander)
         {
             if (m_lastOpenExpander == null)
@@ -47,14 +54,13 @@ namespace GymHome
             SelectedIndex = index - 1;
         }
 
-        public async Task PageLoaded(int userID)
+        public async Task PageLoaded()
         {
             HttpClient client = new HttpClient();
-            List<Plan> m_plans = null;
 
             try
             {
-                m_plans = await client.GetFromJsonAsync<List<Plan>>($"http://localhost:5000/profileComplete/user_id={userID}");
+                m_allPlans = await client.GetFromJsonAsync<List<Plan>>($"http://localhost:5000/profileComplete/user_id={Settings.UserID}");
             }
             catch (Exception ex)
             {
@@ -62,12 +68,14 @@ namespace GymHome
                 return;
             }
 
-            foreach (Plan plan in m_plans)
+            for (int i = 0; i < m_allPlans.Count && i < m_elementsPerPage; i++)
             {
-                Plans.Add(plan);
+                Plans.Add(m_allPlans[i]);
             }
 
+
             SelectedIndex = 0;
+            PageNumber = 1;
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Description));
         }
@@ -78,38 +86,109 @@ namespace GymHome
             NavigateToPreviousPage();
         }
 
+        [RelayCommand]
+        public void StartPlan()
+        {
+            if (Plans.Count == 0)
+                return;
+
+            Plan plan = Plans[SelectedIndex];
+            Navigate(typeof(VideoPage), plan.PlanExercise.ToArray());
+        }
+
+        [RelayCommand]
+        private void NextListPage()
+        {
+            if (m_allPlans.Count / m_elementsPerPage < PageNumber - 1)
+                return;
+
+            Plans.Clear();
+
+            int startPoint = PageNumber * m_elementsPerPage;
+            for (int i = startPoint; i < m_allPlans.Count && i < startPoint + m_elementsPerPage; i++)
+            {
+                Plans.Add(m_allPlans[i]);
+            }
+
+            SelectedIndex = 0;
+            PageNumber++;
+        }
+
+        [RelayCommand]
+        private void PreviousListPage()
+        {
+            if (PageNumber == 1)
+                return;
+
+            Plans.Clear();
+            int startPoint = (PageNumber - 2) * m_elementsPerPage;
+            for (int i = startPoint; i < m_allPlans.Count && i < startPoint + m_elementsPerPage; i++)
+            {
+                Plans.Add(m_allPlans[i]);
+            }
+
+            SelectedIndex = 0;
+            PageNumber--;
+        }
+        private void NextListPage(string obj = null)
+        {
+            NextListPage();
+        }
+
+        private void PreviousListPage(string obj = null)
+        {
+            PreviousListPage();
+        }
+
+        private void StartPlan(string obj = null)
+        {
+            StartPlan();
+        }
+
+        private readonly Dictionary<string, int> m_stringNumToInt = new Dictionary<string, int>
+        {
+            {"um",1},
+            {"dois",2 },
+            {"tres",3 },
+            {"quatro",4 },
+            {"cinco",5 },
+            {"seis",6 },
+            {"sete",7 },
+            {"oito",8 },
+            {"nove",9 },
+            {"dez",10 }
+        };
+
         private void SelectPlan(string obj = null)
         {
             if (obj == null)
                 return;
 
-            int index = 0;
-
-            try
+            if (!m_stringNumToInt.ContainsKey(obj))
             {
-                index = int.Parse(obj);
-            }
-            catch
-            {
-                Debug.WriteLine($"invalid index: {obj}");
+                Logger.Error($"Unknown number {obj}");
                 return;
             }
 
+            int index = m_stringNumToInt[obj];
             index--;
-            if (index < 0 || index > Plans.Count - 1)
-                return;
-
             SelectedIndex = index;
         }
 
         private void InitCommands()
         {
             AddCommand(SelectPlan, Settings.VoiceKeywords.PlanPageSelectPlan);
+            AddCommand(NextListPage, Settings.VoiceKeywords.ExercisesPageNextListPage);
+            AddCommand(PreviousListPage, Settings.VoiceKeywords.ExercisesPagePreviousListPage);
+            AddCommand(StartPlan, Settings.VoiceKeywords.ExercisesPageStartExercise);
         }
 
         protected override void OnNavigatedFrom()
         {
             RemoveCommand(Settings.VoiceKeywords.PlanPageSelectPlan);
+            AddCommand(NextListPage, Settings.VoiceKeywords.ExercisesPageNextListPage);
+            AddCommand(PreviousListPage, Settings.VoiceKeywords.ExercisesPagePreviousListPage);
+            AddCommand(StartPlan, Settings.VoiceKeywords.ExercisesPageStartExercise);
         }
     }
 }

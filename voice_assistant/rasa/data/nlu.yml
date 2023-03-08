@@ -66,6 +66,14 @@ nlu:
   examples: |
     - planos de exercícios
     - mostra-me os meus planos de exercícios
+    - planos
+    - mostra-me os meus planos
+    - mostrar planos
+    - mostrar-me os meus planos
+    - mostrar planos de exercícios
+    - planos de treino
+    - mostra-me os meus planos de treino
+    - mostrar planos de treino
 
 - intent: request_selecionar_opcao
   examples: |
@@ -104,6 +112,19 @@ nlu:
     - voltar atrás
     - voltar para trás
     - andar para trás
+
+- intent: request_pagina_inicial
+  examples: |
+    - página inicial
+    - página principal
+    - voltar para a página inicial
+    - voltar página inicial
+    - voltar para a página principal
+    - voltar página principal
+    - voltar para o início
+    - voltar inicio
+    - voltar para inicio
+    - sair 
 
 - intent: request_avancar
   examples: |
@@ -171,4 +192,8 @@ nlu:
 - intent: request_todos_exercicios
   examples: |
     - todos os exercícios
-    - mostrar todos
+    - mostrar exercícios
+    - mostrar-me os exercícios
+    - mostrar todos os exercícios
+    - mostrar-me todos os exercícios
+    - exercicios

@@ -9,7 +9,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="White"
+    Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -34,7 +35,8 @@
                    Style="{StaticResource TitleTextBlockStyle}"
                    Padding="20"
                    />
-        <MediaPlayerElement AutoPlay="True"
-                            Grid.Row="1"/>
+        <ContentControl Content="{Binding MediaPlayerElement}"
+                        HorizontalAlignment="Stretch"
+                        Grid.Row="1"/>
     </Grid>
 </Page>

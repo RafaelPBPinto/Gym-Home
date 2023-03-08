@@ -79,7 +79,14 @@ class ActionSelecionarOpcao(Action):
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+        options = ["um", "dois", "tres", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez"]
         slot_value = tracker.get_slot('opcao')
+        slot_value = slot_value.lower()
+        
+        for word in slot_value.split():
+            if word in options:
+                slot_value = word
+                break
         
         msg = {"comando": "selecionar_opcao", "opcao": slot_value}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
@@ -236,6 +243,20 @@ class ActionMostrarTodosExercicios(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
         msg = {"comando": "selecionar_opcao", "opcao": "todos_exercicios"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
+        
+        return []
+
+class ActionPaginaInicial(Action):
+    
+    def name(self) -> Text:
+        return "action_pagina_inicial"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        msg = {"comando": "sair"}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
         
         return []

@@ -1,11 +1,15 @@
-﻿using System.Text.Json.Serialization;
+﻿using Microsoft.UI.Xaml.Media.Imaging;
+using System;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using Windows.Storage.Streams;
 
 namespace GymHome
 {
     public class ExerciseItem : IExerciseItem
     {
-        private static int index = 0;
-
         public int Index { get; private set; }
 
         /// <summary>
@@ -41,6 +45,15 @@ namespace GymHome
         [JsonPropertyName("tipo")]
         public string ExerciseType { get; set; }
 
+        [JsonPropertyName("imagem")]
+        [JsonConverter(typeof(ImageDataConverter))]
+        public byte[] ImageBytes { get; set; }
+
+        public string ImageSource => m_imagePath;
+
+        [JsonPropertyName("videoID")]
+        public int VideoID { get; set; }
+
         /// <summary>
         /// Represents an exercise
         /// </summary>
@@ -49,15 +62,18 @@ namespace GymHome
         /// <param name="duration">Duration in seconds of the exercise</param>
         /// <param name="description">Description of the exercise</param>
         /// <param name="exerciseType">Type of the exercise</param>
-        [JsonConstructor]
-        public ExerciseItem(string title, string author, int duration, string description, string exerciseType)
+        public ExerciseItem(string title, string author, int duration, string description, string exerciseType, int videoID, byte[] imageBytes = null)
         {
             Title = title;
             Author = author;
             Duration = duration;
             Description = description;
             ExerciseType = exerciseType;
-            Index = index+1;
+            ImageBytes = imageBytes;
+            VideoID = videoID;
+            Index = index + 1;
+            m_imagePath = Path.Combine(m_imagesFolderPath, $"{TitleString}.png");
+            SaveImage();
 
             index++;
         }
@@ -65,6 +81,29 @@ namespace GymHome
         public static void ResetIndex()
         {
             index = 0;
+        }
+
+
+        private static int index = 0;
+        private static string m_imagesFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+        private string m_imagePath;
+
+        private void SaveImage()
+        {
+            File.WriteAllBytes(m_imagePath, ImageBytes);
+        }
+    }
+
+    public class ImageDataConverter : JsonConverter<byte[]>
+    {
+        public override void Write(Utf8JsonWriter writer, byte[] value, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override byte[] Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return Convert.FromBase64String(reader.GetString());
         }
     }
 }

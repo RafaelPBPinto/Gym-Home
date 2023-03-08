@@ -24,6 +24,7 @@ intents:
   - request_scroll_down
   - request_todos_exercicios
   - response_selecionar_opcao
+  - request_pagina_inicial
 
 entities:
   - username
@@ -74,7 +75,7 @@ actions:
   - action_scroll_up
   - action_scroll_down
   - action_mostrar_todos_exercicios
-  
+  - action_pagina_inicial
 
 responses:
   utter_greet:
@@ -121,6 +122,9 @@ responses:
 
   utter_ask_opcao:
   - text: "Qual opção deseja selecionar?"
+
+  utter_pagina_inicial:
+  - text: "A voltar para a página inicial..."
 
 session_config:
   session_expiration_time: 60

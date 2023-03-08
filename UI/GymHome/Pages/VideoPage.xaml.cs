@@ -22,8 +22,13 @@ namespace GymHome
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ExerciseItem item = (ExerciseItem)e.Parameter;
-            DataContext = new VideoViewModel(new IExerciseItem[1] { item });
+            IExerciseItem[] item = (IExerciseItem[])e.Parameter;
+            DataContext = new VideoViewModel(item);
+        }
+
+        private async void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            await ((VideoViewModel)DataContext).PageLoadedAsync();
         }
     }
 }
