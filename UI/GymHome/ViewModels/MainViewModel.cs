@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +60,14 @@ namespace GymHome
         protected override void OnNavigatedFrom()
         {
             RemoveCommand(Settings.VoiceKeywords.MainPageSelectOption);
+        }
+
+        [ObservableProperty]
+        private Visibility v = Visibility.Collapsed;
+        public void mute()
+        {
+            Debug.WriteLine("T");
+            V = Visibility.Visible;
         }
     }
 }

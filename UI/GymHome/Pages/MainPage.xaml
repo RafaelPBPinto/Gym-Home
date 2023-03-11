@@ -11,7 +11,7 @@
     mc:Ignorable="d"
     Background="White">
 
-    <Grid>
+    <Grid KeyDown="Grid_KeyDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -100,5 +100,15 @@
                VerticalAlignment="Center"
                HorizontalAlignment="Center"
                Margin="50 0"/>
+        
+        <Image Source="../Assets/mic_unmuted.png"
+               Grid.Column="1"
+               Grid.Row="1"
+               Width="75"
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Right"
+               Margin="0 0 10 10"
+               Visibility="{Binding V}"
+               />
     </Grid>
 </Page>

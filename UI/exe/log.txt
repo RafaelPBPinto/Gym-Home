@@ -1,0 +1,5 @@
+[11/03/2023 18:22:34] - Log: logger initialized
+[11/03/2023 18:22:34] - Log: Initializing base component
+[11/03/2023 18:22:34] - Log: Initializing mqtt
+[11/03/2023 18:22:34] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "voltar"
+[11/03/2023 18:22:34] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "sair"
