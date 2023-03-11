@@ -1,15 +1,31 @@
 import sqlite3
 
+# --------------
+# ONLY FOR TESTS
+# --------------
+#
+# --------------
+# ONLY FOR TESTS
+# --------------
+
 def processData():
     conn = sqlite3.connect('..\PlanosUser.db')
     cursor = conn.cursor()
    
-    sql = "DROP TABLE IF EXISTS Imagem;"
+    query = "DROP TABLE IF EXISTS Imagem;"
 
-    cursor.execute(sql)
+    cursor.execute(query)
     conn.commit()
 
     conn.close()
     
 if __name__ == '__main__':
     processData()
+
+# --------------
+# ONLY FOR TESTS
+# --------------
+#
+# --------------
+# ONLY FOR TESTS
+# --------------

@@ -2,6 +2,7 @@ import sqlite3
 from flask import Blueprint, render_template, request, flash, redirect, send_file, url_for, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 import base64
+import os
 
 api = Blueprint('api', __name__)
 
@@ -33,12 +34,20 @@ def addExercise():
         tipo = request.form.get('tipo')
         duracao = request.form.get('duracao')
         descricao = request.form.get('descricao')
+                
 
         if 'imagem' in request.files:
             # get the image file from the form and read it as binary
             imagem = request.files.get('imagem').read()
-        else:
-            imagem = None
+            if not imagem:
+                return jsonify({'error': 'No image found'}), 400
+
+        if 'video' in request.files:
+            video_file = request.files.get('video')
+            if not video_file:
+                return jsonify({'error': 'No video found'}), 400
+            #video_path = os.path.join('video', video_file.filename)
+            video_file.save(os.path.join('DBmanagement', 'video', video_file.filename))
 
         conn = sqlite3.connect('PlanosUser.db')
         query = f"INSERT INTO Exercicio (Nome, Tipo, Duracao, Descricao) VALUES ('{nome}', '{tipo}', '{duracao}', '{descricao}')"
@@ -48,6 +57,10 @@ def addExercise():
         if imagem:
             query = f"INSERT INTO Imagem (Nome, ImagemBinary, RefID_exercicio) VALUES (?, ?, ?)"
             conn.execute(query, (nome, imagem, refID_exercicio))
+
+        if video_file:
+            query = f"INSERT INTO Video (Nome, VideoName, RefID_exercicio) VALUES (?, ?, ?)"
+            conn.execute(query, (nome, video_file.filename, refID_exercicio))
 
         conn.commit()
         conn.close()
@@ -68,11 +81,21 @@ def removeExercise():
 
         if result is not None:
             RefID_exercicio = result[0]
+            print(RefID_exercicio)
             query = "DELETE FROM Exercicio WHERE Nome = ?"
             conn.execute(query, (nome,))
 
             query = "DELETE FROM Imagem WHERE RefID_exercicio = ?"
             conn.execute(query, (RefID_exercicio,))
+
+            query = "DELETE FROM Video WHERE RefID_exercicio = ?"
+            conn.execute(query, (RefID_exercicio,))
+            
+            # also delete the video file from the folder video
+            #query = "SELECT VideoName FROM Video WHERE RefID_exercicio = ?"
+            #video_name = conn.execute(query, (RefID_exercicio,)).fetchone()
+            #print(video_name)
+            #os.remove(os.path.join('DBmanagement', 'video', video_name))
 
             conn.commit()
             conn.close()
