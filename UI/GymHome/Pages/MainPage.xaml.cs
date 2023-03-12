@@ -15,7 +15,6 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using Microsoft.WindowsAppSDK.Runtime.Packages;
 using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -34,16 +33,16 @@ namespace GymHome
             DataContext = new MainViewModel();
         }
 
-        private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
+        //private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
+        //{
 
-            var x = e.Key;
-            //if (x == Windows.System.VirtualKey.X)
-            //{
-            Debug.WriteLine("J");
-            ((MainViewModel)DataContext).mute();
-            //}
-            e.Handled = true;
-        }
+        //    var x = e.Key;
+        //    //if (x == Windows.System.VirtualKey.X)
+        //    //{
+        //    Debug.WriteLine("J");
+        //    ((MainViewModel)DataContext).mute();
+        //    //}
+        //    e.Handled = true;
+        //}
     }
 }

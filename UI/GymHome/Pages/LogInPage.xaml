@@ -12,100 +12,111 @@
     Background="White">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-            <Button CornerRadius="20"
-                    BorderThickness="3"
-                    BorderBrush="Aqua"
-                    Command="{Binding MariaLogInCommand}"
-                    Background="LightBlue"
-                    Width="400"
-                    Height="100">
-                <TextBlock Foreground="Black"
-                           FontSize="20"
-                           Text="Maria"/>
-            </Button>
-            <Button CornerRadius="20"
-                    Margin="0 20 0 0"
-                    BorderThickness="3"
-                    BorderBrush="Aqua"
-                    Command="{Binding AlbertoLogInCommand}"
-                    Background="LightBlue"
-                    Width="400"
-                    Height="100">
-                <TextBlock Foreground="Black"
-                           FontSize="20"
-                           Text="Alberto"/>
-            </Button>
-            <Button CornerRadius="20"
-                    Margin="0 20 0 0"
-                    BorderThickness="3"
-                    BorderBrush="Aqua"
-                    Command="{Binding AntonioLogInCommand}"
-                    Background="LightBlue"
-                    Width="400"
-                    Height="100">
-                <TextBlock Foreground="Black"
-                           FontSize="20"
-                           Text="Sara"/>
-            </Button>
-        </StackPanel>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="1" CornerRadius="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical" 
-                        Background="LightBlue" 
-                        Grid.Column="1"
-                        CornerRadius="20">
-                <TextBox Foreground="White" 
-                         Background="SlateGray" 
-                         Header="Email:" 
-                         PlaceholderText="email@example.com" 
-                         FontSize="30"
-                         Margin="30"
-                         MaxHeight="100"
-                         VerticalAlignment="Top"
-                         HorizontalAlignment="Stretch"
-                         Text="{Binding Email, Mode=TwoWay}"/>
-
-                <PasswordBox Foreground="White" 
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                <Button CornerRadius="20"
+                        BorderThickness="3"
+                        BorderBrush="Aqua"
+                        Command="{Binding MariaLogInCommand}"
+                        Background="LightBlue"
+                        Width="400"
+                        Height="100">
+                    <TextBlock Foreground="Black"
+                               FontSize="20"
+                               Text="Maria"/>
+                </Button>
+                <Button CornerRadius="20"
+                        Margin="0 20 0 0"
+                        BorderThickness="3"
+                        BorderBrush="Aqua"
+                        Command="{Binding AlbertoLogInCommand}"
+                        Background="LightBlue"
+                        Width="400"
+                        Height="100">
+                    <TextBlock Foreground="Black"
+                               FontSize="20"
+                               Text="Alberto"/>
+                </Button>
+                <Button CornerRadius="20"
+                        Margin="0 20 0 0"
+                        BorderThickness="3"
+                        BorderBrush="Aqua"
+                        Command="{Binding AntonioLogInCommand}"
+                        Background="LightBlue"
+                        Width="400"
+                        Height="100">
+                    <TextBlock Foreground="Black"
+                               FontSize="20"
+                               Text="Sara"/>
+                </Button>
+            </StackPanel>
+            <!--<Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1" CornerRadius="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" 
+                            Background="LightBlue" 
+                            Grid.Column="1"
+                            CornerRadius="20">
+                    <TextBox Foreground="White" 
                              Background="SlateGray" 
-                             Header="Password:"  
+                             Header="Email:" 
+                             PlaceholderText="email@example.com" 
                              FontSize="30"
+                             Margin="30"
                              MaxHeight="100"
                              VerticalAlignment="Top"
                              HorizontalAlignment="Stretch"
-                             Margin="30"
-                             Password="{Binding Password,Mode=TwoWay}"/>
-                <Button Background="LightBlue"
-                        CornerRadius="20"
-                        BorderBrush="White"
-                        BorderThickness="3"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Padding="20 10"
-                        Margin="20"
-                        Command="{Binding LogInCommand}">
-                    <TextBlock Text="LogIn" FontSize="30"/>
-                </Button>
-            </StackPanel>
-        </Grid>-->
+                             Text="{Binding Email, Mode=TwoWay}"/>
+
+                    <PasswordBox Foreground="White" 
+                                 Background="SlateGray" 
+                                 Header="Password:"  
+                                 FontSize="30"
+                                 MaxHeight="100"
+                                 VerticalAlignment="Top"
+                                 HorizontalAlignment="Stretch"
+                                 Margin="30"
+                                 Password="{Binding Password,Mode=TwoWay}"/>
+                    <Button Background="LightBlue"
+                            CornerRadius="20"
+                            BorderBrush="White"
+                            BorderThickness="3"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Padding="20 10"
+                            Margin="20"
+                            Command="{Binding LogInCommand}">
+                        <TextBlock Text="LogIn" FontSize="30"/>
+                    </Button>
+                </StackPanel>
+            </Grid>-->
+        
+        </Grid>
+        <Image Source="../Assets/mic_unmuted.png"
+                Grid.Column="1"
+                Grid.Row="1"
+                Width="75"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                Margin="0 0 10 10"
+                />
     </Grid>
 </Page>

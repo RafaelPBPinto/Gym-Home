@@ -11,127 +11,138 @@
     mc:Ignorable="d"
     Background="White"
     Loaded="Page_Loaded">
-    <Grid KeyDown="Grid_KeyDown" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <Rectangle Fill="LightBlue" Grid.ColumnSpan="2"/>
-        <Button VerticalAlignment="Center"
-                Command="{Binding GoBackCommand}"
-                BorderBrush="AliceBlue"
-                BorderThickness="3">
-                <TextBlock Text="Go Back"
-                           Foreground="Black"
-                           FontSize="30"/>
-        </Button>
-        <TextBlock Foreground="Black" 
-                   Text="Excercicios"
-                   TextWrapping="WrapWholeWords"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Grid.ColumnSpan="2"
-                   Style="{StaticResource TitleTextBlockStyle}"
-                   Padding="20"
-                   />
-        <Grid Grid.Row="1">
+    <Grid>
+        <Grid KeyDown="Grid_KeyDown" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0"
-                    Command="{Binding PreviousListPageCommand}">
-                <TextBlock Text="-" Foreground="Black"
+            <Rectangle Fill="LightBlue" Grid.ColumnSpan="2"/>
+            <Button VerticalAlignment="Center"
+                    Command="{Binding GoBackCommand}"
+                    BorderBrush="AliceBlue"
+                    BorderThickness="3">
+                <TextBlock Text="Go Back"
+                               Foreground="Black"
+                               FontSize="30"/>
+            </Button>
+            <TextBlock Foreground="Black" 
+                       Text="Excercicios"
+                       TextWrapping="WrapWholeWords"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Grid.ColumnSpan="2"
+                       Style="{StaticResource TitleTextBlockStyle}"
+                       Padding="20"
+                       />
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                        Command="{Binding PreviousListPageCommand}">
+                    <TextBlock Text="-" Foreground="Black"
+                               FontSize="20"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               />
+                </Button>
+                <TextBlock Text="{Binding PageNumber}"
+                           Foreground="Black"
                            FontSize="20"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
-                           />
-            </Button>
-            <TextBlock Text="{Binding PageNumber}"
-                       Foreground="Black"
-                       FontSize="20"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Grid.Column="1"/>
-            <Button Grid.Column="2"
-                    Command="{Binding NextListPageCommand}">
-                <TextBlock Text="+"
-                           Foreground="Black"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           FontSize="20"/>
-            </Button>
-        </Grid>
-        <ListView Grid.Row="2"
-                  Grid.Column="0"
-                  BorderBrush="LightBlue"
-                  BorderThickness="0 0 2 0"
-                  ItemsSource="{Binding ExerciseItems}"
-                  SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:ExerciseItem">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Image Source="{x:Bind ImageSource}" Height="75" 
-                               Margin="0 0 20 0"/>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="{x:Bind TitleString}" FontSize="20" FontWeight="SemiBold" Style="{ThemeResource BaseTextBlockStyle}"
-                                HorizontalAlignment="Left" LineHeight="20" Foreground="Black" Margin="0 20 0 0"/>
-                            <TextBlock Grid.Row="1" Text="{x:Bind Author}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
-                                               Foreground="Black" FontSize="16"/>
-                            <TextBlock Grid.Row="2" Text="{x:Bind DurationString}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
-                                               Foreground="Black" FontSize="16"/>
-                        </Grid>
+                           Grid.Column="1"/>
+                <Button Grid.Column="2"
+                        Command="{Binding NextListPageCommand}">
+                    <TextBlock Text="+"
+                               Foreground="Black"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               FontSize="20"/>
+                </Button>
+            </Grid>
+            <ListView Grid.Row="2"
+                      Grid.Column="0"
+                      BorderBrush="LightBlue"
+                      BorderThickness="0 0 2 0"
+                      ItemsSource="{Binding ExerciseItems}"
+                      SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:ExerciseItem">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{x:Bind ImageSource}" Height="75" 
+                                   Margin="0 0 20 0"/>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="{x:Bind TitleString}" FontSize="20" FontWeight="SemiBold" Style="{ThemeResource BaseTextBlockStyle}"
+                                    HorizontalAlignment="Left" LineHeight="20" Foreground="Black" Margin="0 20 0 0"/>
+                                <TextBlock Grid.Row="1" Text="{x:Bind Author}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
+                                                   Foreground="Black" FontSize="16"/>
+                                <TextBlock Grid.Row="2" Text="{x:Bind DurationString}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
+                                                   Foreground="Black" FontSize="16"/>
+                            </Grid>
 
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Text="{Binding Title}" FontSize="30" 
-                       Foreground="Black" 
-                       VerticalAlignment="Top"
-                       HorizontalAlignment="Center"
-                       Margin="0 20 0 20"
-                       FontWeight="SemiBold"
-                       TextWrapping="WrapWholeWords"/>
-            <ScrollViewer
-                HorizontalScrollBarVisibility="Disabled" 
-                VerticalScrollBarVisibility="Auto"
-                Grid.Row="1"
-                Margin="20 0 20 0">
-                <TextBlock TextWrapping="Wrap" Foreground="Black" FontSize="25"
-                           Text="{Binding Description}"/>
-            </ScrollViewer>
-            <Button CornerRadius="15"
-                    Background="LightBlue"
-                    Padding="15"
-                    Margin="0 20 0 20"
-                    Grid.Row="2"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Command="{Binding StartExerciseCommand}">
-                <TextBlock Text="Comecar" Foreground="Black" FontSize="30"/>
-            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding Title}" FontSize="30" 
+                           Foreground="Black" 
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Center"
+                           Margin="0 20 0 20"
+                           FontWeight="SemiBold"
+                           TextWrapping="WrapWholeWords"/>
+                <ScrollViewer
+                    HorizontalScrollBarVisibility="Disabled" 
+                    VerticalScrollBarVisibility="Auto"
+                    Grid.Row="1"
+                    Margin="20 0 20 0">
+                    <TextBlock TextWrapping="Wrap" Foreground="Black" FontSize="25"
+                               Text="{Binding Description}"/>
+                </ScrollViewer>
+                <Button CornerRadius="15"
+                        Background="LightBlue"
+                        Padding="15"
+                        Margin="0 20 0 20"
+                        Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding StartExerciseCommand}">
+                    <TextBlock Text="Comecar" Foreground="Black" FontSize="30"/>
+                </Button>
+            </Grid>
+
         </Grid>
+        <Image Source="../Assets/mic_unmuted.png"
+                   Grid.Column="1"
+                   Grid.Row="1"
+                   Width="75"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Right"
+                   Margin="0 0 10 10"
+                   />
     </Grid>
 </Page>

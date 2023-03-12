@@ -1,5 +1,31 @@
-[11/03/2023 18:22:34] - Log: logger initialized
-[11/03/2023 18:22:34] - Log: Initializing base component
-[11/03/2023 18:22:34] - Log: Initializing mqtt
-[11/03/2023 18:22:34] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "voltar"
-[11/03/2023 18:22:34] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "sair"
+[11/03/2023 23:36:13] - Log: logger initialized
+[11/03/2023 23:36:13] - Log: Initializing base component
+[11/03/2023 23:36:13] - Log: Initializing mqtt
+[11/03/2023 23:36:14] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "voltar"
+[11/03/2023 23:36:14] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "sair"
+[11/03/2023 23:36:19] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "selecionar_opcao"
+[11/03/2023 23:36:20] - Info: RemoveCommand removed a command with keyword "selecionar_opcao"
+[11/03/2023 23:36:20] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "comecar"
+[11/03/2023 23:36:20] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "proximo"
+[11/03/2023 23:36:20] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "anterior"
+[11/03/2023 23:36:20] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "selecionar_opcao"
+[11/03/2023 23:36:20] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "avancar"
+[11/03/2023 23:36:20] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "voltar"
+[11/03/2023 23:36:34] - Info: RemoveCommand removed a command with keyword "comecar"
+[11/03/2023 23:36:34] - Info: RemoveCommand removed a command with keyword "proximo"
+[11/03/2023 23:36:34] - Info: RemoveCommand removed a command with keyword "anterior"
+[11/03/2023 23:36:34] - Info: RemoveCommand removed a command with keyword "selecionar_opcao"
+[11/03/2023 23:36:34] - Info: RemoveCommand removed a command with keyword "avancar"
+[11/03/2023 23:36:34] - Info: RemoveCommand removed a command with keyword "voltar"
+[11/03/2023 23:36:34] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "voltar"
+[11/03/2023 23:36:34] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "selecionar_opcao"
+[11/03/2023 23:36:37] - Info: RemoveCommand removed a command with keyword "selecionar_opcao"
+[11/03/2023 23:36:37] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "selecionar_opcao"
+[11/03/2023 23:36:37] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "avancar"
+[11/03/2023 23:36:37] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "voltar"
+[11/03/2023 23:36:37] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "comecar"
+[11/03/2023 23:36:50] - Info: RemoveCommand removed a command with keyword "selecionar_opcao"
+[11/03/2023 23:36:50] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "avancar"
+[11/03/2023 23:36:50] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "voltar"
+[11/03/2023 23:36:50] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "comecar"
+[11/03/2023 23:36:50] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "selecionar_opcao"

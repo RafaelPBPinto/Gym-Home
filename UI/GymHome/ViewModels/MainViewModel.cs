@@ -62,12 +62,13 @@ namespace GymHome
             RemoveCommand(Settings.VoiceKeywords.MainPageSelectOption);
         }
 
-        [ObservableProperty]
-        private Visibility v = Visibility.Collapsed;
-        public void mute()
-        {
-            Debug.WriteLine("T");
-            V = Visibility.Visible;
-        }
+
+        // Objetivo é aparecer micro verde quando está a captar, vermelho quando n consegue ouvir
+        //[ObservableProperty]
+        //private Visibility v = Visibility.Collapsed;
+        //public void mute(){
+        //    Debug.WriteLine("T");
+        //    V = Visibility.Visible;
+        //}
     }
 }

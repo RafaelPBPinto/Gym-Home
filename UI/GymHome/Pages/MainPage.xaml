@@ -11,7 +11,7 @@
     mc:Ignorable="d"
     Background="White">
 
-    <Grid KeyDown="Grid_KeyDown">
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -108,7 +108,6 @@
                VerticalAlignment="Bottom"
                HorizontalAlignment="Right"
                Margin="0 0 10 10"
-               Visibility="{Binding V}"
                />
     </Grid>
 </Page>
