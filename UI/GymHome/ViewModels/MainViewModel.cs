@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
+using Windows.UI.Core;
 
 namespace GymHome
 {
@@ -62,7 +64,7 @@ namespace GymHome
             RemoveCommand(Settings.VoiceKeywords.MainPageSelectOption);
         }
 
-
+        
         // Objetivo é aparecer micro verde quando está a captar, vermelho quando n consegue ouvir
         //[ObservableProperty]
         //private Visibility v = Visibility.Collapsed;

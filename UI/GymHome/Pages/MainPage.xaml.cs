@@ -16,6 +16,9 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System.Diagnostics;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.UI.Core;
+using System.Windows.Input;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,6 +34,22 @@ namespace GymHome
         {
             this.InitializeComponent();
             DataContext = new MainViewModel();
+        }
+
+        private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            var key = e.Key;
+            if (key == Windows.System.VirtualKey.Y)
+            {
+                if (micImage.Source.ToString().Contains("mic_unmuted.png"))
+                {
+                    micImage.Source = new BitmapImage(new Uri("../Assets/mic_muted.png", UriKind.Relative));
+                }
+                else
+                {
+                    micImage.Source = new BitmapImage(new Uri("../Assets/mic_unmuted.png", UriKind.Relative));
+                }
+            }
         }
 
         //private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
