@@ -11,28 +11,26 @@
     mc:Ignorable="d"
     Background="White"
     Loaded="Page_Loaded">
-    
     <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Rectangle Fill="LightBlue" Grid.ColumnSpan="2"/>
-            <Button VerticalAlignment="Center"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Fill="LightBlue" Grid.ColumnSpan="2"/>
+        <Button VerticalAlignment="Center"
                     Command="{Binding GoBackCommand}"
                     BorderBrush="AliceBlue"
                     BorderThickness="3">
-                <TextBlock Text="Go Back"
+            <TextBlock Text="Go Back"
                                Foreground="Black"
                                FontSize="30"/>
-            </Button>
-            <TextBlock Foreground="Black" 
+        </Button>
+        <TextBlock Foreground="Black" 
                        Text="Planos"
                        TextWrapping="WrapWholeWords"
                        VerticalAlignment="Center"
@@ -41,115 +39,115 @@
                        Style="{StaticResource TitleTextBlockStyle}"
                        Padding="20"
                        />
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0"
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
                         Command="{Binding PreviousListPageCommand}">
-                    <TextBlock Text="-" Foreground="Black"
+                <TextBlock Text="-" Foreground="Black"
                                FontSize="20"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                />
-                </Button>
-                <TextBlock Text="{Binding PageNumber}"
+            </Button>
+            <TextBlock Text="{Binding PageNumber}"
                            Foreground="Black"
                            FontSize="20"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            Grid.Column="1"/>
-                <Button Grid.Column="2"
+            <Button Grid.Column="2"
                         Command="{Binding NextListPageCommand}">
-                    <TextBlock Text="+"
+                <TextBlock Text="+"
                                Foreground="Black"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                FontSize="20"/>
-                </Button>
-            </Grid>
-            <ListView Grid.Row="2"
+            </Button>
+        </Grid>
+        <ListView Grid.Row="2"
                       Grid.Column="0"
                       BorderBrush="LightBlue"
                       BorderThickness="0 0 2 0"
                       ItemsSource="{Binding Plans}"
                       SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:Plan">
-                        <Expander HorizontalAlignment="Stretch"
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:Plan">
+                    <Expander HorizontalAlignment="Stretch"
                                   Expanding="Expander_Expanding">
-                            <Expander.Header>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Visibility="Collapsed" Text="{x:Bind IndexString}" />
-                                    <Image Source="./Assets/calendar-regular.svg" MaxHeight="75"
+                        <Expander.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Visibility="Collapsed" Text="{x:Bind IndexString}" />
+                                <Image Source="./Assets/calendar-regular.svg" MaxHeight="75"
                                         Margin="0 0 20 0"/>
-                                    <Grid Grid.Column="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" Text="{x:Bind TitleString}" FontSize="20" FontWeight="SemiBold" Style="{ThemeResource BaseTextBlockStyle}"
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="{x:Bind TitleString}" FontSize="20" FontWeight="SemiBold" Style="{ThemeResource BaseTextBlockStyle}"
                                                     HorizontalAlignment="Left" LineHeight="20" Foreground="Black" Margin="0 20 0 0"/>
-                                        <TextBlock Grid.Row="1" Text="{x:Bind AuthorString}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
+                                    <TextBlock Grid.Row="1" Text="{x:Bind AuthorString}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
                                                     Foreground="Black" FontSize="16"/>
-                                        <TextBlock Grid.Row="2" Text="{x:Bind DayString}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
+                                    <TextBlock Grid.Row="2" Text="{x:Bind DayString}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"
                                                     Foreground="Black" FontSize="16"/>
-                                    </Grid>
                                 </Grid>
-                            </Expander.Header>
-                            <Expander.Content>
-                                <ListView ItemsSource="{x:Bind PlanExercise}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="local:PlanExercise">
-                                            <Grid Margin="0 0 0 30">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="*"/>
-                                                </Grid.RowDefinitions>
-                                                <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="20" Foreground="Black"/>
-                                                <TextBlock Grid.Row="3" Text="{Binding ExerciseType}" FontSize="20" Foreground="Black"/>
-                                                <TextBlock Grid.Row="1" Text="{Binding SeriesString}" FontSize="20" Foreground="Black"/>
-                                                <TextBlock Grid.Row="2" Text="{Binding RepetitionsString}" FontSize="20" Foreground="Black"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </Expander.Content>
-                        </Expander>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="{Binding Title}" FontSize="30" 
+                            </Grid>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <ListView ItemsSource="{x:Bind PlanExercise}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="local:PlanExercise">
+                                        <Grid Margin="0 0 0 30">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="20" Foreground="Black"/>
+                                            <TextBlock Grid.Row="3" Text="{Binding ExerciseType}" FontSize="20" Foreground="Black"/>
+                                            <TextBlock Grid.Row="1" Text="{Binding SeriesString}" FontSize="20" Foreground="Black"/>
+                                            <TextBlock Grid.Row="2" Text="{Binding RepetitionsString}" FontSize="20" Foreground="Black"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Expander.Content>
+                    </Expander>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding Title}" FontSize="30" 
                            FontWeight="SemiBold"
                            Foreground="Black" 
                            VerticalAlignment="Top"
                            HorizontalAlignment="Center"
                            Margin="0 20 0 20"
                            TextWrapping="WrapWholeWords"/>
-                <ScrollViewer
+            <ScrollViewer
                     HorizontalScrollBarVisibility="Disabled" 
                     VerticalScrollBarVisibility="Auto"
                     Grid.Row="1"
                     Margin="20 0 20 0">
-                    <TextBlock TextWrapping="Wrap" Foreground="Black" FontSize="25"
+                <TextBlock TextWrapping="Wrap" Foreground="Black" FontSize="25"
                                Text="{Binding Description}"/>
-                </ScrollViewer>
-                <Button CornerRadius="15"
+            </ScrollViewer>
+            <Button CornerRadius="15"
                         Background="LightBlue"
                         Padding="15"
                         Margin="0 20 0 20"
@@ -157,13 +155,12 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Command="{Binding StartPlanCommand}">
-                    <TextBlock Text="Comecar" Foreground="Black" FontSize="30"/>
-                </Button>
-            </Grid>
+                <TextBlock Text="Comecar" Foreground="Black" FontSize="30"/>
+            </Button>
         </Grid>
         <Image Source="../Assets/mic_unmuted.png"
                Grid.Column="1"
-               Grid.Row="1"
+               Grid.Row="2"
                Width="75"
                VerticalAlignment="Bottom"
                HorizontalAlignment="Right"

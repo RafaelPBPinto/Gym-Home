@@ -11,8 +11,7 @@
     mc:Ignorable="d"
     Background="White"
     Loaded="Page_Loaded">
-    <Grid>
-        <Grid KeyDown="Grid_KeyDown" >
+    <Grid KeyDown="Grid_KeyDown" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -134,15 +133,13 @@
                     <TextBlock Text="Comecar" Foreground="Black" FontSize="30"/>
                 </Button>
             </Grid>
-
-        </Grid>
         <Image Source="../Assets/mic_unmuted.png"
-                   Grid.Column="1"
-                   Grid.Row="1"
-                   Width="75"
-                   VerticalAlignment="Bottom"
-                   HorizontalAlignment="Right"
-                   Margin="0 0 10 10"
-                   />
+               Grid.Column="1"
+               Grid.Row="2"
+               Width="75"
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Right"
+               Margin="0 0 10 10"
+               />
     </Grid>
 </Page>
