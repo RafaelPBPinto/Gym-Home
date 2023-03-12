@@ -10,11 +10,15 @@ import requests
 import sys
 import json
 import paho.mqtt.publish as publish
+from rasa_sdk import Tracker
 
 # https://alphacephei.com/vosk/models
 # Colocar o path do vosk-model
 model = Model("vosk-model-small-pt-0.3") # 31MB
 recognizer = KaldiRecognizer(model, 16000)
+
+log = open("log.txt","w")
+tracker = Tracker()
 
 speaker = tts.init()
 speaker.setProperty('rate', 150)
@@ -31,9 +35,12 @@ def main():
         if text == "olá maria" or text == "hey maria" or text == "oi maria":
             if text != "" :
                     r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"message": text})
+                    print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+                    log.write("Confiança: " + tracker.latest_message["intent"].get("confidence") + "\n")
                     for i in r.json():
                         bot_message = i['text']
             print(f"Assistente: {bot_message}")
+            log.write("Assistente: " + {bot_message} + "\n")
             speaker.say(bot_message)
             speaker.runAndWait()
             publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "listening"}), hostname="localhost")
@@ -47,6 +54,7 @@ def main():
                 text = text[14:-3]
                 text = text.lower()
                 print(text)
+                log.write("User: " + text + "\n")
                 #publish.single(topic="comandos/voz/UI", payload=json.dumps({"legenda": text}), hostname="localhost")     
     sys.exit(0)
 
@@ -60,12 +68,16 @@ def assistant_listening_loop():
             text = text[14:-3]
             text = text.lower()
             print(text)
+            log.write("User: " + text + "\n")
             #publish.single(topic="comandos/voz/UI", payload=json.dumps({"legenda": text}), hostname="localhost")
             if text != "" :
                 r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"message": text})
+                print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+                log.write("Confiança: " + tracker.latest_message["intent"].get("confidence") + "\n") 
                 for i in r.json():
                     bot_message = i['text']
                     print(f"Assistente: {bot_message}")
+                    log.write("Assistente: " + {bot_message} + "\n")
                     speaker.say(bot_message)
                     speaker.runAndWait()
             publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "listening"}), hostname="localhost")
