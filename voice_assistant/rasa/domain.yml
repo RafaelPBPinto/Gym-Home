@@ -76,8 +76,15 @@ actions:
   - action_scroll_down
   - action_mostrar_todos_exercicios
   - action_pagina_inicial
+  - action_default_fallback
 
 responses:
+  utter_default:
+  - text: Desculpe, não percebi. Pode repetir?
+  - text: Desculpe, não percebi. Pode falar um pouco mais alto?
+  - text: Desculpe, não percebi. Pode falar mais devagar?
+  - text: Desculpe, não percebi. Pode falar mais claramente?
+
   utter_greet:
   - text: "Olá {username}! Como posso ajudar?"
 
@@ -93,23 +100,29 @@ responses:
   utter_goodbye:
   - text: "Adeus"
 
+  utter_understand_planos:
+  - text: "A abrir planos de exercícios..."
+
+  utter_understand_exercicios:
+  - text: "A abrir todos os exercícios..."
+
   utter_exercicios:
   - text: "Aqui estão os seus planos de exercícios!"
 
-  utter_opcao:
-  - text: "selecionando {opcao}"
+  utter_understand_opcao:
+  - text: "A selecionar {opcao}"
 
   utter_comecar:
-  - text: "Começando..."
+  - text: "A começar..."
 
   utter_voltar:
-  - text: "Voltando..."
+  - text: "A voltar..."
 
   utter_avancar:
-  - text: "Avançando..."
+  - text: "A avançar..."
 
   utter_terminar:
-  - text: "Terminando..."
+  - text: "A terminar..."
 
   utter_agradecer:
   - text: "De nada!"
@@ -125,6 +138,18 @@ responses:
 
   utter_pagina_inicial:
   - text: "A voltar para a página inicial..."
+
+  utter_understand_virar_camara_esquerda:
+  - text: "A virar a câmara para a esquerda..."
+
+  utter_understand_virar_camara_direita:
+  - text: "A virar a câmara para a direita..."
+
+  utter_understand_virar_camara_cima:
+  - text: "A virar a câmara para cima..."
+
+  utter_understand_virar_camara_baixo:
+  - text: "A virar a câmara para baixo..."
 
 session_config:
   session_expiration_time: 60

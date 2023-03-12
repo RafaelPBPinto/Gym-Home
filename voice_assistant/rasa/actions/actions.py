@@ -30,10 +30,33 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, UserUtteranceReverted
 
 import paho.mqtt.publish as publish
 import json
+import unidecode
+
+class ActionDefaultFallback(Action):
+    """Executes the fallback action and goes back to the previous state
+    of the dialogue"""
+
+    def name(self) -> Text:
+        return "action_default_fallback"
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        print(tracker.latest_message["intent"].get("confidence"))
+        if tracker.latest_message["intent"].get("confidence") > 0.8:
+            dispatcher.utter_message(response="utter_default")
+        
+        publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "no_understad"}), hostname="localhost")
+
+        # Revert user message which led to fallback.
+        return [UserUtteranceReverted()]
 
 class ActionResetName(Action):
 
@@ -82,11 +105,13 @@ class ActionSelecionarOpcao(Action):
         options = ["um", "dois", "tres", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez"]
         slot_value = tracker.get_slot('opcao')
         slot_value = slot_value.lower()
+        slot_value = unidecode.unidecode(slot_value)
         
         for word in slot_value.split():
             if word in options:
                 slot_value = word
                 break
+        
         
         msg = {"comando": "selecionar_opcao", "opcao": slot_value}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
