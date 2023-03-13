@@ -1,6 +1,5 @@
-[12/03/2023 14:27:35] - Log: logger initialized
-[12/03/2023 14:27:35] - Log: Initializing base component
-[12/03/2023 14:27:35] - Log: Initializing mqtt
-[12/03/2023 14:27:35] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "voltar"
-[12/03/2023 14:27:35] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "sair"
-[12/03/2023 14:27:36] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "selecionar_opcao"
+[13/03/2023 11:41:30] - Log: logger initialized
+[13/03/2023 11:41:30] - Log: Initializing base component
+[13/03/2023 11:41:30] - Log: Initializing mqtt
+[13/03/2023 11:41:30] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "voltar"
+[13/03/2023 11:41:30] - Info: AddCommand added command "System.Action`1[System.String]" with keyword "sair"
