@@ -158,7 +158,7 @@
                 <TextBlock Text="Comecar" Foreground="Black" FontSize="30"/>
             </Button>
         </Grid>
-        <Image Source="../Assets/mic_unmuted.png"
+        <Image Source="{Binding MicrofoneImageSource}"
                Grid.Column="1"
                Grid.Row="2"
                Width="50"

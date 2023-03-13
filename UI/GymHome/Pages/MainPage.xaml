@@ -11,7 +11,7 @@
     mc:Ignorable="d"
     Background="White">
 
-    <Grid KeyDown="Grid_KeyDown">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -101,8 +101,8 @@
                HorizontalAlignment="Center"
                Margin="50 0"/>
 
-        <Image x:Name="micImage"
-           Source="../Assets/mic_unmuted.png"
+        <Image
+           Source="{Binding MicrofoneImageSource}"
            Grid.Column="1"
            Grid.Row="1"
            Width="50"

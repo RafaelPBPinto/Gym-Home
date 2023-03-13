@@ -88,7 +88,7 @@ namespace GymHome
         ObservableCollection<ExerciseItem> exerciseItems = new ObservableCollection<ExerciseItem>();
 
         [ObservableProperty]
-        private int pageNumber;
+        private int pageNumber = 0;
         private List<ExerciseItem> allItems = null;
 
         private const int m_elementsPerPage = 10;
@@ -119,6 +119,9 @@ namespace GymHome
         [RelayCommand]
         private void NextListPage()
         {
+            if (allItems == null)
+                return;
+
             if (allItems.Count / m_elementsPerPage < PageNumber - 1)
                 return;
 
@@ -137,6 +140,9 @@ namespace GymHome
         [RelayCommand]
         private void PreviousListPage()
         {
+            if (allItems == null)
+                return;
+
             if(PageNumber == 1)
                 return;
 

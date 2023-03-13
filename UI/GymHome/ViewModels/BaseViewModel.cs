@@ -1,10 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.IO;
 
 namespace GymHome
 {
-    public class BaseViewModel : ObservableObject
+    public partial class BaseViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private Uri microfoneImageSource;
+
+        private static readonly string baseImagesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Assets");
+
         public BaseViewModel()
         {
             if (!KeywordExists(Settings.VoiceKeywords.NavigateToPreviousPage))
@@ -12,6 +18,14 @@ namespace GymHome
 
             if(!KeywordExists(Settings.VoiceKeywords.NavigateToMainPage))
                 AddCommand(NavigateToMainPage,Settings.VoiceKeywords.NavigateToMainPage);
+
+            if(!KeywordExists(Settings.VoiceKeywords.MicrofoneMute))
+                AddCommand(NotListening,Settings.VoiceKeywords.MicrofoneMute);
+
+            if (!KeywordExists(Settings.VoiceKeywords.MicrofoneUnmute))
+                AddCommand(Listening, Settings.VoiceKeywords.MicrofoneUnmute);
+
+            MicrofoneImageSource = new Uri(Path.Combine(baseImagesPath, "mic_muted.png"));
         }
 
         /// <summary>
@@ -59,6 +73,16 @@ namespace GymHome
         private void NavigateToPreviousPage(string obj = null)
         {
             NavigateToPreviousPage();
+        }
+
+        private void Listening(string obj = null)
+        {
+            MicrofoneImageSource = new Uri(Path.Combine(baseImagesPath, "mic_unmuted.png"));
+        }
+
+        private void NotListening(string obj = null)
+        {
+            MicrofoneImageSource = new Uri(Path.Combine(baseImagesPath, "mic_muted.png"));
         }
 
         protected void NavigateToMainPage(string obj = null)

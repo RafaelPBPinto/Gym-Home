@@ -38,6 +38,10 @@ namespace GymHome
 
             public static string VideoPageEndPlan { get; private set; }
 
+            public static string MicrofoneMute { get; private set; }
+
+            public static string MicrofoneUnmute { get; private set; }
+
             public static void SetDefaults()
             {
                 MainPageSelectOption = "selecionar_opcao";
@@ -51,6 +55,8 @@ namespace GymHome
                 NavigateToPreviousPage = "voltar";
                 NavigateToMainPage = "sair";
                 VideoPageEndPlan = "terminar";
+                MicrofoneUnmute = "listening";
+                MicrofoneMute = "no_listening";
             }
             //[JsonConstructor]
             //public VoiceKeywords(string mainPageSelectOption,string exercisesPageStartExercie,string exercisesPageNextItem,string exercisesPagePreviousItem,string exercisesPageSelectExercise
