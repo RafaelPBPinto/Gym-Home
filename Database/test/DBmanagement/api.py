@@ -88,15 +88,13 @@ def removeExercise():
             query = "DELETE FROM Imagem WHERE RefID_exercicio = ?"
             conn.execute(query, (RefID_exercicio,))
 
+            query = "SELECT VideoName FROM Video WHERE RefID_exercicio = ?"
+            video_name = conn.execute(query, (RefID_exercicio,)).fetchone()[0]
+            os.remove(os.path.join('DBmanagement', 'video', video_name))
+
             query = "DELETE FROM Video WHERE RefID_exercicio = ?"
             conn.execute(query, (RefID_exercicio,))
             
-            # also delete the video file from the folder video
-            #query = "SELECT VideoName FROM Video WHERE RefID_exercicio = ?"
-            #video_name = conn.execute(query, (RefID_exercicio,)).fetchone()
-            #print(video_name)
-            #os.remove(os.path.join('DBmanagement', 'video', video_name))
-
             conn.commit()
             conn.close()
             alert_message = 'Exercício removido com sucesso!'
@@ -107,7 +105,7 @@ def removeExercise():
             #return jsonify({'message': 'Exercise not found'})
     return render_template('removeExercise.html', alert_message=alert_message)
 
-# para já só vai buscar os excs com imagem (por causa do INNER JOIN)
+
 @api.route('/getExercises', methods=['GET', 'POST'])
 def getExercises():
     if request.method == 'GET':

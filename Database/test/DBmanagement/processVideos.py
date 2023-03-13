@@ -7,25 +7,21 @@ def processData():
 
     # video = convert2BinData('video\Ponte.mp4')
     # insertVideo('Ponte', video, 1)
-
     #insertVideoPath('Ponte', 'C:/Users/hbilab/Desktop/video/Ponte.mp4', 1)
     insertVideoPath('Ponte', 'Ponte.mp4', 1)
 
     # video = convert2BinData('video\AgachamentoCadeira.mp4')
     # insertVideo('Agachamento Cadeira', video, 2)
-
     #insertVideoPath('Agachamento Cadeira', 'C:/Users/hbilab/Desktop/video/AgachamentoCadeira.mp4', 2)
     insertVideoPath('Agachamento Cadeira', 'AgachamentoCadeira.mp4', 2)
 
     # video = convert2BinData('video\Gemeos.mp4')
     # insertVideo('Gémeos', video, 3)
-
     # insertVideoPath('Gémeos', 'C:/Users/hbilab/Desktop/video/Gemeos.mp4', 3)
     insertVideoPath('Gémeos', 'Gemeos.mp4', 3)
 
     # video = convert2BinData('video\ElevacaoDePerna.mp4')
     # insertVideo('Elevação de Perna', video, 4)
-
     #insertVideoPath('Elevação de Perna', 'C:/Users/hbilab/Desktop/video/ElevacaoDePerna.mp4', 4)
     insertVideoPath('Elevação de Perna','ElevacaoDePerna.mp4', 4)
 
@@ -47,7 +43,7 @@ def processData():
     # video = convert2BinData('video\Pesseguidos.mp4')
     # insertVideo('Pes Seguidos', video, 8)
     #insertVideoPath('Pés Seguidos', 'C:/Users/hbilab/Desktop/video/Pesseguidos.mp4', 8)
-    insertVideoPath('Pés Seguidos', 'Pesseguidos.mp4', 8)
+    insertVideoPath('Abdominal Crunch', 'AbdominalCrunch.mp4', 8)
 
     # video = convert2BinData('video\AlongamentoCurvaLateral.mp4')
     # insertVideo('Alongamento da Curva Lateral', video, 9)
@@ -82,7 +78,7 @@ def processData():
     # video = convert2BinData('video\AlongamentoAbdominal.mp4')
     # insertVideo('Alongamento Abdominal', video, 15)
     #insertVideoPath('Alongamento abdominal', 'C:/Users/hbilab/Desktop/video/AlongamentoAbdominal.mp4', 15)
-    insertVideoPath('Alongamento abdominal', 'AlongamentoAbdominal.mp4', 15)
+    insertVideoPath('Alongamento dos Glúteos', 'AlongamentoGluteo.mp4', 15)
 
 
 
