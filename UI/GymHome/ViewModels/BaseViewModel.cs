@@ -25,7 +25,7 @@ namespace GymHome
             if (!KeywordExists(Settings.VoiceKeywords.MicrofoneUnmute))
                 AddCommand(Listening, Settings.VoiceKeywords.MicrofoneUnmute);
 
-            MicrofoneImageSource = new Uri(Path.Combine(baseImagesPath, "mic_muted.png"));
+            NotListening();
         }
 
         /// <summary>
@@ -77,12 +77,24 @@ namespace GymHome
 
         private void Listening(string obj = null)
         {
-            MicrofoneImageSource = new Uri(Path.Combine(baseImagesPath, "mic_unmuted.png"));
+            string path = Path.Combine(baseImagesPath, "mic_unmuted.png");
+            if (!File.Exists(path))
+            {
+                Logger.Error($"Couldn't find image {path}");
+                return;
+            }
+            MicrofoneImageSource = new Uri(path);
         }
 
         private void NotListening(string obj = null)
         {
-            MicrofoneImageSource = new Uri(Path.Combine(baseImagesPath, "mic_muted.png"));
+            string path = Path.Combine(baseImagesPath, "mic_muted.png");
+            if (!File.Exists(path))
+            {
+                Logger.Error($"Couldn't find image {path}");
+                return;
+            }
+            MicrofoneImageSource = new Uri(path);
         }
 
         protected void NavigateToMainPage(string obj = null)
