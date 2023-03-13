@@ -736,6 +736,6 @@ $RECYCLE.BIN/
 
 _NCrunch*
 
-.png
-.mp4
-.txt
+*.png
+*.mp4
+log.txt
