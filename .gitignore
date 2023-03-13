@@ -735,3 +735,7 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+
+.png
+.mp4
+.txt
