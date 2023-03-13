@@ -63,8 +63,6 @@ def assistant_listening_loop():
     while bot_message != "Adeus":
         data = stream.read(4096, exception_on_overflow = False)
         if recognizer.AcceptWaveform(data):
-            publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "no_listening"}), hostname="localhost")
-            write_log("No Listening..." + "\n")
             text = recognizer.Result()
             text = text[14:-3]
             text = text.lower()
@@ -72,6 +70,8 @@ def assistant_listening_loop():
             write_log("User: " + text + "\n")
             publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "legenda", "legenda": text}), hostname="localhost")
             if text != "" :
+                publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "no_listening"}), hostname="localhost")
+                write_log("No Listening..." + "\n")
                 try:
                     r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"message": text})
                     for i in r.json():
@@ -79,13 +79,13 @@ def assistant_listening_loop():
                     print(f"Assistente: {bot_message}")
                     write_log("Assistente: " + bot_message + "\n")
                     speak(bot_message)
-                    publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "listening"}), hostname="localhost")
-                    write_log("Listening..." + "\n")
                 except:
                     error = "Rasa está offline"
                     print(error)
                     speak(error)
-                    break                
+                    break             
+                publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "listening"}), hostname="localhost")
+                write_log("Listening..." + "\n")   
     publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "no_listening"}), hostname="localhost")
     write_log("No Listening..." + "\n")
     
