@@ -44,7 +44,9 @@ def main():
                     bot_message = ""
                     text = ""
                 except:
-                    print("Rasa ainda não está pronto")
+                    error = "Rasa ainda não está pronto"
+                    print(error)
+                    speak(error)
         else:
             data = stream.read(4096, exception_on_overflow = False)
             if recognizer.AcceptWaveform(data):
@@ -53,7 +55,7 @@ def main():
                 text = text.lower()
                 print(text)
                 write_log("User: " + text + "\n")
-                #publish.single(topic="comandos/voz/UI", payload=json.dumps({"legenda": text}), hostname="localhost")     
+                publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "legenda", "legenda": text}), hostname="localhost")     
     sys.exit(0)
 
 def assistant_listening_loop():
@@ -68,7 +70,7 @@ def assistant_listening_loop():
             text = text.lower()
             print(text)
             write_log("User: " + text + "\n")
-            #publish.single(topic="comandos/voz/UI", payload=json.dumps({"legenda": text}), hostname="localhost")
+            publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "legenda", "legenda": text}), hostname="localhost")
             if text != "" :
                 try:
                     r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"message": text})
@@ -80,7 +82,10 @@ def assistant_listening_loop():
                     publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "listening"}), hostname="localhost")
                     write_log("Listening..." + "\n")
                 except:
-                    print("Rasa está offline")                
+                    error = "Rasa está offline"
+                    print(error)
+                    speak(error)
+                    break                
     publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "no_listening"}), hostname="localhost")
     write_log("No Listening..." + "\n")
     
