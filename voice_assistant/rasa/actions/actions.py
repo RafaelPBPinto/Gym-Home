@@ -36,7 +36,9 @@ import paho.mqtt.publish as publish
 import json
 import unidecode
 
-log = open("log.txt", "a")
+def write_log(text):
+    with open("log.txt", "a") as log:
+        log.write(text)
 
 class ActionDefaultFallback(Action):
     """Executes the fallback action and goes back to the previous state
@@ -51,13 +53,17 @@ class ActionDefaultFallback(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        log.write("Actions: " + "No_understand: " + "enter\n")
-        print(tracker.latest_message["intent"].get("confidence"))
-        if tracker.latest_message["intent"].get("confidence") > 0.8:
+        write_log("Actions: " + "No_understand: " + "enter\n")
+        
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
+        if tracker.latest_message["intent"].get("confidence") > 0.5:
             dispatcher.utter_message(response="utter_default")
         
         publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "no_understand"}), hostname="localhost")
-        log.write("Actions: " + "No_understand: " + "exit\n")
+        
+        write_log("Actions: " + "No_understand: " + "exit\n")
         
         # Revert user message which led to fallback.
         return [UserUtteranceReverted()]
@@ -82,10 +88,14 @@ class ActionMostrarPlanosExercicios(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Mostrar_planos_exercicios: " + "enter\n")
+        write_log("Actions: " + "Mostrar_planos_exercicios: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "selecionar_opcao", "opcao": "planos_exercicios"}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Mostrar_planos_exercicios: " + "exit\n")
+        
+        write_log("Actions: " + "Mostrar_planos_exercicios: " + "exit\n")
         
         return []
         
@@ -108,7 +118,10 @@ class ActionSelecionarOpcao(Action):
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        log.write("Actions: " + "Selecionar_opcao: " + "enter\n")
+        write_log("Actions: " + "Selecionar_opcao: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         options = ["um", "dois", "tres", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez"]
         slot_value = tracker.get_slot('opcao')
         slot_value = slot_value.lower()
@@ -122,7 +135,8 @@ class ActionSelecionarOpcao(Action):
         
         msg = {"comando": "selecionar_opcao", "opcao": slot_value}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Selecionar_opcao: " + "exit\n")
+        
+        write_log("Actions: " + "Selecionar_opcao: " + "exit\n")
         
         return []
 
@@ -135,10 +149,14 @@ class ActionComecar(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Comecar: " + "enter\n")
+        write_log("Actions: " + "Comecar: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "comecar"}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Comecar: " + "exit\n")
+        
+        write_log("Actions: " + "Comecar: " + "exit\n")
         
         return []
 
@@ -151,10 +169,14 @@ class ActionAvancar(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Avancar: " + "enter\n")
+        write_log("Actions: " + "Avancar: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "avancar"}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Avancar: " + "exit\n")
+        
+        write_log("Actions: " + "Avancar: " + "exit\n")
         
         return []
 
@@ -167,10 +189,14 @@ class ActionVoltar(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Voltar: " + "enter\n")
+        write_log("Actions: " + "Voltar: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "voltar"}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Voltar: " + "exit\n")
+        
+        write_log("Actions: " + "Voltar: " + "exit\n")
         
         return []
 
@@ -183,10 +209,14 @@ class ActionTerminar(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Terminar: " + "enter\n")
+        write_log("Actions: " + "Terminar: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "terminar"}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Terminar: " + "exit\n")
+        
+        write_log("Actions: " + "Terminar: " + "exit\n")
         
         return []
 
@@ -199,10 +229,14 @@ class ActionVirarCamaraEsquerda(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Virar_camara_esquerda: " + "enter\n")  
+        write_log("Actions: " + "Virar_camara_esquerda: " + "enter\n")  
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "esquerda"}
         publish.single(topic="comandos/voz/camara", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Virar_camara_esquerda: " + "exit\n")
+        
+        write_log("Actions: " + "Virar_camara_esquerda: " + "exit\n")
         
         return []
         
@@ -215,10 +249,14 @@ class ActionVirarCamaraDireita(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Virar_camara_direita: " + "enter\n")
+        write_log("Actions: " + "Virar_camara_direita: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "direita"}
         publish.single(topic="comandos/voz/camara", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Virar_camara_direita: " + "exit\n")
+        
+        write_log("Actions: " + "Virar_camara_direita: " + "exit\n")
         
         return []
         
@@ -231,10 +269,14 @@ class ActionVirarCamaraCima(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Virar_camara_cima: " + "enter\n")
+        write_log("Actions: " + "Virar_camara_cima: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "cima"}
         publish.single(topic="comandos/voz/camara", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Virar_camara_cima: " + "exit\n")
+        
+        write_log("Actions: " + "Virar_camara_cima: " + "exit\n")
         
         return []
     
@@ -247,10 +289,14 @@ class ActionVirarCamaraBaixo(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Virar_camara_baixo: " + "enter\n")
+        write_log("Actions: " + "Virar_camara_baixo: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+
         msg = {"comando": "baixo"}
         publish.single(topic="comandos/voz/camara", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Virar_camara_baixo: " + "exit\n")
+        
+        write_log("Actions: " + "Virar_camara_baixo: " + "exit\n")
         
         return []
 
@@ -263,10 +309,14 @@ class ActionScrollUp(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Scroll_up: " + "enter\n")
+        write_log("Actions: " + "Scroll_up: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "scroll_up"}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Scroll_up: " + "exit\n")
+        
+        write_log("Actions: " + "Scroll_up: " + "exit\n")
         
         return []
 
@@ -279,10 +329,14 @@ class ActionScrollDown(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Scroll_down: " + "enter\n")
+        write_log("Actions: " + "Scroll_down: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "scroll_down"}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Scroll_down: " + "exit\n")
+        
+        write_log("Actions: " + "Scroll_down: " + "exit\n")
         
         return []
 
@@ -295,10 +349,14 @@ class ActionMostrarTodosExercicios(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Mostrar_todos_exercicios: " + "enter\n")
+        write_log("Actions: " + "Mostrar_todos_exercicios: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "selecionar_opcao", "opcao": "todos_exercicios"}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Mostrar_todos_exercicios: " + "exit\n")
+        
+        write_log("Actions: " + "Mostrar_todos_exercicios: " + "exit\n")
         
         return []
 
@@ -311,10 +369,14 @@ class ActionPaginaInicial(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        log.write("Actions: " + "Pagina_inicial: " + "enter\n")
+        write_log("Actions: " + "Pagina_inicial: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
         msg = {"comando": "sair"}
         publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
-        log.write("Actions: " + "Pagina_inicial: " + "exit\n")
+        
+        write_log("Actions: " + "Pagina_inicial: " + "exit\n")
         
         return []
     

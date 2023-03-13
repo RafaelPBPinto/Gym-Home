@@ -17,9 +17,6 @@ from rasa_sdk import Tracker
 model = Model("vosk-model-small-pt-0.3") # 31MB
 recognizer = KaldiRecognizer(model, 16000)
 
-log = open("log.txt","w")
-tracker = Tracker()
-
 speaker = tts.init()
 speaker.setProperty('rate', 150)
 speaker.setProperty('voice', "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\MSTTS_V110_ptPT_Helia")
@@ -34,19 +31,20 @@ def main():
     while text != "desligar":
         if text == "olá maria" or text == "hey maria" or text == "oi maria":
             if text != "" :
+                try:
                     r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"message": text})
-                    print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
-                    log.write("Confiança: " + tracker.latest_message["intent"].get("confidence") + "\n")
                     for i in r.json():
                         bot_message = i['text']
-            print(f"Assistente: {bot_message}")
-            log.write("Assistente: " + {bot_message} + "\n")
-            speaker.say(bot_message)
-            speaker.runAndWait()
-            publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "listening"}), hostname="localhost")
-            assistant_listening_loop()
-            bot_message = ""
-            text = ""
+                    print(f"Assistente: {bot_message}")
+                    write_log("Assistente: " + bot_message + "\n")
+                    speak(bot_message)
+                    publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "listening"}), hostname="localhost")
+                    write_log("Listening..." + "\n")
+                    assistant_listening_loop()
+                    bot_message = ""
+                    text = ""
+                except:
+                    print("Rasa ainda não está pronto")
         else:
             data = stream.read(4096, exception_on_overflow = False)
             if recognizer.AcceptWaveform(data):
@@ -54,7 +52,7 @@ def main():
                 text = text[14:-3]
                 text = text.lower()
                 print(text)
-                log.write("User: " + text + "\n")
+                write_log("User: " + text + "\n")
                 #publish.single(topic="comandos/voz/UI", payload=json.dumps({"legenda": text}), hostname="localhost")     
     sys.exit(0)
 
@@ -64,24 +62,35 @@ def assistant_listening_loop():
         data = stream.read(4096, exception_on_overflow = False)
         if recognizer.AcceptWaveform(data):
             publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "no_listening"}), hostname="localhost")
+            write_log("No Listening..." + "\n")
             text = recognizer.Result()
             text = text[14:-3]
             text = text.lower()
             print(text)
-            log.write("User: " + text + "\n")
+            write_log("User: " + text + "\n")
             #publish.single(topic="comandos/voz/UI", payload=json.dumps({"legenda": text}), hostname="localhost")
             if text != "" :
-                r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"message": text})
-                print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
-                log.write("Confiança: " + tracker.latest_message["intent"].get("confidence") + "\n") 
-                for i in r.json():
-                    bot_message = i['text']
+                try:
+                    r = requests.post('http://localhost:5002/webhooks/rest/webhook', json={"message": text})
+                    for i in r.json():
+                        bot_message = i['text']
                     print(f"Assistente: {bot_message}")
-                    log.write("Assistente: " + {bot_message} + "\n")
-                    speaker.say(bot_message)
-                    speaker.runAndWait()
-            publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "listening"}), hostname="localhost")
+                    write_log("Assistente: " + bot_message + "\n")
+                    speak(bot_message)
+                    publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "listening"}), hostname="localhost")
+                    write_log("Listening..." + "\n")
+                except:
+                    print("Rasa está offline")                
     publish.single(topic="comandos/voz/UI", payload=json.dumps({"comando": "no_listening"}), hostname="localhost")
+    write_log("No Listening..." + "\n")
+    
+def write_log(text):
+    with open("log.txt", "a") as log:
+        log.write(text)
+
+def speak(text):
+    speaker.say(text)
+    speaker.runAndWait()
     
 if __name__ == "__main__":
     main()  
