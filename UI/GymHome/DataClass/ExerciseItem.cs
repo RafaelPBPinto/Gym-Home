@@ -82,8 +82,7 @@ namespace GymHome
         {
             index = 0;
         }
-
-
+        
         private static int index = 0;
         private static string m_imagesFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
         private string m_imagePath;

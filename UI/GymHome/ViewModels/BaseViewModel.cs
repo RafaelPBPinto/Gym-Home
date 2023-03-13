@@ -9,7 +9,7 @@ namespace GymHome
         [ObservableProperty]
         private Uri microfoneImageSource;
 
-        private static readonly string baseImagesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Assets");
+        private static readonly string baseImagesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets");
 
         public BaseViewModel()
         {
@@ -19,11 +19,11 @@ namespace GymHome
             if(!KeywordExists(Settings.VoiceKeywords.NavigateToMainPage))
                 AddCommand(NavigateToMainPage,Settings.VoiceKeywords.NavigateToMainPage);
 
-            if(!KeywordExists(Settings.VoiceKeywords.MicrofoneMute))
-                AddCommand(NotListening,Settings.VoiceKeywords.MicrofoneMute);
-
-            if (!KeywordExists(Settings.VoiceKeywords.MicrofoneUnmute))
-                AddCommand(Listening, Settings.VoiceKeywords.MicrofoneUnmute);
+            //no if check because although it will exist, it is using the imageSource variable previous declared
+            //meaning it will only work in the first page
+            //this way it will override the variable used in the methods and work properly
+            AddCommand(NotListening, Settings.VoiceKeywords.MicrofoneMute);
+            AddCommand(Listening, Settings.VoiceKeywords.MicrofoneUnmute);
 
             NotListening();
         }
