@@ -56,7 +56,7 @@ namespace GymHome
             foreach (var exercise in bufferPlanExercise)
                 PlanExercise.Add(exercise);
 
-            IndexString = (index+1).ToString();
+            IndexString = (index % 10 +1).ToString();
             m_imagePath = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images"), $"{TitleString}.png");
 
             if(!File.Exists(m_imagePath))

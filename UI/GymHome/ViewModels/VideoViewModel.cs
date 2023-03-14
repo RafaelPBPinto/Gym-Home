@@ -9,7 +9,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.Media.Core;
 using Windows.Media.Playback;
-using Windows.UI.Core;
 
 namespace GymHome
 {
@@ -42,21 +41,7 @@ namespace GymHome
                 Directory.CreateDirectory("./Videos");
         }
 
-        private void InitCommands()
-        {
-            AddCommand(FinishPlan, Settings.VoiceKeywords.VideoPageEndPlan);
-        }
-
-        private void FinishPlan(string obj)
-        {
-            if (MediaPlayerElement != null)
-            {
-                MediaPlayerElement.MediaPlayer.Pause();
-                MediaPlayerElement = null;
-            }
-
-            NavigateToMainPage();
-        }
+       
 
         [RelayCommand]
         public void GoBack()
@@ -140,14 +125,28 @@ namespace GymHome
             File.WriteAllBytes(Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Videos"), $"{Title}.mp4"), videoBytes);
         }
 
+        private void InitCommands()
+        {
+            AddCommand(FinishPlan, Settings.VoiceKeywords.VideoPageEndPlan);
+        }
+        
         private void RemoveCommands()
         {
             RemoveCommand(Settings.VoiceKeywords.VideoPageEndPlan);
+        }
+        private void FinishPlan(string obj)
+        {
+            NavigateToMainPage();
         }
 
         protected override void OnNavigatedFrom()
         {
             base.OnNavigatedFrom();
+            if (MediaPlayerElement != null)
+            {
+                MediaPlayerElement.MediaPlayer.Pause();
+                MediaPlayerElement = null;
+            }
             RemoveCommands();
         }
     }

@@ -71,7 +71,7 @@ namespace GymHome
             ExerciseType = exerciseType;
             ImageBytes = imageBytes;
             VideoID = videoID;
-            Index = index + 1;
+            Index = index % 10 + 1;
             m_imagePath = Path.Combine(m_imagesFolderPath, $"{TitleString}.png");
             SaveImage();
 
