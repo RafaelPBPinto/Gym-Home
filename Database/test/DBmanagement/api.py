@@ -143,7 +143,7 @@ def getExercise(id):
         return jsonify(response), 200
     return jsonify({'error': 'Invalid request method'}), 400
 
-@api.route('/', methods=['GET','POST'])
+@api.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
         data = request.json()
@@ -341,3 +341,8 @@ def getPlanos():
 
     conn.close()
     return jsonify(responses),200
+
+
+@api.route('/', methods = ['GET', 'POST'])
+def home():
+    return render_template("index.html")
