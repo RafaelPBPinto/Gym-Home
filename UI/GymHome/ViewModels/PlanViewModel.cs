@@ -99,6 +99,9 @@ namespace GymHome
         [RelayCommand]
         private void NextListPage()
         {
+            if(m_allPlans == null)
+                return;
+
             if (m_allPlans.Count / m_elementsPerPage < PageNumber - 1)
                 return;
 
@@ -117,6 +120,9 @@ namespace GymHome
         [RelayCommand]
         private void PreviousListPage()
         {
+            if (m_allPlans == null)
+                return;
+
             if (PageNumber == 1)
                 return;
 

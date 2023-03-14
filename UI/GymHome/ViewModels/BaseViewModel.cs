@@ -1,10 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.IO;
 
 namespace GymHome
 {
-    public class BaseViewModel : ObservableObject
+    public partial class BaseViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private Uri microfoneImageSource;
+
+        private static readonly string baseImagesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets");
+
         public BaseViewModel()
         {
             if (!KeywordExists(Settings.VoiceKeywords.NavigateToPreviousPage))
@@ -12,6 +18,14 @@ namespace GymHome
 
             if(!KeywordExists(Settings.VoiceKeywords.NavigateToMainPage))
                 AddCommand(NavigateToMainPage,Settings.VoiceKeywords.NavigateToMainPage);
+
+            //no if check because although it will exist, it is using the imageSource variable previous declared
+            //meaning it will only work in the first page
+            //this way it will override the variable used in the methods and work properly
+            AddCommand(NotListening, Settings.VoiceKeywords.MicrofoneMute);
+            AddCommand(Listening, Settings.VoiceKeywords.MicrofoneUnmute);
+
+            NotListening();
         }
 
         /// <summary>
@@ -59,6 +73,28 @@ namespace GymHome
         private void NavigateToPreviousPage(string obj = null)
         {
             NavigateToPreviousPage();
+        }
+
+        private void Listening(string obj = null)
+        {
+            string path = Path.Combine(baseImagesPath, "mic_unmuted.png");
+            if (!File.Exists(path))
+            {
+                Logger.Error($"Couldn't find image {path}");
+                return;
+            }
+            MicrofoneImageSource = new Uri(path);
+        }
+
+        private void NotListening(string obj = null)
+        {
+            string path = Path.Combine(baseImagesPath, "mic_muted.png");
+            if (!File.Exists(path))
+            {
+                Logger.Error($"Couldn't find image {path}");
+                return;
+            }
+            MicrofoneImageSource = new Uri(path);
         }
 
         protected void NavigateToMainPage(string obj = null)

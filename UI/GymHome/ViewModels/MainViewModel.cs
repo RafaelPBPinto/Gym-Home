@@ -26,6 +26,8 @@ namespace GymHome
             InitCommands();
         }
 
+
+
         /// <summary>
         /// Navigate to the exercises page.
         /// Shows all exercises available to the user.

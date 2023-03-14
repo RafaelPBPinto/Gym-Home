@@ -36,21 +36,21 @@ namespace GymHome
             DataContext = new MainViewModel();
         }
 
-        private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            var key = e.Key;
-            if (key == Windows.System.VirtualKey.Y)
-            {
-                if (micImage.Source.ToString().Contains("mic_unmuted.png"))
-                {
-                    micImage.Source = new BitmapImage(new Uri("../Assets/mic_muted.png", UriKind.Relative));
-                }
-                else
-                {
-                    micImage.Source = new BitmapImage(new Uri("../Assets/mic_unmuted.png", UriKind.Relative));
-                }
-            }
-        }
+        //private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
+        //{
+        //    var key = e.Key;
+        //    if (key == Windows.System.VirtualKey.Y)
+        //    {
+        //        if (micImage.Source.ToString().Contains("mic_unmuted.png"))
+        //        {
+        //            micImage.Source = new BitmapImage(new Uri("../Assets/mic_muted.png", UriKind.Relative));
+        //        }
+        //        else
+        //        {
+        //            micImage.Source = new BitmapImage(new Uri("../Assets/mic_unmuted.png", UriKind.Relative));
+        //        }
+        //    }
+        //}
 
         //private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
         //{

@@ -38,7 +38,7 @@
         <ContentControl Content="{Binding MediaPlayerElement}"
                         HorizontalAlignment="Stretch"
                         Grid.Row="1"/>
-        <Image Source="../Assets/mic_unmuted.png"
+        <Image Source="{Binding MicrofoneImageSource}"
                Grid.Column="1"
                Grid.Row="1"
                Width="50"
