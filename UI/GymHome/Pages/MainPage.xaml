@@ -57,7 +57,7 @@
                         <Image Source="../Assets/calendar-regular.svg" MaxHeight="75"
                                Margin="0 0 20 0"/>
                         <TextBlock Grid.Column="1"
-                                   Text="Plano de exercicios"
+                                   Text="Plano de exercícios"
                                    Foreground="Black"
                                    VerticalAlignment="Center"
                                    TextWrapping="Wrap"
@@ -82,7 +82,7 @@
                         <Image Source="../Assets/Muscleman.png" MaxHeight="75"
                                Margin="0 0 20 0"/>
                         <TextBlock Grid.Column="1"
-                                   Text="Mostrar todos os exercicios"
+                                   Text="Mostrar todos os exercícios"
                                    Foreground="Black"
                                    VerticalAlignment="Center"
                                    TextWrapping="Wrap"

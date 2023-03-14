@@ -26,7 +26,7 @@
                     Command="{Binding GoBackCommand}"
                     BorderBrush="AliceBlue"
                     BorderThickness="3">
-            <TextBlock Text="Go Back"
+            <TextBlock Text="Voltar"
                                Foreground="Black"
                                FontSize="30"/>
         </Button>
