@@ -17,6 +17,7 @@
     <Content Remove="Assets\calendar-regular.svg" />
     <Content Remove="Assets\MainPageImage.jpg" />
     <Content Remove="Assets\Muscleman.png" />
+    <Content Remove="Assets\no-wifi.png" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ExercisesPage.xaml" />
@@ -68,6 +69,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Muscleman.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\no-wifi.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Page Update="PlanPage.xaml">

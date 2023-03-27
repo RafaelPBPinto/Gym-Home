@@ -8,12 +8,12 @@
 
   <Identity
     Name="3611dce6-9fd5-42d2-98fa-08ca0bf54037"
-    Publisher="CN=blues"
+    Publisher="CN=Projeto PECI UA"
     Version="1.0.0.0" />
 
   <Properties>
     <DisplayName>GymHome</DisplayName>
-    <PublisherDisplayName>blues</PublisherDisplayName>
+    <PublisherDisplayName>Projeto PECI UA</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -23,7 +23,7 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="pt-PT"/>
   </Resources>
 
   <Applications>

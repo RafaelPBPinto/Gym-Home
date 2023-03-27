@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,13 @@ namespace GymHome
 
         [ObservableProperty]
         ObservableCollection<Plan> plans = new ObservableCollection<Plan>();
+
+
+        [ObservableProperty]
+        private Visibility noInternetConnectionVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
+        private Visibility planInfoVisibility = Visibility.Collapsed;
 
         public string Title => Plans.Count == 0 ? string.Empty : Plans[SelectedIndex].Title;
 
@@ -64,6 +72,7 @@ namespace GymHome
             }
             catch (Exception ex)
             {
+                NoInternetConnectionVisibility = Visibility.Visible;
                 Debug.WriteLine(ex.Message);
                 return;
             }
@@ -76,6 +85,7 @@ namespace GymHome
 
             SelectedIndex = 0;
             PageNumber = 1;
+            PlanInfoVisibility = Visibility.Visible;
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Description));
         }

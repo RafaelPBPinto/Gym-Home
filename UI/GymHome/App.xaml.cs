@@ -82,7 +82,7 @@ namespace GymHome
             {
                 StartMqttListener("localhost", 1883).GetAwaiter();
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 Logger.Error($"Failed to initialize mqtt. {ex.Message}");
                 Debug.WriteLine(ex.Message);
@@ -109,9 +109,9 @@ namespace GymHome
         /// Navigate through pages using the root frame.
         /// </summary>
         /// <param name="pageType">The type of the page to navigate to.</param>
-        public void Navigate(Type pageType,object param = null)
+        public void Navigate(Type pageType, object param = null)
         {
-            m_rootFrame.Navigate(pageType,param);
+            m_rootFrame.Navigate(pageType, param);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace GymHome
         /// <param name="action">Action to be called</param>
         /// <param name="keyword">Keyword used to call <paramref name="action"/></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void AddCommand(Action<string> action,string keyword, [CallerMemberName] string caller = "")
+        public void AddCommand(Action<string> action, string keyword, [CallerMemberName] string caller = "")
         {
-            if(action == null)
+            if (action == null)
             {
                 Logger.Error($"{caller} tried to add a null action.");
                 throw new ArgumentNullException("action");
@@ -146,15 +146,15 @@ namespace GymHome
         /// <param name="caller"></param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="Exception"></exception>
-        public void RemoveCommand(string keyword, [CallerMemberName] string caller = "") 
+        public void RemoveCommand(string keyword, [CallerMemberName] string caller = "")
         {
-            if(keyword == null)
+            if (keyword == null)
             {
                 Logger.Error($"{caller} tried to remove a command with a null keyword");
                 throw new ArgumentNullException("keyword");
             }
 
-            if(!m_mqttActions.ContainsKey(keyword))
+            if (!m_mqttActions.ContainsKey(keyword))
             {
                 Logger.Error($"{caller} tried to remove a command with keyword \"{keyword}\", which doesn't exist.");
                 throw new Exception($"keyword \"{keyword}\" doesn't exist. Can't remove.");
@@ -164,12 +164,14 @@ namespace GymHome
             m_mqttActions.Remove(keyword);
         }
 
+        public event Action<string> OnAnyMessageReceived;
+
         /// <summary>
         /// Checks if the <paramref name="keyword"/> exists in the list.
         /// </summary>
         /// <param name="keyword"></param>
         /// <returns></returns>
-        public bool keywordExists(string keyword) 
+        public bool keywordExists(string keyword)
         {
             if (keyword == null)
                 return true;
@@ -185,7 +187,7 @@ namespace GymHome
             {
                 m_rootFrame.GoBack();
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 Logger.Error($"Failed to navigate to previous page. {ex.Message}");
             }
@@ -195,25 +197,25 @@ namespace GymHome
         private Frame m_rootFrame;
         private MqttFactory m_mqttFactory;
         private IMqttClient m_mqttClient;
-        private Dictionary<string,Action<string>> m_mqttActions = new Dictionary<string, Action<string>>();
+        private Dictionary<string, Action<string>> m_mqttActions = new Dictionary<string, Action<string>>();
         private readonly DispatcherQueue m_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        private readonly string m_loggerPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"log.txt");
+        private readonly string m_loggerPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
         private readonly string m_settingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json");
 
-        private async Task StartMqttListener(string serverName,int serverPort)
+        private async Task StartMqttListener(string serverName, int serverPort)
         {
-            var mqttClientOptions = new MqttClientOptionsBuilder().WithClientId("GymHomeUI").WithTcpServer(serverName,serverPort).Build();
+            var mqttClientOptions = new MqttClientOptionsBuilder().WithClientId("GymHomeUI").WithTcpServer(serverName, serverPort).Build();
 
             m_mqttClient.ApplicationMessageReceivedAsync += MessageReceived;
 
-            await m_mqttClient.ConnectAsync(mqttClientOptions,CancellationToken.None);
+            await m_mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
 
             var mqttSubscriberOptions = m_mqttFactory.CreateSubscribeOptionsBuilder().WithTopicFilter(f =>
             {
                 f.WithTopic("comandos/voz/UI");
             }).Build();
 
-            await m_mqttClient.SubscribeAsync(mqttSubscriberOptions,CancellationToken.None);
+            await m_mqttClient.SubscribeAsync(mqttSubscriberOptions, CancellationToken.None);
         }
 
         private Task MessageReceived(MqttApplicationMessageReceivedEventArgs arg)
@@ -226,6 +228,9 @@ namespace GymHome
                 bool res = m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
                     () =>
                     {
+                        if (OnAnyMessageReceived != null)
+                            OnAnyMessageReceived.Invoke(command.Arg);
+
                         if (m_mqttActions.ContainsKey(command.Command))
                         {
                             Logger.Log($"executed command associated with key {command.Command}");
@@ -235,7 +240,7 @@ namespace GymHome
                             Logger.Warning($"Unknown command received. {command.Command}");
                     });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.Error($"Caught exception while trying to execute received mqtt command. {ex.Message}");
                 Debug.WriteLine(ex.Message);

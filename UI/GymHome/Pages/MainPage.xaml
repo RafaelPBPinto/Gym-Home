@@ -9,7 +9,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="White">
+    Background="White"
+    Language="pt-PT">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -57,13 +58,14 @@
                         <Image Source="../Assets/calendar-regular.svg" MaxHeight="75"
                                Margin="0 0 20 0"/>
                         <TextBlock Grid.Column="1"
-                                   Text="Plano de exercícios"
                                    Foreground="Black"
                                    VerticalAlignment="Center"
                                    TextWrapping="Wrap"
                                    FontSize="20"
                                    FontWeight="SemiBold"
-                                   HorizontalAlignment="Left"/>
+                                   HorizontalAlignment="Left">
+                            Plano de exercicios
+                        </TextBlock>
 
                     </Grid>
                 </Button>
@@ -82,13 +84,14 @@
                         <Image Source="../Assets/Muscleman.png" MaxHeight="75"
                                Margin="0 0 20 0"/>
                         <TextBlock Grid.Column="1"
-                                   Text="Mostrar todos os exercícios"
                                    Foreground="Black"
                                    VerticalAlignment="Center"
                                    TextWrapping="Wrap"
                                    FontSize="20"
                                    FontWeight="SemiBold"
-                                   HorizontalAlignment="Left"/>
+                                   HorizontalAlignment="Left">
+                            Mostrar todos os exercicios
+                        </TextBlock>
 
                     </Grid>
                 </Button>
@@ -100,6 +103,22 @@
                VerticalAlignment="Center"
                HorizontalAlignment="Center"
                Margin="50 0"/>
+
+        <InfoBar
+            Title="A processar:"
+            Message="{Binding Message}"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Left"
+            IsOpen="{Binding IsOpen}"
+            Foreground="Black"
+            Background="LightBlue"
+            IsClosable="False"
+            CornerRadius="5"
+            Margin="10,0,0,10">
+        </InfoBar>
+
 
         <Image
            Source="{Binding MicrofoneImageSource}"

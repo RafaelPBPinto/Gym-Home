@@ -38,9 +38,25 @@ namespace GymHome
 
             public static string VideoPageEndPlan { get; private set; }
 
+            public static string VideoPlay { get; private set; }
+
+            public static string VideoPause { get; private set; }
+
+            public static string VideoNext { get; private set; }
+
+            public static string VideoPrevious { get; private set; }
+
             public static string MicrofoneMute { get; private set; }
 
             public static string MicrofoneUnmute { get; private set; }
+
+            public static string MicrofoneMessageCaught { get; private set; }
+
+            //a confirm message like "yes"
+            public static string Confirm { get; private set; }
+
+            //a deny message like "no"
+            public static string Deny { get; private set; }
 
             public static void SetDefaults()
             {
@@ -57,6 +73,13 @@ namespace GymHome
                 VideoPageEndPlan = "terminar";
                 MicrofoneUnmute = "listening";
                 MicrofoneMute = "no_listening";
+                MicrofoneMessageCaught = "legenda";
+                VideoPlay = "play";
+                VideoPause = "pause";
+                VideoNext = "proximo";
+                VideoPrevious = "anterior";
+                Confirm = "confirmar";
+                Deny = "negar";
             }
             //[JsonConstructor]
             //public VoiceKeywords(string mainPageSelectOption,string exercisesPageStartExercie,string exercisesPageNextItem,string exercisesPagePreviousItem,string exercisesPageSelectExercise

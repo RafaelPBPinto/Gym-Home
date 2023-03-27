@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Shapes;
 using System;
@@ -39,6 +40,7 @@ namespace GymHome
             }
             catch(Exception ex)
             {
+                NoInternetConnectionVisibility = Visibility.Visible;
                 Logger.Error($"Couldn't get exercises. Reason: {ex.Message}");
                 return;
             }
@@ -56,6 +58,7 @@ namespace GymHome
             
             SelectedIndex = 0;
             PageNumber = 1;
+            ExerciseInfoVisibility = Visibility.Visible;
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Description));
         }
@@ -90,6 +93,12 @@ namespace GymHome
         [ObservableProperty]
         private int pageNumber = 0;
         private List<ExerciseItem> allItems = null;
+
+        [ObservableProperty]
+        private Visibility noInternetConnectionVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
+        private Visibility exerciseInfoVisibility = Visibility.Collapsed;
 
         private const int m_elementsPerPage = 10;
 

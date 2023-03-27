@@ -35,9 +35,62 @@
                    Style="{StaticResource TitleTextBlockStyle}"
                    Padding="20"
                    />
+
         <ContentControl Content="{Binding MediaPlayerElement}"
                         HorizontalAlignment="Stretch"
                         Grid.Row="1"/>
+
+        <Grid Grid.Row="1"
+              Visibility="{Binding NextVideoPromptVisibility}">
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Background="LightBlue"
+                        Padding="20"
+                        CornerRadius="10">
+                <TextBlock Foreground="Black"
+                           FontSize="30"
+                           HorizontalAlignment="Center">
+                    Acabou o exercicio. <LineBreak/> Quer passar ao proximo?
+                </TextBlock>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <Button Command="{Binding NextVideoCommand}"
+                            CornerRadius="10"
+                            Background="LightSkyBlue"
+                            Margin="0,0,20,0">
+                        <TextBlock Foreground="Black"
+                                   FontSize="20">
+                            Sim
+                        </TextBlock>
+                    </Button>
+                    <Button Command="{Binding ClosePromptCommand}"
+                            CornerRadius="10"
+                            Background="LightSkyBlue">
+                        <TextBlock Foreground="Black"
+                                   FontSize="20">
+                            Nao
+                        </TextBlock>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <InfoBar
+            Title="A processar:"
+            Message="{Binding Message}"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Left"
+            IsOpen="{Binding IsOpen}"
+            Foreground="Black"
+            Background="LightBlue"
+            IsClosable="False"
+            CornerRadius="5"
+            Margin="10,0,0,10">
+        </InfoBar>
+        
         <Image Source="{Binding MicrofoneImageSource}"
                Grid.Column="1"
                Grid.Row="1"

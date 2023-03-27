@@ -126,7 +126,25 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+
+        <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="1"
+              Visibility="{Binding NoInternetConnectionVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image Source="../Assets/no-wifi.png"
+                   Grid.Row="0"/>
+            <TextBlock FontSize="25"
+                       Foreground="Black"
+                       HorizontalAlignment="Center"
+                       Grid.Row="1">
+                Nao foi possivel conectar ao servidor.
+            </TextBlock>
+        </Grid>
+        
+        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"
+              Visibility="{Binding PlanInfoVisibility}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -158,6 +176,22 @@
                 <TextBlock Text="Comecar" Foreground="Black" FontSize="30"/>
             </Button>
         </Grid>
+
+        <InfoBar
+            Title="A processar:"
+            Message="{Binding Message}"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Left"
+            IsOpen="{Binding IsOpen}"
+            Foreground="Black"
+            Background="LightBlue"
+            IsClosable="False"
+            CornerRadius="5"
+            Margin="10,0,0,10">
+        </InfoBar>
+        
         <Image Source="{Binding MicrofoneImageSource}"
                Grid.Column="1"
                Grid.Row="2"

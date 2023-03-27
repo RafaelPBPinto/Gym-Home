@@ -9,6 +9,12 @@ namespace GymHome
         [ObservableProperty]
         private Uri microfoneImageSource;
 
+        [ObservableProperty]
+        private bool isOpen = false;
+
+        [ObservableProperty]
+        private string message = "";
+
         private static readonly string baseImagesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets");
 
         public BaseViewModel()
@@ -24,7 +30,8 @@ namespace GymHome
             //this way it will override the variable used in the methods and work properly
             AddCommand(NotListening, Settings.VoiceKeywords.MicrofoneMute);
             AddCommand(Listening, Settings.VoiceKeywords.MicrofoneUnmute);
-
+            AddCommand(ShowLegend, Settings.VoiceKeywords.MicrofoneMessageCaught);
+            ((App)App.Current).OnAnyMessageReceived += HideLegend;
             NotListening();
         }
 
@@ -35,6 +42,7 @@ namespace GymHome
         protected void Navigate(Type pageType, object param = null)
         {
             OnNavigatedFrom();
+            ((App)App.Current).OnAnyMessageReceived -= HideLegend;
             ((App)App.Current).Navigate(pageType, param);
         }
 
@@ -95,6 +103,21 @@ namespace GymHome
                 return;
             }
             MicrofoneImageSource = new Uri(path);
+        }
+
+        private void ShowLegend(string obj = null)
+        {
+            if (obj == null)
+                return;
+
+            Message = obj;
+            IsOpen = true;
+        }
+
+        private void HideLegend(string obj = null)
+        {
+            IsOpen = false;
+            Message = string.Empty;
         }
 
         protected void NavigateToMainPage(string obj = null)
