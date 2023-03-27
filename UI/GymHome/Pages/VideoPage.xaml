@@ -50,8 +50,8 @@
                         CornerRadius="10">
                 <TextBlock Foreground="Black"
                            FontSize="30"
-                           HorizontalAlignment="Center">
-                    Acabou o exercicio. <LineBreak/> Quer passar ao proximo?
+                           HorizontalAlignment="Center"
+                           Text="{Binding PromptMessage}">
                 </TextBlock>
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center">

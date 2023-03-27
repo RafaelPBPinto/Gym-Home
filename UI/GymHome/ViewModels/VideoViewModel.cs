@@ -35,14 +35,17 @@ namespace GymHome
             Title = m_exerciseItems[0].Title;
             if (!Directory.Exists("./Videos"))
                 Directory.CreateDirectory("./Videos");
+
+            if (m_exerciseItems.Length == 1)
+                PromptMessage = m_planEndedString;
         }
 
-       
+
 
         [RelayCommand]
         public void GoBack()
         {
-            if(MediaPlayerElement != null)
+            if (MediaPlayerElement != null)
             {
                 MediaPlayerElement.MediaPlayer.Pause();
                 MediaPlayerElement = null;
@@ -52,7 +55,7 @@ namespace GymHome
             {
                 NavigateToPreviousPage();
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 Logger.Error($"error while leaving video page. {ex.Message}");
             }
@@ -67,39 +70,55 @@ namespace GymHome
         private IExerciseItem[] m_exerciseItems = null;
         private int m_currentVideoIndex = 0;
         private readonly DispatcherQueue m_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        private const string m_planEndedString = "Acabou todos os exercicios.\nQuer terminar o plano?";
+        private const string m_exerciseFinishString = "Acabou o exercicio.\nQuer fazer o proximo?";
 
         [ObservableProperty]
-        private string title;
+        private string title = "";
 
         [ObservableProperty]
         private MediaPlayerElement mediaPlayerElement;
 
         [ObservableProperty]
-        private Visibility nextVideoPromptVisibility = Visibility.Visible;
+        private Visibility nextVideoPromptVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
+        private string promptMessage = m_exerciseFinishString;
 
         private void ResetMediaPlayerElement()
         {
             MediaPlayerElement = new MediaPlayerElement();
             MediaPlayerElement.AreTransportControlsEnabled = true;
             MediaPlayerElement.AutoPlay = true;
-            MediaPlayerElement.MediaPlayer.MediaEnded += VideoEnded;
+            MediaPlayerElement.MediaPlayer.MediaEnded += (MediaPlayer sender, object args) =>
+            {
+                ShowPrompt();
+            };
         }
 
-        private void VideoEnded(MediaPlayer sender, object args)
+        private void ShowPrompt()
         {
-            NextVideoPromptVisibility = Visibility.Visible;
+            m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
+                () =>
+                {
+                    NextVideoPromptVisibility = Visibility.Visible;
+                });
         }
 
         [RelayCommand]
-        private void NextVideo()
+        private void NextVideo(string obj = null)
         {
-            NextVideo("");
+            Task.Run(async () => { await NextVideo(); });
         }
 
         [RelayCommand]
         private void ClosePrompt(string obj = null)
         {
-            NextVideoPromptVisibility = Visibility.Collapsed;
+            m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
+                () =>
+                {
+                    NextVideoPromptVisibility = Visibility.Collapsed;
+                });
         }
 
         private async Task SetMediaSource(int videoID)
@@ -135,12 +154,12 @@ namespace GymHome
         {
             AddCommand(FinishPlan, Settings.VoiceKeywords.VideoPageEndPlan);
             AddCommand(Play, Settings.VoiceKeywords.VideoPlay);
-            AddCommand(Pause,Settings.VoiceKeywords.VideoPause);
-            AddCommand(NextVideo,Settings.VoiceKeywords.VideoNext);
+            AddCommand(Pause, Settings.VoiceKeywords.VideoPause);
+            AddCommand(NextVideo, Settings.VoiceKeywords.VideoNext);
             AddCommand(ClosePrompt, Settings.VoiceKeywords.Deny);
             AddCommand(NextVideo, Settings.VoiceKeywords.Confirm);
         }
-        
+
         private void RemoveCommands()
         {
             RemoveCommand(Settings.VoiceKeywords.VideoPageEndPlan);
@@ -152,12 +171,12 @@ namespace GymHome
         }
         private void FinishPlan(string obj = null)
         {
-            NavigateToMainPage();
+            Navigate(typeof(PlanPage));
         }
 
         private void Pause(string obj = null)
         {
-            if(MediaPlayerElement != null)
+            if (MediaPlayerElement != null)
                 MediaPlayerElement.MediaPlayer.Pause();
         }
 
@@ -166,24 +185,58 @@ namespace GymHome
             if (MediaPlayerElement != null)
                 MediaPlayerElement.MediaPlayer.Play();
         }
-        
-        private void NextVideo(string obj = null)
+
+        private async Task NextVideo()
         {
+            ClosePrompt();
             if (m_currentVideoIndex + 1 < m_exerciseItems.Length)
+            {
+                m_currentVideoIndex++;
+                await LoadVideo();
+                if (m_currentVideoIndex + 1 == m_exerciseItems.Length)
+                    m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
+                    () =>
+                    {
+                        PromptMessage = m_planEndedString;
+                    });
+            }
+            else
             {
                 m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
                     () =>
                     {
-                        Title = m_exerciseItems[(m_currentVideoIndex + 1)].Title;
+                        Navigate(typeof(PlanPage));
+                    });
+
+            }
+        }
+
+        private async Task PreviousVideo()
+        {
+            ClosePrompt();
+            if (m_currentVideoIndex > 0)
+            {
+                m_currentVideoIndex--;
+                await LoadVideo();
+                m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
+                    () =>
+                    {
+                        PromptMessage = m_exerciseFinishString;
+                    });
+            }
+        }
+
+        private async Task LoadVideo()
+        {
+            m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
+                    () =>
+                    {
+                        Title = m_exerciseItems[m_currentVideoIndex].Title;
                         ResetMediaPlayerElement();
                     });
 
-                Task.Run(async () =>
-                {
-                    await SetMediaSource(m_exerciseItems[(m_currentVideoIndex + 1)].VideoID);
-                }).Start();
-                m_currentVideoIndex++;
-            }
+            await SetMediaSource(m_exerciseItems[m_currentVideoIndex].VideoID);
+
         }
 
         protected override void OnNavigatedFrom()
