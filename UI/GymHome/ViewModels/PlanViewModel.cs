@@ -15,24 +15,6 @@ namespace GymHome
 {
     public partial class PlanViewModel : BaseViewModel
     {
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(Title))]
-        [NotifyPropertyChangedFor(nameof(Description))]
-        private int selectedIndex = 0;
-
-        [ObservableProperty]
-        private int pageNumber = 0;
-
-        [ObservableProperty]
-        ObservableCollection<Plan> plans = new ObservableCollection<Plan>();
-
-
-        [ObservableProperty]
-        private Visibility noInternetConnectionVisibility = Visibility.Collapsed;
-
-        [ObservableProperty]
-        private Visibility planInfoVisibility = Visibility.Collapsed;
-
         public string Title => Plans.Count == 0 ? string.Empty : Plans[SelectedIndex].Title;
 
         public string Description => Plans.Count == 0 ? string.Empty : Plans[SelectedIndex].Description;
@@ -42,10 +24,6 @@ namespace GymHome
             InitCommands();
             Plan.ResetIndex();
         }
-
-        private Expander m_lastOpenExpander = null;
-        private List<Plan> m_allPlans;
-        private readonly int m_elementsPerPage = 10;
 
         public void Expander_Expanding(Expander expander)
         {
@@ -68,7 +46,7 @@ namespace GymHome
 
             try
             {
-                m_allPlans = await client.GetFromJsonAsync<List<Plan>>($"http://localhost:5000/profileComplete/user_id={Settings.UserID}");
+                m_allPlans = await client.GetFromJsonAsync<List<Plan>>($"{Settings.Instance.ServerAddress}/profileComplete/user_id={Settings.UserID}");
             }
             catch (Exception ex)
             {
@@ -86,6 +64,7 @@ namespace GymHome
             SelectedIndex = 0;
             PageNumber = 1;
             PlanInfoVisibility = Visibility.Visible;
+            m_maxNumberOfPages = (int)MathF.Ceiling(m_allPlans.Count / (float)m_elementsPerPage);
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Description));
         }
@@ -106,13 +85,49 @@ namespace GymHome
             Navigate(typeof(VideoPage), plan.PlanExercise.ToArray());
         }
 
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Title))]
+        [NotifyPropertyChangedFor(nameof(Description))]
+        private int selectedIndex = 0;
+
+        [ObservableProperty]
+        private int pageNumber = 0;
+
+        [ObservableProperty]
+        private ObservableCollection<Plan> plans = new ObservableCollection<Plan>();
+
+
+        [ObservableProperty]
+        private Visibility noInternetConnectionVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
+        private Visibility planInfoVisibility = Visibility.Collapsed;
+
+        private Expander m_lastOpenExpander = null;
+        private List<Plan> m_allPlans;
+        private readonly int m_elementsPerPage = 10;
+        private int m_maxNumberOfPages = 0;
+        private readonly Dictionary<string, int> m_stringNumToInt = new Dictionary<string, int>
+        {
+            {"um",1},
+            {"dois",2 },
+            {"tres",3 },
+            {"quatro",4 },
+            {"cinco",5 },
+            {"seis",6 },
+            {"sete",7 },
+            {"oito",8 },
+            {"nove",9 },
+            {"dez",10 }
+        };
+
         [RelayCommand]
         private void NextListPage()
         {
             if(m_allPlans == null)
                 return;
 
-            if (m_allPlans.Count / m_elementsPerPage < PageNumber - 1)
+            if (m_maxNumberOfPages <= PageNumber)
                 return;
 
             Plans.Clear();
@@ -161,20 +176,6 @@ namespace GymHome
             StartPlan();
         }
 
-        private readonly Dictionary<string, int> m_stringNumToInt = new Dictionary<string, int>
-        {
-            {"um",1},
-            {"dois",2 },
-            {"tres",3 },
-            {"quatro",4 },
-            {"cinco",5 },
-            {"seis",6 },
-            {"sete",7 },
-            {"oito",8 },
-            {"nove",9 },
-            {"dez",10 }
-        };
-
         private void SelectPlan(string obj = null)
         {
             if (obj == null)
@@ -193,18 +194,18 @@ namespace GymHome
 
         private void InitCommands()
         {
-            AddCommand(SelectPlan, Settings.VoiceKeywords.PlanPageSelectPlan);
-            AddCommand(NextListPage, Settings.VoiceKeywords.ExercisesPageNextListPage);
-            AddCommand(PreviousListPage, Settings.VoiceKeywords.ExercisesPagePreviousListPage);
-            AddCommand(StartPlan, Settings.VoiceKeywords.ExercisesPageStartExercise);
+            AddCommand(SelectPlan, settingsInstance.voiceKeywords.PlanPageSelectPlan);
+            AddCommand(NextListPage, settingsInstance.voiceKeywords.ExercisesPageNextListPage);
+            AddCommand(PreviousListPage, settingsInstance.voiceKeywords.ExercisesPagePreviousListPage);
+            AddCommand(StartPlan, settingsInstance.voiceKeywords.ExercisesPageStartExercise);
         }
 
         protected override void OnNavigatedFrom()
         {
-            RemoveCommand(Settings.VoiceKeywords.PlanPageSelectPlan);
-            AddCommand(NextListPage, Settings.VoiceKeywords.ExercisesPageNextListPage);
-            AddCommand(PreviousListPage, Settings.VoiceKeywords.ExercisesPagePreviousListPage);
-            AddCommand(StartPlan, Settings.VoiceKeywords.ExercisesPageStartExercise);
+            RemoveCommand(settingsInstance.voiceKeywords.PlanPageSelectPlan);
+            AddCommand(NextListPage, settingsInstance.voiceKeywords.ExercisesPageNextListPage);
+            AddCommand(PreviousListPage, settingsInstance.voiceKeywords.ExercisesPagePreviousListPage);
+            AddCommand(StartPlan, settingsInstance.voiceKeywords.ExercisesPageStartExercise);
         }
     }
 }

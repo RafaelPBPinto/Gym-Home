@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace GymHome
 {
@@ -6,59 +9,49 @@ namespace GymHome
     {
         public class VoiceKeywords
         {
-            [JsonInclude]
-            public static string MainPageSelectOption { get; private set; }
+            public string MainPageSelectOption { get; set; }
 
-            [JsonInclude]
-            public static string ExercisesPageStartExercise { get; private set; }
+            public string ExercisesPageStartExercise { get; set; }
 
-            [JsonInclude]
-            public static string ExercisesPageNextItem { get; private set; }
+            public string ExercisesPageNextItem { get; set; }
 
-            [JsonInclude]
-            public static string ExercisesPagePreviousItem { get; private set; }
+            public string ExercisesPagePreviousItem { get; set; }
 
-            [JsonInclude]
-            public static string ExercisesPageSelectExercise { get; private set; }
+            public string ExercisesPageSelectExercise { get; set; }
 
-            [JsonInclude]
-            public static string ExercisesPageNextListPage { get; private set; }
+            public string ExercisesPageNextListPage { get; set; }
 
-            [JsonInclude]
-            public static string ExercisesPagePreviousListPage { get; private set; }
+            public string ExercisesPagePreviousListPage { get; set; }
 
-            [JsonInclude]
-            public static string PlanPageSelectPlan { get; private set; }
+            public string PlanPageSelectPlan { get; set; }
 
-            [JsonInclude]
-            public static string NavigateToPreviousPage { get; private set; }
+            public string NavigateToPreviousPage { get; set; }
 
-            [JsonInclude]
-            public static string NavigateToMainPage { get; private set; }
+            public string NavigateToMainPage { get; set; }
 
-            public static string VideoPageEndPlan { get; private set; }
+            public string VideoPageEndPlan { get; set; }
 
-            public static string VideoPlay { get; private set; }
+            public string VideoPlay { get; set; }
 
-            public static string VideoPause { get; private set; }
+            public string VideoPause { get; set; }
 
-            public static string VideoNext { get; private set; }
+            public string VideoNext { get; set; }
 
-            public static string VideoPrevious { get; private set; }
+            public string VideoPrevious { get; set; }
 
-            public static string MicrofoneMute { get; private set; }
+            public string MicrofoneMute { get; set; }
 
-            public static string MicrofoneUnmute { get; private set; }
+            public string MicrofoneUnmute { get; set; }
 
-            public static string MicrofoneMessageCaught { get; private set; }
+            public string MicrofoneMessageCaught { get; set; }
 
             //a confirm message like "yes"
-            public static string Confirm { get; private set; }
+            public string Confirm { get; set; }
 
             //a deny message like "no"
-            public static string Deny { get; private set; }
+            public string Deny { get; set; }
 
-            public static void SetDefaults()
+            public void SetDefaults()
             {
                 MainPageSelectOption = "selecionar_opcao";
                 ExercisesPageStartExercise = "comecar";
@@ -81,21 +74,64 @@ namespace GymHome
                 Confirm = "confirmar";
                 Deny = "negar";
             }
-            //[JsonConstructor]
-            //public VoiceKeywords(string mainPageSelectOption,string exercisesPageStartExercie,string exercisesPageNextItem,string exercisesPagePreviousItem,string exercisesPageSelectExercise
-            //    ,string planPageSelectPlan,string navigateToPreviousPage)
-            //{
-
-            //}
         }
 
-        public VoiceKeywords voiceKeyword { get; set; }
+
+        public VoiceKeywords voiceKeywords { get; set; }
+
+        private static Settings m_instance;
+        public static Settings Instance
+        {
+            get
+            {
+                if(m_instance == null)
+                    m_instance = new Settings();
+
+                return m_instance;
+            }
+        }
 
         public static int UserID { get; set; }
 
-        public static void SetDefaults()
+        public string ServerAddress { get; set; }
+
+        public string MqttAddress { get; set; }
+
+        public int MqttPort { get; set; }
+
+        public void SetDefaults()
         {
-            VoiceKeywords.SetDefaults();
+            voiceKeywords = new VoiceKeywords();
+            voiceKeywords.SetDefaults();
+            ServerAddress = "http://localhost:5000";
+            MqttAddress = "localhost";
+            MqttPort = 1883;
+        }
+
+        public static string SettingsPath { get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.xaml"); } }
+
+        private Settings() 
+        {
+            SetDefaults();
+        }
+
+        public static void SaveSettings()
+        {
+            Settings instance = Instance;
+            XmlSerializer xs = new XmlSerializer(typeof(Settings));
+            TextWriter tw = new StreamWriter(SettingsPath);
+            xs.Serialize(tw, instance);
+            tw.Close();
+        }
+
+        public static void LoadSettings() 
+        {
+            m_instance = new Settings();
+            XmlSerializer xs = new XmlSerializer(typeof(Settings));
+            using (var sr = new StreamReader(SettingsPath)) 
+            {
+                m_instance = (Settings)xs.Deserialize(sr);
+            }
         }
 
     }

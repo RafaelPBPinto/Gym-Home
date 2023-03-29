@@ -128,7 +128,7 @@ namespace GymHome
 
             try
             {
-                videoBytes = await client.GetByteArrayAsync($"http://localhost:5000/getVideo/video_id={videoID}");
+                videoBytes = await client.GetByteArrayAsync($"{Settings.Instance.ServerAddress}/getVideo/video_id={videoID}");
             }
             catch (Exception ex)
             {
@@ -152,22 +152,22 @@ namespace GymHome
 
         private void InitCommands()
         {
-            AddCommand(FinishPlan, Settings.VoiceKeywords.VideoPageEndPlan);
-            AddCommand(Play, Settings.VoiceKeywords.VideoPlay);
-            AddCommand(Pause, Settings.VoiceKeywords.VideoPause);
-            AddCommand(NextVideo, Settings.VoiceKeywords.VideoNext);
-            AddCommand(ClosePrompt, Settings.VoiceKeywords.Deny);
-            AddCommand(NextVideo, Settings.VoiceKeywords.Confirm);
+            AddCommand(FinishPlan, settingsInstance.voiceKeywords.VideoPageEndPlan);
+            AddCommand(Play, settingsInstance.voiceKeywords.VideoPlay);
+            AddCommand(Pause, settingsInstance.voiceKeywords.VideoPause);
+            AddCommand(NextVideo, settingsInstance.voiceKeywords.VideoNext);
+            AddCommand(ClosePrompt, settingsInstance.voiceKeywords.Deny);
+            AddCommand(NextVideo, settingsInstance.voiceKeywords.Confirm);
         }
 
         private void RemoveCommands()
         {
-            RemoveCommand(Settings.VoiceKeywords.VideoPageEndPlan);
-            RemoveCommand(Settings.VoiceKeywords.VideoPlay);
-            RemoveCommand(Settings.VoiceKeywords.VideoPause);
-            RemoveCommand(Settings.VoiceKeywords.VideoNext);
-            RemoveCommand(Settings.VoiceKeywords.Deny);
-            RemoveCommand(Settings.VoiceKeywords.Confirm);
+            RemoveCommand(settingsInstance.voiceKeywords.VideoPageEndPlan);
+            RemoveCommand(settingsInstance.voiceKeywords.VideoPlay);
+            RemoveCommand(settingsInstance.voiceKeywords.VideoPause);
+            RemoveCommand(settingsInstance.voiceKeywords.VideoNext);
+            RemoveCommand(settingsInstance.voiceKeywords.Deny);
+            RemoveCommand(settingsInstance.voiceKeywords.Confirm);
         }
         private void FinishPlan(string obj = null)
         {

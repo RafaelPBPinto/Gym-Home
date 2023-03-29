@@ -15,22 +15,22 @@ namespace GymHome
         [ObservableProperty]
         private string message = "";
 
-        private static readonly string baseImagesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets");
+        protected static readonly Settings settingsInstance = Settings.Instance;
 
         public BaseViewModel()
         {
-            if (!KeywordExists(Settings.VoiceKeywords.NavigateToPreviousPage))
-                AddCommand(NavigateToPreviousPage, Settings.VoiceKeywords.NavigateToPreviousPage);
+            if (!KeywordExists(settingsInstance.voiceKeywords.NavigateToPreviousPage))
+                AddCommand(NavigateToPreviousPage, settingsInstance.voiceKeywords.NavigateToPreviousPage);
 
-            if(!KeywordExists(Settings.VoiceKeywords.NavigateToMainPage))
-                AddCommand(NavigateToMainPage,Settings.VoiceKeywords.NavigateToMainPage);
+            if(!KeywordExists(settingsInstance.voiceKeywords.NavigateToMainPage))
+                AddCommand(NavigateToMainPage,settingsInstance.voiceKeywords.NavigateToMainPage);
 
             //no if check because although it will exist, it is using the imageSource variable previous declared
             //meaning it will only work in the first page
             //this way it will override the variable used in the methods and work properly
-            AddCommand(NotListening, Settings.VoiceKeywords.MicrofoneMute);
-            AddCommand(Listening, Settings.VoiceKeywords.MicrofoneUnmute);
-            AddCommand(ShowLegend, Settings.VoiceKeywords.MicrofoneMessageCaught);
+            AddCommand(NotListening, settingsInstance.voiceKeywords.MicrofoneMute);
+            AddCommand(Listening, settingsInstance.voiceKeywords.MicrofoneUnmute);
+            AddCommand(ShowLegend, settingsInstance.voiceKeywords.MicrofoneMessageCaught);
             ((App)App.Current).OnAnyMessageReceived += HideLegend;
             NotListening();
         }
@@ -70,9 +70,17 @@ namespace GymHome
             return ((App)App.Current).keywordExists(keyword);
         }
 
+        protected void NavigateToMainPage(string obj = null)
+        {
+            Navigate(typeof(MainPage));
+        }
+
         protected virtual void OnNavigatedFrom()
         {
         }
+
+        
+        private static readonly string m_baseImagesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets");
 
         /// <summary>
         /// Wrapper function for voice command to call <see cref="NavigateToPreviousPage"/>
@@ -85,7 +93,7 @@ namespace GymHome
 
         private void Listening(string obj = null)
         {
-            string path = Path.Combine(baseImagesPath, "mic_unmuted.png");
+            string path = Path.Combine(m_baseImagesPath, "mic_unmuted.png");
             if (!File.Exists(path))
             {
                 Logger.Error($"Couldn't find image {path}");
@@ -96,7 +104,7 @@ namespace GymHome
 
         private void NotListening(string obj = null)
         {
-            string path = Path.Combine(baseImagesPath, "mic_muted.png");
+            string path = Path.Combine(m_baseImagesPath, "mic_muted.png");
             if (!File.Exists(path))
             {
                 Logger.Error($"Couldn't find image {path}");
@@ -119,11 +127,5 @@ namespace GymHome
             IsOpen = false;
             Message = string.Empty;
         }
-
-        protected void NavigateToMainPage(string obj = null)
-        {
-            Navigate(typeof(MainPage));
-        }
-        
     }
 }

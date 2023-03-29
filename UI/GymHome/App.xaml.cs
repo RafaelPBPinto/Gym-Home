@@ -39,37 +39,35 @@ namespace GymHome
             }
 
             Logger.Init(m_loggerPath);
-            Logger.Log("logger initialized");
-            Settings.SetDefaults();
+            Logger.Log("Logger initialized");
+            Logger.Log("Initializing settings");
 
-            //Logger.Log("Reading settings file");
-            //if (!File.Exists(m_settingsPath))
-            //{
-            //    Logger.Warning("Settings file not found. Creating file");
-            //    var file = File.Create(m_settingsPath);
-            //    file.Dispose();
-            //    try
-            //    {
-            //        Settings.SetDefaults();
-            //        string json = JsonSerializer.Serialize(new Settings());
-            //    }
-            //    catch(Exception ex) 
-            //    {
-            //        Debug.WriteLine(ex.Message);
-            //    }
-            //}
-            //else
-            //{
-            //    try
-            //    {
-            //        JsonSerializer.Deserialize<Settings>(m_settingsPath);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Logger.Error($"Can't deserialize settings file. Message: {ex.Message}");
-            //        Settings.SetDefaults();
-            //    }
-            //}
+            if(!File.Exists(Settings.SettingsPath)) 
+            {
+                Logger.Info("Settings file not found! Generating settings file with default values.");
+                try
+                {
+                    Settings.SaveSettings();
+                    Logger.Info("Settings created successfuly");
+                }
+                catch(Exception ex) 
+                {
+                    Logger.Error($"A problem occured while generating settings! File creation aborted. \n{ex.Message}");
+                }
+            }
+            else
+            {
+                Logger.Info("Settings file found. Loading settings");
+                try
+                {
+                    Settings.LoadSettings();
+                    Logger.Info("Settings loaded successfuly");
+                }
+                catch(Exception ex) 
+                {
+                    Logger.Error($"A problem occured while loading settings! Defaults settings will be used. \n{ex.Message}");
+                }
+            }
 
             Logger.Log("Initializing base component");
 
@@ -80,7 +78,7 @@ namespace GymHome
             m_mqttClient = m_mqttFactory.CreateMqttClient();
             try
             {
-                StartMqttListener("localhost", 1883).GetAwaiter();
+                StartMqttListener(Settings.Instance.MqttAddress, Settings.Instance.MqttPort).GetAwaiter();
             }
             catch (Exception ex)
             {

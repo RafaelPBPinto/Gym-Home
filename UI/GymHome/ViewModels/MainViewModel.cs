@@ -26,8 +26,6 @@ namespace GymHome
             InitCommands();
         }
 
-
-
         /// <summary>
         /// Navigate to the exercises page.
         /// Shows all exercises available to the user.
@@ -58,21 +56,12 @@ namespace GymHome
 
         private void InitCommands()
         {
-            AddCommand(SelectOption, Settings.VoiceKeywords.MainPageSelectOption);
+            AddCommand(SelectOption, settingsInstance.voiceKeywords.MainPageSelectOption);
         }
 
         protected override void OnNavigatedFrom()
         {
-            RemoveCommand(Settings.VoiceKeywords.MainPageSelectOption);
+            RemoveCommand(settingsInstance.voiceKeywords.MainPageSelectOption);
         }
-
-        
-        // Objetivo é aparecer micro verde quando está a captar, vermelho quando n consegue ouvir
-        //[ObservableProperty]
-        //private Visibility v = Visibility.Collapsed;
-        //public void mute(){
-        //    Debug.WriteLine("T");
-        //    V = Visibility.Visible;
-        //}
     }
 }

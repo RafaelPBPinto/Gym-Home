@@ -35,7 +35,7 @@ namespace GymHome
             {
                 if (!Directory.Exists("./Images"))
                     Directory.CreateDirectory("./Images");
-                allItems = await client.GetFromJsonAsync<List<ExerciseItem>>("http://localhost:5000/getExercises");
+                allItems = await client.GetFromJsonAsync<List<ExerciseItem>>($"{Settings.Instance.ServerAddress}/getExercises");
                 
             }
             catch(Exception ex)
@@ -58,6 +58,7 @@ namespace GymHome
             
             SelectedIndex = 0;
             PageNumber = 1;
+            m_maxNumberOfPages = (int)MathF.Ceiling(allItems.Count / (float)m_elementsPerPage);
             ExerciseInfoVisibility = Visibility.Visible;
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Description));
@@ -101,6 +102,21 @@ namespace GymHome
         private Visibility exerciseInfoVisibility = Visibility.Collapsed;
 
         private const int m_elementsPerPage = 10;
+        private int m_maxNumberOfPages = 0;
+
+        private readonly Dictionary<string, int> m_stringNumToInt = new Dictionary<string, int>
+        {
+            {"um",1},
+            {"dois",2 },
+            {"tres",3 },
+            {"quatro",4 },
+            {"cinco",5 },
+            {"seis",6 },
+            {"sete",7 },
+            {"oito",8 },
+            {"nove",9 },
+            {"dez",10 }
+        };
 
         [RelayCommand]
         private void StartExercise()
@@ -131,7 +147,7 @@ namespace GymHome
             if (allItems == null)
                 return;
 
-            if (allItems.Count / m_elementsPerPage < PageNumber - 1)
+            if (m_maxNumberOfPages <= PageNumber)
                 return;
 
             ExerciseItems.Clear();
@@ -193,20 +209,6 @@ namespace GymHome
             PreviousItem();
         }
 
-        private readonly Dictionary<string, int> m_stringNumToInt = new Dictionary<string, int>
-        {
-            {"um",1},
-            {"dois",2 },
-            {"tres",3 },
-            {"quatro",4 },
-            {"cinco",5 },
-            {"seis",6 },
-            {"sete",7 },
-            {"oito",8 },
-            {"nove",9 },
-            {"dez",10 }
-        };
-
         private void SelectExercise(string obj = null)
         {
             if (obj == null)
@@ -227,22 +229,22 @@ namespace GymHome
         {
             //TODO: add commands and keywords to a variable like in app.xaml.cs and call the AddCommand in a loop
             //same for RemoveCommand
-            AddCommand(StartExercise,Settings.VoiceKeywords.ExercisesPageStartExercise);
-            AddCommand(NextItem,Settings.VoiceKeywords.ExercisesPageNextItem);
-            AddCommand(PreviousItem,Settings.VoiceKeywords.ExercisesPagePreviousItem);
-            AddCommand(SelectExercise,Settings.VoiceKeywords.ExercisesPageSelectExercise);
-            AddCommand(NextListPage,Settings.VoiceKeywords.ExercisesPageNextListPage);
-            AddCommand(PreviousListPage, Settings.VoiceKeywords.ExercisesPagePreviousListPage);
+            AddCommand(StartExercise,settingsInstance.voiceKeywords.ExercisesPageStartExercise);
+            AddCommand(NextItem,settingsInstance.voiceKeywords.ExercisesPageNextItem);
+            AddCommand(PreviousItem,settingsInstance.voiceKeywords.ExercisesPagePreviousItem);
+            AddCommand(SelectExercise,settingsInstance.voiceKeywords.ExercisesPageSelectExercise);
+            AddCommand(NextListPage,settingsInstance.voiceKeywords.ExercisesPageNextListPage);
+            AddCommand(PreviousListPage, settingsInstance.voiceKeywords.ExercisesPagePreviousListPage);
         }
 
         protected override void OnNavigatedFrom()
         {
-            RemoveCommand(Settings.VoiceKeywords.ExercisesPageStartExercise);
-            RemoveCommand(Settings.VoiceKeywords.ExercisesPageNextItem);
-            RemoveCommand(Settings.VoiceKeywords.ExercisesPagePreviousItem);
-            RemoveCommand(Settings.VoiceKeywords.ExercisesPageSelectExercise);
-            RemoveCommand(Settings.VoiceKeywords.ExercisesPageNextListPage);
-            RemoveCommand(Settings.VoiceKeywords.ExercisesPagePreviousListPage);
+            RemoveCommand(settingsInstance.voiceKeywords.ExercisesPageStartExercise);
+            RemoveCommand(settingsInstance.voiceKeywords.ExercisesPageNextItem);
+            RemoveCommand(settingsInstance.voiceKeywords.ExercisesPagePreviousItem);
+            RemoveCommand(settingsInstance.voiceKeywords.ExercisesPageSelectExercise);
+            RemoveCommand(settingsInstance.voiceKeywords.ExercisesPageNextListPage);
+            RemoveCommand(settingsInstance.voiceKeywords.ExercisesPagePreviousListPage);
         }
     }
 }
