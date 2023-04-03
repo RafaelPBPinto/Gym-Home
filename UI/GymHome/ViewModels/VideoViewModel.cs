@@ -37,7 +37,7 @@ namespace GymHome
                 Directory.CreateDirectory("./Videos");
 
             if (m_exerciseItems.Length == 1)
-                PromptMessage = m_planEndedString;
+                PromptMessage = m_exerciseEndedString;
         }
 
 
@@ -71,6 +71,7 @@ namespace GymHome
         private int m_currentVideoIndex = 0;
         private readonly DispatcherQueue m_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         private const string m_planEndedString = "Acabou todos os exercicios.\nQuer terminar o plano?";
+        private const string m_exerciseEndedString = "Acabou o exercicio.\nQuer voltar a pagina dos exercicios?"; //used when there is only 1 exercise instead of a plan
         private const string m_exerciseFinishString = "Acabou o exercicio.\nQuer fazer o proximo?";
 
         [ObservableProperty]
@@ -205,7 +206,10 @@ namespace GymHome
                 m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
                     () =>
                     {
-                        Navigate(typeof(PlanPage));
+                        if(m_exerciseItems.Length > 1)
+                            Navigate(typeof(PlanPage));
+                        else
+                            Navigate(typeof(ExercisesPage));
                     });
 
             }
