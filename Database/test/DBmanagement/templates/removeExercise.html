@@ -38,9 +38,9 @@
     {% endif %} 
     <form method="POST" action="{{ url_for('api.removeExercise') }}">
       <h2>Remover Exercício</h2>
-      <div style="font-weight: bold;">Nome do exercício:</div>
+      <div style="font-weight: bold;">ID do exercício:</div>
       <p></p>
-      <input type="text" name="nome" id="nome">
+      <input type="text" name="id" id="id">
       <input type="submit" value="Remover">
     </form>
 

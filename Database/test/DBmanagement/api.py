@@ -73,17 +73,15 @@ def addExercise():
 def removeExercise():
     alert_message = ''
     if request.method == 'POST':
-        nome = request.form.get('nome')
+        RefID_exercicio = request.form.get('id')
 
         conn = sqlite3.connect('PlanosUser.db')
-        query = "SELECT * FROM Exercicio WHERE Nome = ?"
-        result = conn.execute(query, (nome,)).fetchone()
+        query = "SELECT * FROM Exercicio WHERE ID = ?"
+        result = conn.execute(query, (RefID_exercicio,)).fetchone()
 
         if result is not None:
-            RefID_exercicio = result[0]
-            print(RefID_exercicio)
-            query = "DELETE FROM Exercicio WHERE Nome = ?"
-            conn.execute(query, (nome,))
+            query = "DELETE FROM Exercicio WHERE ID = ?"
+            conn.execute(query, (RefID_exercicio,))
 
             query = "DELETE FROM Imagem WHERE RefID_exercicio = ?"
             conn.execute(query, (RefID_exercicio,))
