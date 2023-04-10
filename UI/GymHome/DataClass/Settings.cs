@@ -99,6 +99,8 @@ namespace GymHome
 
         public int MqttPort { get; set; }
 
+        public string StreamURL { get; set; }
+
         public void SetDefaults()
         {
             voiceKeywords = new VoiceKeywords();
@@ -106,6 +108,7 @@ namespace GymHome
             ServerAddress = "http://localhost:5000";
             MqttAddress = "localhost";
             MqttPort = 1883;
+            StreamURL = "https://www.youtube.com";
         }
 
         public static string SettingsPath { get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.xaml"); } }

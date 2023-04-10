@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 
@@ -31,6 +32,7 @@ namespace GymHome
                 throw new ArgumentException("Parameter can't be an empty list", nameof(exerciseItems));
             }
 
+            SetStreamSource();
             m_exerciseItems = exerciseItems;
             Title = m_exerciseItems[0].Title;
             if (!Directory.Exists("./Videos"))
@@ -38,6 +40,7 @@ namespace GymHome
 
             if (m_exerciseItems.Length == 1)
                 PromptMessage = m_exerciseEndedString;
+
         }
 
 
@@ -45,6 +48,12 @@ namespace GymHome
         [RelayCommand]
         public void GoBack()
         {
+            m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
+                    () =>
+                    {
+                        StreamSource = new Uri("https://www.youtube.com");
+                    });
+
             if (MediaPlayerElement != null)
             {
                 MediaPlayerElement.MediaPlayer.Pause();
@@ -85,6 +94,9 @@ namespace GymHome
 
         [ObservableProperty]
         private string promptMessage = m_exerciseFinishString;
+
+        [ObservableProperty]
+        private Uri streamSource = null;
 
         private void ResetMediaPlayerElement()
         {
@@ -144,6 +156,30 @@ namespace GymHome
                     {
                         MediaPlayerElement.Source = MediaSource.CreateFromUri(new Uri(Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Videos"), $"{Title}.mp4")));
                     });
+        }
+
+        private void SetStreamSource()
+        {
+            string streamID = settingsInstance.StreamURL;
+            if(streamID == null || streamID == "")
+            {
+                Logger.Error("Settings stream URL is null or empty");
+                return;
+            }
+
+            if (streamID.Contains("youtube.com"))
+            {
+                var uri = new Uri(settingsInstance.StreamURL);
+                var parameters = HttpUtility.ParseQueryString(uri.Query);
+                streamID = parameters["v"];
+                if(streamID == null)
+                {
+                    Logger.Error("Stream ID is null!");
+                    return;
+                }
+            }
+
+            StreamSource = new Uri($"https://www.youtube.com/embed/{streamID}");
         }
 
         private void SaveVideo(byte[] videoBytes)
@@ -246,11 +282,17 @@ namespace GymHome
         protected override void OnNavigatedFrom()
         {
             base.OnNavigatedFrom();
+            m_dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal,
+                    () =>
+                    {
+                        StreamSource = new Uri("https://www.youtube.com");
+                    });
             if (MediaPlayerElement != null)
             {
                 MediaPlayerElement.MediaPlayer.Pause();
                 MediaPlayerElement = null;
             }
+            
             RemoveCommands();
         }
     }

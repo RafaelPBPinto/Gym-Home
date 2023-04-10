@@ -17,7 +17,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Rectangle Fill="LightBlue" Grid.ColumnSpan="2"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Fill="LightBlue" Grid.ColumnSpan="3"/>
         <Button VerticalAlignment="Center"
                 Command="{Binding GoBackCommand}"
                 BorderBrush="AliceBlue"
@@ -31,17 +36,19 @@
                    TextWrapping="WrapWholeWords"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
-                   Grid.ColumnSpan="2"
+                   Grid.Column="1"
                    Style="{StaticResource TitleTextBlockStyle}"
                    Padding="20"
                    />
 
         <ContentControl Content="{Binding MediaPlayerElement}"
                         HorizontalAlignment="Stretch"
+                        Grid.ColumnSpan="3"
                         Grid.Row="1"/>
 
         <Grid Grid.Row="1"
-              Visibility="{Binding NextVideoPromptVisibility}">
+              Visibility="{Binding NextVideoPromptVisibility}"
+              Grid.ColumnSpan="3">
             <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
@@ -80,7 +87,7 @@
             Title="A processar:"
             Message="{Binding Message}"
             Grid.Row="1"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             VerticalAlignment="Bottom"
             HorizontalAlignment="Left"
             IsOpen="{Binding IsOpen}"
@@ -92,12 +99,21 @@
         </InfoBar>
         
         <Image Source="{Binding MicrofoneImageSource}"
-               Grid.Column="1"
+               Grid.Column="2"
                Grid.Row="1"
                Width="50"
                VerticalAlignment="Bottom"
                HorizontalAlignment="Right"
                Margin="0 0 10 10"
                />
+
+        <WebView2 Grid.Column="2"
+                  Grid.RowSpan="2"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Top"
+                  Source="{Binding StreamSource}"
+                  Width="500"
+                  Height="300"
+                  />
     </Grid>
 </Page>
