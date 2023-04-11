@@ -379,4 +379,104 @@ class ActionPaginaInicial(Action):
         write_log("Actions: " + "Pagina_inicial: " + "exit\n")
         
         return []
+
+class ActionPlay(Action):
+    
+    def name(self) -> Text:
+        return "action_play"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        write_log("Actions: " + "Play: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
+        msg = {"comando": "play"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
+        
+        write_log("Actions: " + "Play: " + "exit\n")
+        
+        return []
+
+class ActionPause(Action):
+    
+    def name(self) -> Text:
+        return "action_pause"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        write_log("Actions: " + "Pause: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
+        msg = {"comando": "pause"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
+        
+        write_log("Actions: " + "Pause: " + "exit\n")
+        
+        return []
+    
+class ActionReplay(Action):
+    
+    def name(self) -> Text:
+        return "action_replay"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        write_log("Actions: " + "Replay: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
+        msg = {"comando": "replay"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
+        
+        write_log("Actions: " + "Replay: " + "exit\n")
+        
+        return []
+
+class ActionAfirmar(Action):
+    
+    def name(self) -> Text:
+        return "action_afirmar"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        write_log("Actions: " + "Afirmar: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
+        msg = {"comando": "confirmar"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
+        
+        write_log("Actions: " + "Afirmar: " + "exit\n")
+        
+        return []
+
+class ActionNegar(Action):
+    
+    def name(self) -> Text:
+        return "action_negar"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        write_log("Actions: " + "Negar: " + "enter\n")
+        print("Confiança: ", tracker.latest_message["intent"].get("confidence"))
+        write_log("Confiança: " + str(tracker.latest_message["intent"].get("confidence")) + "\n")
+        
+        msg = {"comando": "negar"}
+        publish.single(topic="comandos/voz/UI", payload=json.dumps(msg), hostname="localhost")
+        
+        write_log("Actions: " + "Negar: " + "exit\n")
+        
+        return []
     

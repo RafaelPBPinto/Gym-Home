@@ -144,3 +144,31 @@ rules:
   - action: utter_understand_exercicios
   - action: action_mostrar_todos_exercicios
   - action: utter_todos_exercicios
+
+- rule: play video
+  steps:
+  - intent: request_play
+  - action: action_play
+  - action: utter_understand_play
+
+- rule: pausar
+  steps:
+  - intent: request_pause
+  - action: action_pause
+  - action: utter_understand_pause
+
+- rule: replay video
+  steps:
+  - intent: request_replay
+  - action: action_replay
+  - action: utter_understand_replay
+
+- rule: confirmar
+  steps:
+  - intent: response_afirmar
+  - action: action_afirmar
+
+- rule: negar
+  steps:
+  - intent: response_negar
+  - action: action_negar

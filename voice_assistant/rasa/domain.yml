@@ -25,6 +25,9 @@ intents:
   - request_todos_exercicios
   - response_selecionar_opcao
   - request_pagina_inicial
+  - request_play
+  - request_pause
+  - request_replay
 
 entities:
   - username
@@ -77,6 +80,11 @@ actions:
   - action_mostrar_todos_exercicios
   - action_pagina_inicial
   - action_default_fallback
+  - action_play
+  - action_pause
+  - action_replay
+  - action_afirmar
+  - action_negar
 
 responses:
   utter_default:
@@ -146,10 +154,19 @@ responses:
   - text: "A virar a câmara para a direita..."
 
   utter_understand_virar_camara_cima:
-  - text: "A virar a câmara para cima..."
+  - text: "A virar a câmara para cima..."   
 
   utter_understand_virar_camara_baixo:
   - text: "A virar a câmara para baixo..."
+
+  utter_understand_play:
+  - text: "A reproduzir vídeo..."
+
+  utter_understand_pause:
+  - text: "Vídeo pausado..."
+
+  utter_understand_replay:
+  - text: "A repetir vídeo..."
 
 session_config:
   session_expiration_time: 60

@@ -126,13 +126,6 @@ nlu:
     - voltar para inicio
     - sair 
 
-- intent: request_avancar
-  examples: |
-    - avançar
-    - próximo
-    - seguinte
-    - andar para frente
-
 - intent: agradecer
   examples: |
     - obrigado
@@ -197,3 +190,49 @@ nlu:
     - mostrar todos os exercícios
     - mostrar-me todos os exercícios
     - exercicios
+
+- intent: request_play
+  examples: |
+    - play
+    - iniciar o vídeo
+    - iniciar vídeo
+    - iniciar 
+    - reproduzir
+    - reproduzir o vídeo
+    - reproduzir vídeo
+
+- intent: request_pause
+  examples: |
+    - pause
+    - parar o vídeo
+    - parar vídeo
+    - parar
+    - parar de reproduzir
+    - parar de reproduzir o vídeo
+    - parar de reproduzir vídeo
+    - stop
+
+- intent: request_replay
+  examples: |
+    - replay
+    - voltar ao início
+    - voltar ao inicio
+    - voltar para o início
+    - voltar para o inicio
+    - voltar para o inicio do vídeo
+    - reiniciar
+    - reiniciar o vídeo
+    - reiniciar vídeo
+    - recomeçar
+    - recomeçar o vídeo
+    - recomeçar vídeo
+
+- intent: request_avancar
+  examples: |
+    - próximo
+    - seguinte
+    - andar para a frente
+    - andar para frente
+    - avançar
+    - próximo exercício
+    - avançar exercício
