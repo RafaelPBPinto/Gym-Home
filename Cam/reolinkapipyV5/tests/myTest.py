@@ -78,12 +78,14 @@ def on_message(mosq, obj, msg):
             camar.cam.stop_ptz()
         elif message['comando'] == 'cima':
             camar.cam.move_up()
-            time.sleep(1)
-            camar.cam.stop_ptz()
+            # time.sleep(1)
+            # camar.cam.stop_ptz()
         elif message['comando'] == 'baixo':
             camar.cam.move_down()
-            time.sleep(1)
-            camar.cam.stop_ptz()
+            # time.sleep(1)
+            # camar.cam.stop_ptz()
+        elif message['comando'] == 'auto':
+            camar.cam.auto_movement()
 
         # elif message['comando'] == 'parar':
         #     camar.cam.stop_ptz()
@@ -92,9 +94,9 @@ def on_message(mosq, obj, msg):
             print("Comando inválido")
 
 if __name__ == '__main__':
+    
     client = paho.Client()
     client.on_message = on_message
-
     #client.tls_set('root.ca', certfile='c1.crt', keyfile='c1.key')
     client.connect("127.0.0.1", 1883, 60)
 
@@ -102,4 +104,6 @@ if __name__ == '__main__':
 
     while client.loop() == 0:
         pass
+
     unittest.main()
+    
