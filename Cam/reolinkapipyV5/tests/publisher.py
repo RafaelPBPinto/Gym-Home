@@ -14,7 +14,7 @@ host = "localhost"
 
 if __name__ == '__main__':
     # publish a single message
-    string  = {'comando': 'esquerda'}
+    string  = {'comando': 'direita'}
     import json
     
     publish.single(topic="comandos/voz/camara", payload= json.dumps(string), hostname=host)
