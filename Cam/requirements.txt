@@ -4,3 +4,4 @@ paho_mqtt==1.6.1
 Pillow==9.4.0
 requests==2.22.0
 setuptools==45.2.0
+reolinkapi==0.1.5
