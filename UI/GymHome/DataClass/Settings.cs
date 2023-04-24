@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -99,7 +100,7 @@ namespace GymHome
 
         public int MqttPort { get; set; }
 
-        public string StreamURL { get; set; }
+        public List<string> StreamURLs { get; set; }
 
         public void SetDefaults()
         {
@@ -108,7 +109,7 @@ namespace GymHome
             ServerAddress = "http://localhost:5000";
             MqttAddress = "localhost";
             MqttPort = 1883;
-            StreamURL = "https://www.youtube.com";
+            StreamURLs = new List<string>();
         }
 
         public static string SettingsPath { get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.xaml"); } }
@@ -121,6 +122,8 @@ namespace GymHome
         public static void SaveSettings()
         {
             Settings instance = Instance;
+            if (instance.StreamURLs.Count == 0)
+                instance.StreamURLs.Add("https://www.youtube.com/watch?v=youtube_video_id");
             XmlSerializer xs = new XmlSerializer(typeof(Settings));
             TextWriter tw = new StreamWriter(SettingsPath);
             xs.Serialize(tw, instance);
