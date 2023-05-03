@@ -78,19 +78,13 @@ def on_message(mosq, obj, msg):
             camar.cam.stop_ptz()
         elif message['comando'] == 'cima':
             camar.cam.move_up()
-            # time.sleep(1)
-            # camar.cam.stop_ptz()
+            time.sleep(1)
+            camar.cam.stop_ptz()
         elif message['comando'] == 'baixo':
             camar.cam.move_down()
-            # time.sleep(1)
-            # camar.cam.stop_ptz()
-        elif message['comando'] == 'auto':
-            camar.cam.auto_movement()
-
-        # elif message['comando'] == 'parar':
-        #     camar.cam.stop_ptz()
+            time.sleep(1)
+            camar.cam.stop_ptz()
         else:
-            # comando inválido
             print("Comando inválido")
 
 if __name__ == '__main__':
