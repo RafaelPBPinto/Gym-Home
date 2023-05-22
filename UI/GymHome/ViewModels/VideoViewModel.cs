@@ -41,7 +41,10 @@ namespace GymHome
                 Directory.CreateDirectory("./Videos");
 
             if (m_exerciseItems.Length == 1)
+            {
                 PromptMessage = m_exerciseEndedString;
+                nextPrevBtnsVisibility = Visibility.Collapsed;
+            }
 
         }
 
@@ -97,6 +100,9 @@ namespace GymHome
         [ObservableProperty]
         private int noOfCols = 0;
 
+        [ObservableProperty]
+        private Visibility nextPrevBtnsVisibility = Visibility.Visible;
+
         private void ResetMediaPlayerElement()
         {
             MediaPlayerElement = new MediaPlayerElement();
@@ -120,7 +126,15 @@ namespace GymHome
         [RelayCommand]
         private void NextVideo(string obj = null)
         {
+            Pause();
             Task.Run(async () => { await NextVideo(); });
+        }
+
+        [RelayCommand]
+        private void PreviousVideo(string obj = null)
+        {
+            Pause();
+            Task.Run(async () => { await PreviousVideo(); });
         }
 
         [RelayCommand]
@@ -198,6 +212,7 @@ namespace GymHome
             AddCommand(NextVideo, settingsInstance.voiceKeywords.VideoNext);
             AddCommand(ClosePrompt, settingsInstance.voiceKeywords.Deny);
             AddCommand(NextVideo, settingsInstance.voiceKeywords.Confirm);
+            AddCommand(Replay, settingsInstance.voiceKeywords.VideoReplay);
         }
 
         private void RemoveCommands()
@@ -208,6 +223,7 @@ namespace GymHome
             RemoveCommand(settingsInstance.voiceKeywords.VideoNext);
             RemoveCommand(settingsInstance.voiceKeywords.Deny);
             RemoveCommand(settingsInstance.voiceKeywords.Confirm);
+            RemoveCommand(settingsInstance.voiceKeywords.VideoReplay);
         }
         private void FinishPlan(string obj = null)
         {
@@ -280,6 +296,12 @@ namespace GymHome
 
             await SetMediaSource(m_exerciseItems[m_currentVideoIndex].VideoID);
 
+        }
+
+        private void Replay(string obj = null)
+        {
+            MediaPlayerElement.MediaPlayer.PlaybackSession.Position = TimeSpan.Zero;
+            Play();
         }
 
         protected override void OnNavigatedFrom()

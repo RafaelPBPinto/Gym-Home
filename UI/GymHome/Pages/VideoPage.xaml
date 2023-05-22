@@ -34,15 +34,43 @@
                            Foreground="Black"
                            FontSize="30"/>
         </Button>
-        <TextBlock Foreground="Black" 
+        <Grid Grid.Column="1"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button VerticalAlignment="Center"
+                Grid.Column="0"
+                Command="{Binding PreviousVideoCommand}"
+                Visibility="{Binding NextPrevBtnsVisibility}">
+                <TextBlock Text="p"
+                       Foreground="Black"
+                       FontSize="60"
+                />
+            </Button>
+            <TextBlock Foreground="Black" 
                    Text="{Binding Title}"
                    TextWrapping="WrapWholeWords"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
                    Grid.Column="1"
+                   VerticalAlignment="Center"
                    Style="{StaticResource TitleTextBlockStyle}"
                    Padding="20"
                    />
+            <Button VerticalAlignment="Center"
+                Grid.Column="2"
+                    Command="{Binding NextVideoCommand}"
+                Visibility="{Binding NextPrevBtnsVisibility}">
+                <TextBlock Text="n"
+                       Foreground="Black"
+                       FontSize="60"
+                />
+            </Button>
+        </Grid>
+
 
         <ContentControl Content="{Binding MediaPlayerElement}"
                         HorizontalAlignment="Stretch"

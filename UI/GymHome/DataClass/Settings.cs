@@ -40,6 +40,8 @@ namespace GymHome
 
             public string VideoPrevious { get; set; }
 
+            public string VideoReplay { get; set; }
+
             public string MicrofoneMute { get; set; }
 
             public string MicrofoneUnmute { get; set; }
@@ -67,10 +69,11 @@ namespace GymHome
                 VideoPageEndPlan = "terminar";
                 MicrofoneUnmute = "listening";
                 MicrofoneMute = "no_listening";
-                MicrofoneMessageCaught = "legenda";
+                MicrofoneMessageCaught = "legendas";
                 VideoPlay = "play";
                 VideoPause = "pause";
                 VideoNext = "proximo";
+                VideoReplay = "replay";
                 VideoPrevious = "anterior";
                 Confirm = "confirmar";
                 Deny = "negar";
