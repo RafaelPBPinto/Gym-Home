@@ -47,9 +47,9 @@
                 Grid.Column="0"
                 Command="{Binding PreviousVideoCommand}"
                 Visibility="{Binding NextPrevBtnsVisibility}">
-                <TextBlock Text="p"
+                <TextBlock Text="Anterior"
                        Foreground="Black"
-                       FontSize="60"
+                       FontSize="20"
                 />
             </Button>
             <TextBlock Foreground="Black" 
@@ -64,9 +64,9 @@
                 Grid.Column="2"
                     Command="{Binding NextVideoCommand}"
                 Visibility="{Binding NextPrevBtnsVisibility}">
-                <TextBlock Text="n"
+                <TextBlock Text="Proximo"
                        Foreground="Black"
-                       FontSize="60"
+                       FontSize="20"
                 />
             </Button>
         </Grid>
