@@ -11,11 +11,9 @@ def processData():
     if os.path.exists(listaExer):
             xlsx = openpyxl.load_workbook(listaExer)
             sheet = xlsx.active
-            #dimensao = sheet.dimensions
-            #values = sheet[dimensao]
             linha = sheet.rows
             for row in linha:
-                if row[2].value != None:    # Eu acho que alguns erros de None acontecem porque se adiciona uma linha em branco no final do ficheiro excel
+                if row[2].value != None:    
                     nome      = row[0].value
                     tipo      = row[1].value
                     duracao   = int(row[2].value)
@@ -53,6 +51,7 @@ def processData():
                 tipo            = row[0].value
                 series          = int(row[1].value)
                 repeticao       = int(row[2].value)
+                # informacao da row[3] do excel deixou de ser utilizada
                 ordem           = int(row[4].value)
                 RefID_exercicio = int(row[5].value)
                 RefID_plano     = int(row[6].value)
@@ -139,7 +138,6 @@ def convert2BinData(filename):
 def insertImage(nome,img,id):
     conn = sqlite3.connect('..\PlanosUser.db')
     conn.execute('PRAGMA foreign_keys = ON')
-    #query = f"INSERT INTO Imagem (Nome,ImagemBinary,RefID_exercicio) VALUES ('{nome}','{img}','{id}')"
     query = """ INSERT INTO Imagem (Nome, ImagemBinary,RefID_exercicio) VALUES (?, ?, ?)"""
     data_tuple = (nome,img,id)
     conn.execute(query,data_tuple)

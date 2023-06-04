@@ -6,26 +6,7 @@ import os
 
 api = Blueprint('api', __name__)
 
-@api.route('/addExercise2', methods=['POST'])
-def add_exercise():
-    if request.method == 'POST':
-        exercise_data = request.get_json()
-
-        nome = exercise_data.get('nome')
-        tipo = exercise_data.get('tipo')
-        duracao = exercise_data.get('duracao')
-        descricao = exercise_data.get('descricao')
-
-        conn = sqlite3.connect('PlanosUser.db')
-        query = "INSERT INTO Exercicio (Nome, Tipo, Duracao, Descricao) VALUES (?, ?, ?, ?)"
-        conn.execute(query, (nome, tipo, duracao, descricao))
-        conn.commit()
-        conn.close()
-
-        return jsonify({'message': 'Exercise added successfully'})
-    else:
-        return jsonify({'error': 'Invalid request method'}), 400
-
+# add exercise using html form
 @api.route('/addExercise', methods=['GET', 'POST'])
 def addExercise():
     alert_message = ''
@@ -46,7 +27,7 @@ def addExercise():
             video_file = request.files.get('video')
             if not video_file:
                 return jsonify({'error': 'No video found'}), 400
-            #video_path = os.path.join('video', video_file.filename)
+
             video_file.save(os.path.join('DBmanagement', 'video', video_file.filename))
 
         conn = sqlite3.connect('PlanosUser.db')
@@ -65,9 +46,28 @@ def addExercise():
         conn.commit()
         conn.close()
         alert_message = 'Exercício adicionado com sucesso!'
-        #return jsonify({'message': 'Exercício adicionado com sucesso!'})
-        #return redirect(url_for('api.getExercises'))
     return render_template('addExercise.html', alert_message=alert_message)
+
+# add exercise using json
+@api.route('/addExercise2', methods=['POST'])
+def add_exercise():
+    if request.method == 'POST':
+        exercise_data = request.get_json()
+
+        nome = exercise_data.get('nome')
+        tipo = exercise_data.get('tipo')
+        duracao = exercise_data.get('duracao')
+        descricao = exercise_data.get('descricao')
+
+        conn = sqlite3.connect('PlanosUser.db')
+        query = "INSERT INTO Exercicio (Nome, Tipo, Duracao, Descricao) VALUES (?, ?, ?, ?)"
+        conn.execute(query, (nome, tipo, duracao, descricao))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'Exercise added successfully'})
+    else:
+        return jsonify({'error': 'Invalid request method'}), 400
 
 @api.route('/removeExercise', methods=['GET','POST'])
 def removeExercise():
