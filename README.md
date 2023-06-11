@@ -4,7 +4,7 @@
 
 ## Links
 
-site -> https://rafaelpbpinto.github.io/Gym-Home/site
+site -> https://rafaelpbpinto.github.io/Gym-Home/site  
 video -> https://youtu.be/AxsVyO-H1ss
 
 
