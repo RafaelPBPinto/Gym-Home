@@ -2,9 +2,10 @@
 
 # Peci Group 2
 
-First of all, if you want to use this system, run the following command:
+## Links
 
-> pip install -r requirements.txt 
+site -> https://rafaelpbpinto.github.io/Gym-Home/site
+video -> https://youtu.be/AxsVyO-H1ss
 
 
 ## Authors
