@@ -11789,3 +11789,12 @@ html:not(.ie-11):not(.ios) .parallax-disabled {
 .context-dark .countdown-circle-bg, .bg-gray-800 .countdown-circle-bg, .bg-primary .countdown-circle-bg {
 	fill: rgba(255, 255, 255, 0.1);
 }
+
+.avatar {
+	vertical-align: middle;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	max-width: 100%;
+   	max-height: 100%;
+}
